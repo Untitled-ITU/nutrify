@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Nutrify Demo</title>
+    </head>
+    <body>
+        <h1>Nutrify</h1>
+        <form method="post" action="/meals">
+            <div>
+                <label for="name">Name:</label>
+                <input id="name" name="name" type="text" />
+            </div>
+            <div>
+                <label for="country">Country:</label>
+                <input id="country" name="country" type="text" />
+            </div>
+            <div>
+                <label for="type">Type:</label>
+                <input id="type" name="type" type="text" placeholder="breakfast/lunch/dinner" />
+            </div>
+            <div>
+                <label for="ingredients">Ingredients (comma-separated):</label>
+                <input id="ingredients" name="ingredients" type="text" placeholder="egg,tomato" />
+            </div>
+            <div>
+                <button type="submit">Load Meals</button>
+            </div>
+        </form>
+        {% if meals is not none %}
+            {% if meals|length == 0 %}
+                <p>No results found.</p>
+            {% else %}
+                <h2>Meals ({{ meals|length }})</h2>
+                <ul>
+                    {% for m in meals %}
+                    <li>
+                        <div><a href="/meal/{{ m.id }}">{{ m.name }}</a></div>
+                        <div>{{ m.country }}</div>
+                        <div>{{ m.type }}</div>
+                        <div>Calories: {{ m.calories }}</div>
+                        <div>Duration: {{ m.duration_min }} min</div>
+                        <div>Ingredients: {{ m.ingredients | join(', ') }}</div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endif %}
+    </body>
+</html>
