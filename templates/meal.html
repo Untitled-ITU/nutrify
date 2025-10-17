@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>{{ meal.name }} - Details</title>
+    </head>
+    <body>
+        {% if meal is none %}
+            <h1>Meal not found</h1>
+            <p><a href="/">Go back</a></p>
+        {% else %}
+            <h1>{{ meal.name }}</h1>
+            <p><a href="/">Go back</a></p>
+            <div>Country: {{ meal.country }}</div>
+            <div>Type: {{ meal.type }}</div>
+            <div>Calories: {{ meal.calories }}</div>
+            <div>Duration: {{ meal.duration_min }} min</div>
+            <h2>Ingredients</h2>
+            <ul>
+            {% for ing in meal.ingredients %}
+            <li>{{ ing }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    </body>
+</html>
