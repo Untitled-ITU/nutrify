@@ -44,12 +44,12 @@ jobs:
           if [ ! -d build ]; then
             mkdir -p build
             cat > build/index.html <<'HTML'
-<!doctype html>
-<meta charset="utf-8">
-<title>Nutrify (Preprod Live)</title>
-<h1>Nutrify</h1>
-<p>Preprod live placeholder – real frontend will replace this.</p>
-HTML
+            <!doctype html>
+            <meta charset="utf-8">
+            <title>Nutrify (Preprod Live)</title>
+            <h1>Nutrify</h1>
+            <p>Preprod live placeholder – real frontend will replace this.</p>
+            HTML
           fi
 
       - name: Deploy to Firebase Hosting (preprod live)
