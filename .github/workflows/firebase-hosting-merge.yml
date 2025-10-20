@@ -40,7 +40,7 @@ jobs:
           if [ -f package.json ]; then
             npm run build --if-present
           fi
-          # Eğer build klasörü oluşmadıysa placeholder üret
+          # If build folder was not created, generate placeholder
           if [ ! -d build ]; then
             mkdir -p build
             cat > build/index.html <<'HTML'
