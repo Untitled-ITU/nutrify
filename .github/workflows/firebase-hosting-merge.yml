@@ -34,21 +34,10 @@ jobs:
             echo "No package.json found. Skipping npm install."
           fi
 
-      - name: Build (if scripts exist) or create placeholder
+      - name: Build (if scripts exist)
         run: |
           if [ -f package.json ]; then
             npm run build --if-present
-          fi
-          # If build folder was not created, generate placeholder
-          if [ ! -d build ]; then
-            mkdir -p build
-            cat > build/index.html <<'HTML'
-            <!doctype html>
-            <meta charset="utf-8">
-            <title>Nutrify (Preprod Live)</title>
-            <h1>Nutrify</h1>
-            <p>Preprod live placeholder – real frontend will replace this.</p>
-            HTML
           fi
 
       - name: Deploy to Firebase Hosting (preprod live)
