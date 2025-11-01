@@ -1,30 +1,60 @@
-\# Database ERD (v0)
+# Database ERD (v0)
 
-
-
-Aşağıda PostgreSQL tablo ve ilişkileri mermaid ile gösterilmiştir.
-
-
+Aşağıda PostgreSQL tablo ve ilişkileri Mermaid diyagramı ile gösterilmiştir.
 
 ```mermaid
-
-%% Kaynak: database/docs/erd\_v0.mmd
-
 erDiagram
+    RECIPE {
+        bigint id PK
+        text recipe_title
+        text description
+        text category
+        text subcategory
+        int num_steps
+        int num_ingredients
+    }
 
-&nbsp; %% kısa önizleme
+    INGREDIENT {
+        bigint id PK
+        text name
+    }
 
-&nbsp; RECIPE ||--o{ RECIPE\_INGREDIENT : contains
+    RECIPE_INGREDIENT {
+        bigint recipe_id FK
+        bigint ingredient_id FK
+        numeric quantity
+        text unit
+    }
 
-&nbsp; INGREDIENT ||--o{ RECIPE\_INGREDIENT : used\_in
+    INSTRUCTION {
+        bigint id PK
+        bigint recipe_id FK
+        int step_number
+        text instruction_text
+    }
 
-&nbsp; RECIPE ||--o{ RECIPE\_TAG : has
+    NUTRITION {
+        bigint id PK
+        bigint recipe_id FK
+        numeric calories
+        numeric fat
+        numeric protein
+        numeric carbs
+    }
 
-&nbsp; TAG ||--o{ RECIPE\_TAG : categorizes
+    TAG {
+        bigint id PK
+        text tag_name
+    }
 
-&nbsp; RECIPE ||--o{ INSTRUCTION : step\_by\_step
+    RECIPE_TAG {
+        bigint recipe_id FK
+        bigint tag_id FK
+    }
 
-&nbsp; RECIPE ||--|| NUTRITION   : has
-
-
-
+    RECIPE ||--o{ RECIPE_INGREDIENT : contains
+    INGREDIENT ||--o{ RECIPE_INGREDIENT : used_in
+    RECIPE ||--o{ INSTRUCTION : has
+    RECIPE ||--o{ RECIPE_TAG : tagged_with
+    TAG ||--o{ RECIPE_TAG : categorizes
+    RECIPE ||--o| NUTRITION : has
