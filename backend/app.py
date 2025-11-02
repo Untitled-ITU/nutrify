@@ -3,8 +3,11 @@ from flask import Flask, render_template, request
 import json
 import os
 
+from config import Config
+
 
 app = Flask(__name__)
+app.config.from_object(Config)
 
 
 @app.route("/")
