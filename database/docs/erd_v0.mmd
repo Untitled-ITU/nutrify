@@ -1,0 +1,77 @@
+erDiagram
+  %% === STAGING (ham Kaggle) ===
+  STG_RECIPE_RAW {
+    bigint id PK
+    jsonb  payload
+    timestamptz loaded_at
+  }
+
+  %% === CORE (normalize) ===
+  RECIPE {
+    bigint id PK
+    text   title            "from recipe_title"
+    text   summary          "from description"
+    int    total_minutes    "optional: minutes if available"
+    int    total_steps      "from num_steps"
+    int    total_ingredients "from num_ingredients"
+    text   source_url
+    text   image_url
+    timestamptz created_at
+  }
+
+  INGREDIENT {
+    bigint id PK
+    text   name  "unique"
+  }
+
+  RECIPE_INGREDIENT {
+    bigint recipe_id     FK
+    bigint ingredient_id FK
+    numeric quantity     "nullable (v1)"
+    text    unit         "nullable"
+    PK (recipe_id, ingredient_id, unit)
+  }
+
+  TAG {
+    bigint id PK
+    text   name
+    text   type  "category | subcategory | diet | method"
+    UK (name, type)
+  }
+
+  RECIPE_TAG {
+    bigint recipe_id FK
+    bigint tag_id    FK
+    PK (recipe_id, tag_id)
+  }
+
+  INSTRUCTION {
+    bigint recipe_id FK
+    int    step_no
+    text   text
+    PK (recipe_id, step_no)
+  }
+
+  NUTRITION {
+    bigint recipe_id PK, FK
+    numeric calories
+    numeric protein_g
+    numeric fat_g
+    numeric carbs_g
+    numeric fiber_g
+    numeric sugar_g
+    numeric sodium_mg
+  }
+
+  %% === RELATIONSHIPS ===
+  RECIPE ||--o{ RECIPE_INGREDIENT : contains
+  INGREDIENT ||--o{ RECIPE_INGREDIENT : used_in
+
+  RECIPE ||--o{ RECIPE_TAG : has
+  TAG ||--o{ RECIPE_TAG : categorizes
+
+  RECIPE ||--o{ INSTRUCTION : step_by_step
+  RECIPE ||--|| NUTRITION   : has
+
+  %% (Kavramsal) Staging --> Normalize
+  STG_RECIPE_RAW ||--o{ RECIPE : normalized_into

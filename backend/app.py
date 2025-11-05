@@ -5,8 +5,10 @@ import os
 
 from auth.routes import auth_bp
 from extensions import jwt
+from config import Config
 
 app = Flask(__name__)
+app.config.from_object(Config)
 
 app.config["JWT_SECRET_KEY"] = "super-secret-key"  # Github Secrets kullanılacak.
 jwt.init_app(app)
