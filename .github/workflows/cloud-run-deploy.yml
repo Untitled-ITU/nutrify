@@ -1,0 +1,60 @@
+name: Deploy Backend to Cloud Run
+
+on:
+  push:
+    branches:
+      - develop
+    paths:
+      - 'backend/**'
+  workflow_dispatch:
+
+env:
+  PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID_PREPROD }}
+  SERVICE_NAME: nutrify-backend
+  REGION: europe-west1
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: preprod
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          service_account_key: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_PREPROD }}
+          project_id: ${{ secrets.FIREBASE_PROJECT_ID_PREPROD }}
+
+      - name: Configure Docker for GCR
+        run: gcloud auth configure-docker
+
+      - name: Build and push Docker image
+        run: |
+          docker build -t gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA -t gcr.io/$PROJECT_ID/$SERVICE_NAME:latest ./backend
+          docker push gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA
+          docker push gcr.io/$PROJECT_ID/$SERVICE_NAME:latest
+
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run deploy $SERVICE_NAME \
+            --image gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA \
+            --platform managed \
+            --region $REGION \
+            --allow-unauthenticated \
+            --set-env-vars "JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }}" \
+            --port 8080 \
+            --memory 512Mi \
+            --cpu 1 \
+            --timeout 300 \
+            --max-instances 10
+
+      - name: Get service URL
+        id: get-url
+        run: |
+          SERVICE_URL=$(gcloud run services describe $SERVICE_NAME --region $REGION --format 'value(status.url)')
+          echo "url=$SERVICE_URL" >> $GITHUB_OUTPUT
+          echo "✅ Backend deployed to: $SERVICE_URL"
+

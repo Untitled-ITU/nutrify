@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request
+from flask_cors import CORS
 
 import json
 import os
@@ -10,7 +11,14 @@ from config import Config
 app = Flask(__name__)
 app.config.from_object(Config)
 
-app.config["JWT_SECRET_KEY"] = "super-secret-key"  # Github Secrets kullanılacak.
+# Enable CORS for all routes
+CORS(app, resources={
+    r"/api/*": {"origins": "*"},
+    r"/meals": {"origins": "*"},
+    r"/meal/*": {"origins": "*"}
+})
+
+app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY", "super-secret-key")  # Environment variable'dan alınacak
 jwt.init_app(app)
 
 app.register_blueprint(auth_bp)
