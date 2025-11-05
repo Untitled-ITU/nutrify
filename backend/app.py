@@ -3,8 +3,13 @@ from flask import Flask, render_template, request
 import json
 import os
 
+from auth.routes import auth_bp
+from extensions import jwt
 
 app = Flask(__name__)
+
+app.config["JWT_SECRET_KEY"] = "super-secret-key"  # Github Secrets kullanılacak.
+jwt.init_app(app)
 
 
 @app.route("/")
