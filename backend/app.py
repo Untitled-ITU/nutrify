@@ -11,6 +11,9 @@ app = Flask(__name__)
 app.config["JWT_SECRET_KEY"] = "super-secret-key"  # Github Secrets kullanılacak.
 jwt.init_app(app)
 
+app.register_blueprint(auth_bp)
+print("Auth blueprint registered.")
+
 
 @app.route("/")
 def index():

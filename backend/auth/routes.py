@@ -21,6 +21,7 @@ FAKE_DB_USERS = {
 
 # Giriş (login) rotası (3.1.2)
 # @app.route değil @auth_bp.route kullanıyoruz.
+@auth_bp.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
     username = data.get("username")
