@@ -1,13 +1,10 @@
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import create_access_token, get_jwt, jwt_required
 
-# Eklentiyi app.py'den değil, extensions.py dosyasından alacağız.
 from extensions import jwt
 
-# Blueprint oluşturulması
 auth_bp = Blueprint('auth_bp', __name__, url_prefix='/api/auth')
 
-# Sahte kullanıcı veritabanı
 FAKE_DB_USERS = {
     "user1": {
         "password": "pass123",
@@ -19,8 +16,7 @@ FAKE_DB_USERS = {
     }
 }
 
-# Giriş (login) rotası (3.1.2)
-# @app.route değil @auth_bp.route kullanıyoruz.
+
 @auth_bp.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
@@ -40,14 +36,12 @@ def login():
         return jsonify({"msg": "Bad username or password"}), 401
     
 
-# 3.1.1
 @auth_bp.route('/register', methods=['POST'])
 def register():
-    # Database işlemleri burada yapılacak (şimdilik sahte)
+    # Database
     return jsonify({"msg": "User registration endpoint (TODO)"}), 201
 
 
-# 3.1.3 Rol kontrolü
 @auth_bp.route('/chef-only', methods=['GET'])
 @jwt_required() 
 def chef_only_data():
