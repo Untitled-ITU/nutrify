@@ -51,12 +51,12 @@ node_modules/
 .npm
 
 # Cached files
-__pycache__/
+**/__pycache__/
 *.pyc
 
 # Virtual environment
-venv/
-.venv/
+**/venv/
+**/.venv/
 
 # IDEs and editors
 .vscode/
@@ -89,10 +89,3 @@ serviceAccountKey.json
 *.secret.json
 .runtimeconfig.json
 .env
-.env.*
-firebase-debug.log
-
-# Python / Backend
-backend/venv/
-__pycache__/
-*.pyc
