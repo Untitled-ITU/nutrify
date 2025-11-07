@@ -1,4 +1,5 @@
 from flask_jwt_extended import JWTManager
+from flask_sqlalchemy import SQLAlchemy
 
-# JWT yöntemini burada yaparız. Başlatmasını da app.py'de.
 jwt=JWTManager()
+db = SQLAlchemy()

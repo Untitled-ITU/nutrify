@@ -5,7 +5,7 @@ import json
 import os
 
 from auth.routes import auth_bp
-from extensions import jwt
+from extensions import jwt, db
 from config import Config
 
 app = Flask(__name__)
@@ -20,6 +20,7 @@ CORS(app, resources={
 
 app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY", "super-secret-key")  # Environment variable'dan alınacak
 jwt.init_app(app)
+db.init_app(app)
 
 app.register_blueprint(auth_bp)
 print("Auth blueprint registered.")
