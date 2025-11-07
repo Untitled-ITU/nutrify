@@ -1,7 +1,7 @@
 from flask import request, jsonify
 from flask_jwt_extended import create_access_token, get_jwt, jwt_required
 
-from app.auth import auth_bp
+from . import auth_bp
 
 
 FAKE_DB_USERS = {

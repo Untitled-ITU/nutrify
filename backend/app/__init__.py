@@ -1,6 +1,6 @@
-from config import Config
-from extensions import jwt
-from app.auth import auth_bp
+from ..config import Config
+from ..extensions import jwt
+from .auth import auth_bp, routes
 
 from flask import Flask, render_template
 from flask_cors import CORS
