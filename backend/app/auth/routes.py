@@ -56,6 +56,6 @@ def chef_only_data():
     current_user_role = current_user_identity.get("role")
 
     if current_user_role == "chef":
-        return jsonify(message="Merhaba Şef!")
+        return jsonify(message="Hello Chef!")
     else:
-        return jsonify(message="Bu alanı görmeye yetkiniz yok!"), 403
+        return jsonify(message="You don't have permission to view this area!"), 403
