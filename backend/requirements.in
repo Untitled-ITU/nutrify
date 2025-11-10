@@ -6,3 +6,5 @@ Flask-SQLAlchemy
 Flask-WTF
 gunicorn
 python-dotenv
+psycopg2-binary
+cloud-sql-python-connector[pg8000]

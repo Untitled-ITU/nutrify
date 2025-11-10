@@ -1,6 +1,6 @@
 # Database ERD (v0)
 
-Aşağıda PostgreSQL tablo ve ilişkileri Mermaid diyagramı ile gösterilmiştir.
+The PostgreSQL tables and their relationships are shown below using a Mermaid diagram.
 
 ```mermaid
 erDiagram

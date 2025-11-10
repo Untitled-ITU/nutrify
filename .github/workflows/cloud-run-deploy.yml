@@ -51,12 +51,15 @@ jobs:
             --platform managed \
             --region $REGION \
             --allow-unauthenticated \
-            --set-env-vars "JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }}" \
+            --set-env-vars "JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }},DB_USER=${{ secrets.DB_USER }},DB_PASSWORD=${{ secrets.DB_PASSWORD }},DB_NAME=${{ secrets.DB_NAME }},CLOUD_SQL_CONNECTION_NAME=${{ secrets.CLOUD_SQL_CONNECTION_NAME }},CLOUD_RUN_JOB=true" \
+            --add-cloudsql-instances ${{ secrets.CLOUD_SQL_CONNECTION_NAME }} \
             --port 8080 \
             --memory 512Mi \
             --cpu 1 \
             --timeout 300 \
-            --max-instances 10
+            --max-instances 3 \
+            --min-instances 0 \
+            --cpu-throttling
 
       - name: Get service URL
         id: get-url
