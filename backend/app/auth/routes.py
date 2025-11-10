@@ -1,8 +1,8 @@
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import create_access_token, get_jwt, jwt_required
 
-from extensions import jwt,db
-from auth.models import User
+from ...extensions import jwt,db
+from .models import User
 
 auth_bp = Blueprint('auth_bp', __name__, url_prefix='/api/auth')
 
@@ -50,7 +50,7 @@ def register():
     return jsonify({"msg": f"User '{username}' registered successfully"}), 201
 
 @auth_bp.route('/chef-only', methods=['GET'])
-@jwt_required() 
+@jwt_required()
 def chef_only_data():
     current_user_identity = get_jwt()
     current_user_role = current_user_identity.get("role")

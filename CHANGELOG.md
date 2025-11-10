@@ -8,6 +8,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Composite Firestore indexes, PostgreSQL ERD documentation and schema files added.
+- Added requirements.txt, a new Config class, updated .gitignore.
+- Next.js static export, improved Firebase Hosting integration and deployment documentation.
+- Added GitHub Actions for automated Cloud Run deployment. Enabled CORS and environment-based JWT secret.
+- Added Dockerfile and .dockerignore for Flask backend containerization.
+- Added /api/auth/login, /api/auth/register endpoints, JWT generation, role check endpoint
+- User database connection
+
+### Changed
+- Added separate authentication step via google-github-actions/auth, removed service_account_key from setup-gcloud step
+- fixed Docker image push authentication to GCR.
+
+---
+
+## [0.1.1] - 2025-11-8
+
+### Added
 - Initial project structure with organized folders
 - Backend folder containing Flask application (`app.py`)
 - Frontend folder with React-compatible structure
@@ -37,7 +54,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [0.1.0] - 2024-10-21
+## [0.1.0] - 2025-10-21
 
 ### Added
 - Initial project setup
