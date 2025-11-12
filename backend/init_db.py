@@ -14,11 +14,12 @@ def init_database():
         print("Creating database tables...")
         db.create_all()
         print("✅ Database tables created successfully!")
+        # Deafult admin added.
+        admin_email = 'admin@nutrify.com'
+        existing_admin = User.query.filter_by(email=admin_email).first()
         
-        # Optional: Create a default admin user
-        existing_admin = User.query.filter_by(username='admin').first()
         if not existing_admin:
-            admin = User(username='admin', role='admin')
+            admin = User(email=admin_email,name='admin', role='admin')
             admin.set_password('admin123')  # Change this password!
             db.session.add(admin)
             db.session.commit()
