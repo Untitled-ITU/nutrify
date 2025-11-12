@@ -74,3 +74,17 @@ def get_profile():
         name=user.name,
         role=user.role
     ), 200
+
+@auth_bp.route('/profile', methods=['PUT'])
+@jwt_required()
+def update_profile():
+    current_user_email = get_jwt_identity()
+    user = User.query.filter_by(email=current_user_email).first_or_404()
+    data = request.get_json()
+
+    if 'name' in data:
+        user.name = data.get('name')
+
+    db.session.commit()
+
+    return jsonify({"msg": "Profile updated successfully"}), 200
