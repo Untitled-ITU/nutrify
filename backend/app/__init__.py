@@ -5,9 +5,13 @@ from .auth.routes import auth_bp
 from flask import Flask, render_template
 from flask_cors import CORS
 
+import os
 
 def create_app():
-    app = Flask(__name__,  template_folder='../templates')
+    backend_root_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    instance_path = os.path.join(backend_root_path, 'instance')
+    app = Flask(__name__,  template_folder='../templates',
+                instance_path=instance_path)
     app.config.from_object(Config)
 
     # Initialize extensions
