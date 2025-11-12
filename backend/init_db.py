@@ -2,9 +2,9 @@
 Database initialization script
 Run this to create all tables in your Cloud SQL database
 """
-from app import create_app
-from extensions import db
-from app.auth.models import User
+from .app import create_app
+from .extensions import db
+from .app.auth.models import User
 
 def init_database():
     """Initialize database tables"""
