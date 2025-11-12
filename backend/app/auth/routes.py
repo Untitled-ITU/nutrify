@@ -10,44 +10,46 @@ auth_bp = Blueprint('auth_bp', __name__, url_prefix='/api/auth')
 def login():
     data = request.get_json()
 
-    if not data or "username" not in data or "password" not in data:
-        return jsonify({"msg": "Username and password are required"}), 400
+    if not data or "email" not in data or "password" not in data:
+        return jsonify({"msg": "Email and password are required"}), 400
 
-    username = data.get("username")
+    email = data.get("email")
     password = data.get("password")
 
-    user = User.query.filter_by(username=username).first()
+    user = User.query.filter_by(email=email).first()
 
     if user and user.check_password(password):
         user_role = {"role": user.role}
         access_token = create_access_token(
-            identity=user.username,
-            additional_claims=user_role
+            identity=user.email,
+            additional_claims={"role": user.role, "name": user.name}
         )
         return jsonify(access_token=access_token)
     else:
-        return jsonify({"msg": "Bad username or password"}), 401
+        return jsonify({"msg": "Bad email or password"}), 401
+    
 
 @auth_bp.route('/register', methods=['POST'])
 def register():
     data = request.get_json()
-    if not data or "username" not in data or "password" not in data:
-        return jsonify({"msg": "Username and password are required"}), 400
+    if not data or "email" not in data or "password" not in data or "name" not in data:
+        return jsonify({"msg": "Email, password, and name are required"}), 400
 
-    username = data.get("username")
+    email=data.get("email")
     password = data.get("password")
+    name = data.get("name")
     role = data.get("role", "user")
 
-    if User.query.filter_by(username=username).first():
-        return jsonify({"msg": "Username already exists"}), 409
+    if User.query.filter_by(email=email).first():
+        return jsonify({"msg": "Email already registered"}), 409
 
-    new_user = User(username=username, role=role)
+    new_user = User(email=email, name=name, role=role)
     new_user.set_password(password)
 
     db.session.add(new_user)
     db.session.commit()
 
-    return jsonify({"msg": f"User '{username}' registered successfully"}), 201
+    return jsonify({"msg": f"User '{email}' registered successfully"}), 201
 
 @auth_bp.route('/chef-only', methods=['GET'])
 @jwt_required()
