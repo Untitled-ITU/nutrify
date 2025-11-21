@@ -57,3 +57,18 @@ def change_user_role(user_id):
     db.session.commit()
     
     return jsonify({"msg": f"User {user.email} role updated to {new_role}"}), 200
+
+@admin_bp.route('/users/<int:user_id>', methods=['DELETE'])
+@admin_required()
+def delete_user(user_id):
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({"msg": "User not found"}), 404
+        
+    if user.role == 'admin':
+        return jsonify({"msg": "Cannot delete admin account"}), 403
+    
+    db.session.delete(user)
+    db.session.commit()
+    
+    return jsonify({"msg": f"User {user.email} has been deleted"}), 200
