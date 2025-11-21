@@ -4,3 +4,22 @@ from ..auth.models import User
 from ..decorators import admin_required
 
 admin_bp = Blueprint('admin_bp', __name__, url_prefix='/api/admin')
+
+@admin_bp.route('/users/<int:user_id>/reset-password', methods=['PUT'])
+@admin_required()
+def reset_user_password(user_id):
+    user_to_reset = User.query.get(user_id)
+    
+    if not user_to_reset:
+        return jsonify({"msg": "User not found"}), 404
+
+    data = request.get_json()
+    new_password = data.get('new_password')
+
+    if not new_password:
+        return jsonify({"msg": "New password is required"}), 400
+
+    user_to_reset.set_password(new_password)
+    db.session.commit()
+
+    return jsonify({"msg": f"Password for user {user_to_reset.email} has been reset successfully"}), 200
