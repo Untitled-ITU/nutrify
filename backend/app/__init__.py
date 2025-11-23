@@ -1,6 +1,7 @@
 from ..config import Config
 from ..extensions import jwt, db
 from .auth.routes import auth_bp
+from .admin.routes import admin_bp
 
 from flask import Flask, render_template
 from flask_cors import CORS
@@ -23,6 +24,7 @@ def create_app():
     })
 
     app.register_blueprint(auth_bp)
+    app.register_blueprint(admin_bp)
 
     @app.route("/")
     def index():
