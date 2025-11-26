@@ -88,3 +88,27 @@ def update_profile():
     db.session.commit()
 
     return jsonify({"msg": "Profile updated successfully"}), 200
+
+@auth_bp.route('/change-password', methods=['POST'])
+@jwt_required()
+def change_password():
+    current_user_email = get_jwt_identity()
+    user = User.query.filter_by(email=current_user_email).first()
+
+    if not user:
+        return jsonify({"msg": "User not found"}), 404
+
+    data = request.get_json()
+    current_password = data.get('current_password')
+    new_password = data.get('new_password')
+
+    if not current_password or not new_password:
+        return jsonify({"msg": "Current and new passwords are required"}), 400
+
+    if not user.check_password(current_password):
+        return jsonify({"msg": "Incorrect current password"}), 401
+
+    user.set_password(new_password)
+    db.session.commit()
+
+    return jsonify({"msg": "Password updated successfully"}), 200
