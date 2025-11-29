@@ -1,5 +1,5 @@
 from ..config import Config
-from ..extensions import jwt, db
+from ..extensions import jwt, db, mail
 from .auth.routes import auth_bp
 from .admin.routes import admin_bp
 
@@ -18,6 +18,7 @@ def create_app():
 
     jwt.init_app(app)
     db.init_app(app)
+    mail.init_app(app)
 
     CORS(app, resources={
         r"/api/*": {"origins": "*"}

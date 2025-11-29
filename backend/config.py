@@ -1,17 +1,19 @@
+from dotenv import load_dotenv
+
 import os
 
-from dotenv import load_dotenv
 
 base_dir = os.path.dirname(os.path.abspath(__file__))
 dotenv_path = os.path.join(base_dir, '.env')
 
 load_dotenv(dotenv_path=dotenv_path)
 
+
 class Config:
     # Cloud SQL connection configuration
     DB_USER = os.getenv("DB_USER", "postgres")
     DB_PASSWORD = os.getenv("DB_PASSWORD", "")
-    DB_NAME = os.getenv("DB_NAME", "nutrify-database")
+    DB_NAME = os.getenv("DB_NAME", "nutrify_db")
     CLOUD_SQL_CONNECTION_NAME = os.getenv("CLOUD_SQL_CONNECTION_NAME", "")
 
     # Cloud Run connects to Cloud SQL via unix socket
@@ -36,5 +38,15 @@ class Config:
         'max_overflow': 2
     }
 
-    SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret-key-change-in-production")
+    SECRET_KEY = os.getenv("SECRET_KEY")
     JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
+
+    MAIL_SERVER = os.getenv("MAIL_SERVER", "smtp.itu.edu.tr")
+    MAIL_PORT = int(os.getenv("MAIL_PORT", "587"))
+    MAIL_USE_TLS = os.getenv("MAIL_USE_TLS", "True").lower() in ['true', '1']
+    MAIL_USE_SSL = os.getenv("MAIL_USE_SSL", "False").lower() in ['true', '1']
+    MAIL_USERNAME = os.getenv("MAIL_USERNAME")
+    MAIL_PASSWORD = os.getenv("MAIL_PASSWORD")
+    MAIL_DEFAULT_SENDER = os.getenv("MAIL_DEFAULT_SENDER", os.getenv("MAIL_USERNAME"))
+
+    VERIFICATION_CODE_EXPIRY_MINUTES = int(os.getenv("VERIFICATION_CODE_EXPIRY_MINUTES", "10"))
