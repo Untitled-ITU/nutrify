@@ -34,7 +34,7 @@ class Recipe(db.Model):
     protein = db.Column(db.Integer)
     carbohydrates = db.Column(db.Integer)
     original_ingredients = db.Column(db.Text)
-    created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
+    created_at = db.Column(db.DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
 
     author = db.relationship('User', backref='recipes')
     ingredients = db.relationship('RecipeIngredient', back_populates='recipe', cascade='all, delete-orphan')
