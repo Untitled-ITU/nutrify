@@ -1,10 +1,12 @@
+from ...extensions import db
+from .models import User
+
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import create_access_token, get_jwt, jwt_required, get_jwt_identity
 
-from ...extensions import jwt,db
-from .models import User
 
 auth_bp = Blueprint('auth_bp', __name__, url_prefix='/api/auth')
+
 
 @auth_bp.route('/login', methods=['POST'])
 def login():
@@ -22,34 +24,35 @@ def login():
         user_role = {"role": user.role}
         access_token = create_access_token(
             identity=user.email,
-            additional_claims={"role": user.role, "name": user.name}
+            additional_claims={"role": user.role, "username": user.username}
         )
         return jsonify(access_token=access_token)
     else:
         return jsonify({"msg": "Bad email or password"}), 401
-    
+
 
 @auth_bp.route('/register', methods=['POST'])
 def register():
     data = request.get_json()
-    if not data or "email" not in data or "password" not in data or "name" not in data:
-        return jsonify({"msg": "Email, password, and name are required"}), 400
+    if not data or "email" not in data or "password" not in data or "username" not in data:
+        return jsonify({"msg": "Email, password, and username are required"}), 400
 
-    email=data.get("email")
+    email = data.get("email")
     password = data.get("password")
-    name = data.get("name")
-    role = data.get("role", "user")
+    username = data.get("username")
+    role = data.get("role", "consumer")
 
     if User.query.filter_by(email=email).first():
         return jsonify({"msg": "Email already registered"}), 409
 
-    new_user = User(email=email, name=name, role=role)
+    new_user = User(email=email, username=username, role=role)
     new_user.set_password(password)
 
     db.session.add(new_user)
     db.session.commit()
 
     return jsonify({"msg": f"User '{email}' registered successfully"}), 201
+
 
 @auth_bp.route('/chef-only', methods=['GET'])
 @jwt_required()
@@ -62,18 +65,20 @@ def chef_only_data():
     else:
         return jsonify(message="You don't have permission to view this area!"), 403
 
+
 @auth_bp.route('/profile', methods=['GET'])
 @jwt_required()
 def get_profile():
     current_user_email = get_jwt_identity()
     user = User.query.filter_by(email=current_user_email).first_or_404()
-    
+
     return jsonify(
         id=user.id,
         email=user.email,
-        name=user.name,
+        username=user.username,
         role=user.role
     ), 200
+
 
 @auth_bp.route('/profile', methods=['PUT'])
 @jwt_required()
@@ -82,12 +87,18 @@ def update_profile():
     user = User.query.filter_by(email=current_user_email).first_or_404()
     data = request.get_json()
 
-    if 'name' in data:
-        user.name = data.get('name')
+    if 'username' in data:
+        new_username = data.get('username')
+
+        if new_username == user.username:
+            return jsonify({"msg": "This is already your username"}), 200
+
+        user.username = new_username
 
     db.session.commit()
 
     return jsonify({"msg": "Profile updated successfully"}), 200
+
 
 @auth_bp.route('/change-password', methods=['POST'])
 @jwt_required()
@@ -104,6 +115,9 @@ def change_password():
 
     if not current_password or not new_password:
         return jsonify({"msg": "Current and new passwords are required"}), 400
+
+    if current_password == new_password:
+        return jsonify({"msg": "New password must be different from current password"}), 400
 
     if not user.check_password(current_password):
         return jsonify({"msg": "Incorrect current password"}), 401
