@@ -1,5 +1,5 @@
 from ..config import Config
-from ..extensions import jwt, db
+from ..extensions import jwt, db, mail
 from .auth.routes import auth_bp
 from .admin.routes import admin_bp
 
@@ -8,6 +8,7 @@ from flask_cors import CORS
 
 import os
 
+
 def create_app():
     backend_root_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     instance_path = os.path.join(backend_root_path, 'instance')
@@ -15,9 +16,9 @@ def create_app():
                 instance_path=instance_path)
     app.config.from_object(Config)
 
-    # Initialize extensions
     jwt.init_app(app)
     db.init_app(app)
+    mail.init_app(app)
 
     CORS(app, resources={
         r"/api/*": {"origins": "*"}
@@ -29,8 +30,7 @@ def create_app():
     @app.route("/")
     def index():
         return render_template("index.html")
-    
-    # Health check endpoint
+
     @app.route("/health")
     def health():
         return {"status": "healthy", "database": "connected"}, 200
