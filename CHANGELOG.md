@@ -8,17 +8,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- Composite Firestore indexes, PostgreSQL ERD documentation and schema files added.
-- Added requirements.txt, a new Config class, updated .gitignore.
-- Next.js static export, improved Firebase Hosting integration and deployment documentation.
-- Added GitHub Actions for automated Cloud Run deployment. Enabled CORS and environment-based JWT secret.
-- Added Dockerfile and .dockerignore for Flask backend containerization.
+- PostgreSQL integration and database schema updates
+- SQLAlchemy models and DB initialization updates for PostgreSQL compatibility
+- Authentication features: email verification, password-reset and verification model with mail settings
+- Admin functionality: user listing, role management, delete and admin password-reset endpoints
+
+### Changed
+- Configuration and CI updates: database port and env values
+- Refactors: auth and admin route updates
+
+---
+
+## [0.1.2] - 2025-11-30
+
+### Added
+- Composite Firestore indexes, PostgreSQL ERD documentation and schema files added
+- Added requirements.txt, a new Config class, updated .gitignore
+- Next.js static export, improved Firebase Hosting integration and deployment documentation
+- Added GitHub Actions for automated Cloud Run deployment
+- Enabled CORS and environment-based JWT secret
+- Added Dockerfile and .dockerignore for Flask backend containerization
 - Added /api/auth/login, /api/auth/register endpoints, JWT generation, role check endpoint
 - User database connection
 
 ### Changed
 - Added separate authentication step via google-github-actions/auth, removed service_account_key from setup-gcloud step
-- fixed Docker image push authentication to GCR.
+- fixed Docker image push authentication to GCR
 
 ---
 

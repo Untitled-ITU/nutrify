@@ -2,6 +2,7 @@ Flask
 flask-cors
 Flask-JWT-Extended
 Flask-Login
+Flask-Mail
 Flask-SQLAlchemy
 Flask-WTF
 gunicorn
