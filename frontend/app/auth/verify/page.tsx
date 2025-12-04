@@ -4,7 +4,17 @@ import { redirect, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { Card, Text, TextInput, Button, Title, Divider, useMantineTheme } from "@mantine/core";
 
-export default function VerifyPage() {
+import { Suspense } from "react";
+
+export default function Page() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <VerifyPage />
+        </Suspense>
+    );
+}
+
+function VerifyPage() {
     const theme = useMantineTheme();
     const searchParams = useSearchParams();
     const email = searchParams.get("email") || "";
