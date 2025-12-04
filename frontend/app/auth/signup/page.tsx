@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Button, Divider, Switch, TextInput, useMantineTheme } from "@mantine/core";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 
 export default function SignupPage() {
     const theme = useMantineTheme();
@@ -45,7 +45,7 @@ export default function SignupPage() {
         }
 
         // registration success → go to verification page
-        router.push(`/auth/verify?email=${encodeURIComponent(email)}`);
+        redirect(`/auth/verify?email=${encodeURIComponent(email)}`);
     }
 
     return (
