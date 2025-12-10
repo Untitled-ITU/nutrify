@@ -1,12 +1,12 @@
-from ...extensions import db
-from .models import User, VerificationCode
-from .email_service import send_verification_email, send_reset_code_email
+from datetime import datetime, timezone, timedelta
 
 from flask import Blueprint, request, jsonify, current_app
 from flask_jwt_extended import create_access_token, get_jwt, jwt_required, get_jwt_identity
 from werkzeug.security import generate_password_hash
 
-from datetime import datetime, timezone, timedelta
+from ...extensions import db
+from .email_service import send_verification_email, send_reset_code_email
+from .models import User, VerificationCode
 
 
 auth_bp = Blueprint('auth_bp', __name__, url_prefix='/api/auth')
