@@ -2,18 +2,19 @@ from ..config import Config
 from ..extensions import jwt, db, mail
 from .auth.routes import auth_bp
 from .admin.routes import admin_bp
+from .recipe.routes import recipe_bp
+from .fridge.routes import fridge_bp
+from .planning.routes import planning_bp
+from .shopping.routes import shopping_bp
+from .chef.routes import chef_bp
+from .rating.routes import rating_bp
 
 from flask import Flask, render_template
 from flask_cors import CORS
 
-import os
-
 
 def create_app():
-    backend_root_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    instance_path = os.path.join(backend_root_path, 'instance')
-    app = Flask(__name__,  template_folder='../templates',
-                instance_path=instance_path)
+    app = Flask(__name__,  template_folder='../templates')
     app.config.from_object(Config)
 
     jwt.init_app(app)
@@ -27,12 +28,15 @@ def create_app():
     app.register_blueprint(auth_bp)
     app.register_blueprint(admin_bp)
 
+    app.register_blueprint(recipe_bp)
+    app.register_blueprint(rating_bp)
+    app.register_blueprint(planning_bp)
+    app.register_blueprint(shopping_bp)
+    app.register_blueprint(fridge_bp)
+    app.register_blueprint(chef_bp)
+
     @app.route("/")
     def index():
         return render_template("index.html")
-
-    @app.route("/health")
-    def health():
-        return {"status": "healthy", "database": "connected"}, 200
 
     return app

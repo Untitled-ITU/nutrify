@@ -1,11 +1,6 @@
-Flask
+flask
 flask-cors
-Flask-JWT-Extended
-Flask-Login
-Flask-Mail
-Flask-SQLAlchemy
-Flask-WTF
-gunicorn
+flask-jwt-extended
+flask-mail
+flask-sqlalchemy
 python-dotenv
-psycopg2-binary
-cloud-sql-python-connector[pg8000]
