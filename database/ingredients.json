@@ -1,0 +1,558 @@
+{
+    "almond": [
+        "cup"
+    ],
+    "almond milk": [
+        "cup"
+    ],
+    "apple": [
+        "piece"
+    ],
+    "arborio rice": [
+        "cup"
+    ],
+    "artichoke heart": [
+        "cup"
+    ],
+    "asparagus": [
+        "pound"
+    ],
+    "avocado": [
+        "piece"
+    ],
+    "bacon": [
+        "piece"
+    ],
+    "baguette": [
+        "piece"
+    ],
+    "baking powder": [
+        "teaspoon"
+    ],
+    "baking soda": [
+        "teaspoon"
+    ],
+    "balsamic vinegar": [
+        "tablespoon",
+        "teaspoon"
+    ],
+    "bamboo shoots": [
+        "cup"
+    ],
+    "banana": [
+        "piece"
+    ],
+    "barley": [
+        "cup"
+    ],
+    "basil": [
+        "tablespoon",
+        "teaspoon"
+    ],
+    "bean sprout": [
+        "cup"
+    ],
+    "beans": [
+        "cup"
+    ],
+    "beef": [
+        "pound"
+    ],
+    "beef broth": [
+        "cup"
+    ],
+    "beef sirloin": [
+        "pound"
+    ],
+    "bell pepper": [
+        "piece"
+    ],
+    "black beans": [
+        "cup"
+    ],
+    "black pepper": [
+        "teaspoon"
+    ],
+    "blue cheese": [
+        "cup"
+    ],
+    "blueberry": [
+        "cup"
+    ],
+    "bread": [
+        "piece"
+    ],
+    "breadcrumbs": [
+        "cup"
+    ],
+    "broccoli": [
+        "cup"
+    ],
+    "brown sugar": [
+        "tablespoon"
+    ],
+    "butter": [
+        "tablespoon"
+    ],
+    "butternut squash": [
+        "piece"
+    ],
+    "caesar dressing": [
+        "tablespoon"
+    ],
+    "carrot": [
+        "piece"
+    ],
+    "cauliflower": [
+        "pound"
+    ],
+    "celery": [
+        "piece"
+    ],
+    "cheddar cheese": [
+        "cup"
+    ],
+    "cheese": [
+        "cup"
+    ],
+    "cherry tomato": [
+        "cup"
+    ],
+    "chia seeds": [
+        "tablespoon"
+    ],
+    "chicken": [
+        "pound"
+    ],
+    "chicken breast": [
+        "pound"
+    ],
+    "chicken broth": [
+        "cup"
+    ],
+    "chicken thigh": [
+        "pound"
+    ],
+    "chicken wing": [
+        "pound"
+    ],
+    "chickpea": [
+        "cup"
+    ],
+    "chili": [
+        "teaspoon"
+    ],
+    "chili powder": [
+        "tablespoon",
+        "teaspoon"
+    ],
+    "chive": [
+        "tablespoon",
+        "teaspoon"
+    ],
+    "chocolate": [
+        "pound"
+    ],
+    "chocolate chips": [
+        "cup"
+    ],
+    "cilantro": [
+        "cup"
+    ],
+    "cinnamon": [
+        "teaspoon"
+    ],
+    "cocoa powder": [
+        "cup"
+    ],
+    "coconut milk": [
+        "cup"
+    ],
+    "coriander": [
+        "teaspoon"
+    ],
+    "corn": [
+        "cup"
+    ],
+    "cornstarch": [
+        "tablespoon",
+        "teaspoon"
+    ],
+    "cottage cheese": [
+        "cup"
+    ],
+    "couscous": [
+        "cup"
+    ],
+    "cream cheese": [
+        "cup"
+    ],
+    "croutons": [
+        "cup"
+    ],
+    "cucumber": [
+        "piece"
+    ],
+    "cumin": [
+        "tablespoon",
+        "teaspoon"
+    ],
+    "curry paste": [
+        "tablespoon"
+    ],
+    "curry powder": [
+        "tablespoon",
+        "teaspoon"
+    ],
+    "dill": [
+        "tablespoon",
+        "teaspoon"
+    ],
+    "egg": [
+        "piece"
+    ],
+    "egg noodle": [
+        "cup"
+    ],
+    "egg yolk": [
+        "piece"
+    ],
+    "eggplant": [
+        "piece"
+    ],
+    "enchilada sauce": [
+        "cup"
+    ],
+    "feta cheese": [
+        "cup"
+    ],
+    "fettuccine": [
+        "pound"
+    ],
+    "fish sauce": [
+        "tablespoon"
+    ],
+    "flour": [
+        "cup",
+        "tablespoon"
+    ],
+    "garlic": [
+        "piece"
+    ],
+    "garlic powder": [
+        "teaspoon"
+    ],
+    "ginger": [
+        "tablespoon",
+        "teaspoon"
+    ],
+    "granola": [
+        "cup"
+    ],
+    "greek yogurt": [
+        "cup"
+    ],
+    "green onion": [
+        "piece"
+    ],
+    "ground beef": [
+        "pound"
+    ],
+    "ground lamb": [
+        "pound"
+    ],
+    "ground turkey": [
+        "pound"
+    ],
+    "gruyere cheese": [
+        "cup"
+    ],
+    "heavy cream": [
+        "cup"
+    ],
+    "honey": [
+        "tablespoon",
+        "teaspoon"
+    ],
+    "hot sauce": [
+        "cup"
+    ],
+    "jalapeno": [
+        "piece"
+    ],
+    "kale": [
+        "cup"
+    ],
+    "kidney beans": [
+        "cup"
+    ],
+    "lasagna noodles": [
+        "piece"
+    ],
+    "lemon": [
+        "piece"
+    ],
+    "lemon juice": [
+        "tablespoon"
+    ],
+    "lentil": [
+        "cup"
+    ],
+    "lettuce": [
+        "cup"
+    ],
+    "lime": [
+        "piece"
+    ],
+    "lime juice": [
+        "tablespoon"
+    ],
+    "linguine": [
+        "pound"
+    ],
+    "mango": [
+        "piece"
+    ],
+    "maple syrup": [
+        "tablespoon"
+    ],
+    "marinara sauce": [
+        "cup"
+    ],
+    "mayonnaise": [
+        "tablespoon"
+    ],
+    "milk": [
+        "cup"
+    ],
+    "mint": [
+        "tablespoon"
+    ],
+    "mirin": [
+        "tablespoon"
+    ],
+    "mixed berries": [
+        "cup"
+    ],
+    "mixed vegetables": [
+        "cup"
+    ],
+    "mozzarella": [
+        "cup"
+    ],
+    "mushroom": [
+        "pound"
+    ],
+    "mustard": [
+        "tablespoon",
+        "teaspoon"
+    ],
+    "noodles": [
+        "pound"
+    ],
+    "nutmeg": [
+        "teaspoon"
+    ],
+    "oats": [
+        "cup"
+    ],
+    "oil": [
+        "tablespoon"
+    ],
+    "olive": [
+        "cup"
+    ],
+    "olive oil": [
+        "tablespoon",
+        "teaspoon"
+    ],
+    "onion": [
+        "piece"
+    ],
+    "orange": [
+        "piece"
+    ],
+    "oregano": [
+        "tablespoon",
+        "teaspoon"
+    ],
+    "pancetta": [
+        "pound"
+    ],
+    "paprika": [
+        "teaspoon"
+    ],
+    "parmesan": [
+        "cup"
+    ],
+    "parsley": [
+        "tablespoon"
+    ],
+    "pasta": [
+        "pound"
+    ],
+    "peanut": [
+        "cup"
+    ],
+    "peanut butter": [
+        "cup"
+    ],
+    "pear": [
+        "piece"
+    ],
+    "peas": [
+        "cup"
+    ],
+    "pepper": [
+        "teaspoon"
+    ],
+    "pie crust": [
+        "piece"
+    ],
+    "pita bread": [
+        "piece"
+    ],
+    "potato": [
+        "piece"
+    ],
+    "pumpkin puree": [
+        "cup"
+    ],
+    "quinoa": [
+        "cup"
+    ],
+    "red lentil": [
+        "cup"
+    ],
+    "red onion": [
+        "piece"
+    ],
+    "red pepper": [
+        "piece"
+    ],
+    "red pepper flakes": [
+        "teaspoon"
+    ],
+    "rice": [
+        "cup"
+    ],
+    "rice noodles": [
+        "pound"
+    ],
+    "ricotta cheese": [
+        "cup"
+    ],
+    "romaine lettuce": [
+        "cup"
+    ],
+    "saffron": [
+        "teaspoon"
+    ],
+    "salmon": [
+        "piece"
+    ],
+    "salsa": [
+        "cup"
+    ],
+    "salt": [
+        "teaspoon"
+    ],
+    "scallion": [
+        "piece"
+    ],
+    "sesame oil": [
+        "tablespoon",
+        "teaspoon"
+    ],
+    "sesame seeds": [
+        "tablespoon",
+        "teaspoon"
+    ],
+    "shrimp": [
+        "pound"
+    ],
+    "sour cream": [
+        "cup"
+    ],
+    "sourdough bread": [
+        "piece"
+    ],
+    "soy sauce": [
+        "tablespoon"
+    ],
+    "spaghetti": [
+        "pound"
+    ],
+    "spinach": [
+        "cup"
+    ],
+    "strawberry": [
+        "cup"
+    ],
+    "sugar": [
+        "cup",
+        "tablespoon",
+        "teaspoon"
+    ],
+    "sweet potato": [
+        "piece"
+    ],
+    "taco seasoning": [
+        "tablespoon"
+    ],
+    "tahini": [
+        "tablespoon"
+    ],
+    "tamarind paste": [
+        "tablespoon"
+    ],
+    "thyme": [
+        "teaspoon"
+    ],
+    "tofu": [
+        "pound"
+    ],
+    "tomato": [
+        "piece"
+    ],
+    "tomato sauce": [
+        "cup"
+    ],
+    "tortilla": [
+        "piece"
+    ],
+    "tuna": [
+        "pound"
+    ],
+    "turmeric": [
+        "teaspoon"
+    ],
+    "vanilla": [
+        "teaspoon"
+    ],
+    "vegetable broth": [
+        "cup"
+    ],
+    "vinegar": [
+        "tablespoon",
+        "teaspoon"
+    ],
+    "walnut": [
+        "cup"
+    ],
+    "water": [
+        "cup"
+    ],
+    "white beans": [
+        "cup"
+    ],
+    "white wine": [
+        "cup"
+    ],
+    "yogurt": [
+        "cup"
+    ],
+    "zucchini": [
+        "piece"
+    ]
+}
