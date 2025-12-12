@@ -23,6 +23,6 @@ ENV PORT=8080
 # Expose port
 EXPOSE 8080
 
-# Run the application with gunicorn
-CMD exec gunicorn --bind :$PORT --workers 1 --threads 8 --timeout 0 app:app
+# Run the application with gunicorn (using factory pattern)
+CMD exec gunicorn --bind :$PORT --workers 1 --threads 8 --timeout 0 "app:create_app()"
 

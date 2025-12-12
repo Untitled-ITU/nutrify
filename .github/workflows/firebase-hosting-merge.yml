@@ -6,6 +6,10 @@ name: Deploy to Firebase Hosting on merge (preprod)
 on:
   push:
     branches: [ develop ]
+    paths:
+      - 'frontend/**'
+      - 'firebase.json'
+  workflow_dispatch:
 
 permissions:
   contents: read
