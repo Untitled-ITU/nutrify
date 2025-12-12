@@ -16,9 +16,7 @@ class Config:
     DB_NAME = os.getenv("DB_NAME", "nutrify_db")
     CLOUD_SQL_CONNECTION_NAME = os.getenv("CLOUD_SQL_CONNECTION_NAME", "")
 
-    # Cloud Run connects to Cloud SQL via unix socket
-    # For local development, you can use postgresql:// direct connection
-    if os.getenv("GAE_ENV", "").startswith("standard") or os.getenv("CLOUD_RUN_JOB"):
+    if os.getenv("K_SERVICE"): 
         # Use unix socket in Cloud Run environment
         SQLALCHEMY_DATABASE_URI = f"postgresql+pg8000://{DB_USER}:{DB_PASSWORD}@/{DB_NAME}?unix_sock=/cloudsql/{CLOUD_SQL_CONNECTION_NAME}/.s.PGSQL.5432"
     else:
