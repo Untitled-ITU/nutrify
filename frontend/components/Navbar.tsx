@@ -39,6 +39,7 @@ export default function Navbar() {
                                 {
                                     user ? (
                                         <>
+                                            <Button variant="subtle" size="xl" fz="h3" color={theme.white} radius={0} component={Link} href="/discover" >Discover</Button>
                                             <Button variant="subtle" size="xl" fz="h3" color={theme.white} radius={0} component={Link} href="/user/profile" >Profile</Button>
                                             <Button
                                                 variant="subtle"
