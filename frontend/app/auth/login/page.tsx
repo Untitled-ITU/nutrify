@@ -5,6 +5,7 @@ import { Button, Divider, Input, Switch, TextInput, useMantineTheme } from "@man
 import Link from "next/link";
 import { redirect, RedirectType } from "next/navigation";
 import { useState } from "react";
+import { API_BASE_URL } from "@/lib/config";
 
 export default function LoginPage() {
     const theme = useMantineTheme();
@@ -16,7 +17,7 @@ export default function LoginPage() {
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
 
-        const res = await fetch("http://127.0.0.1:5000/api/auth/login", {
+        const res = await fetch(API_BASE_URL + "/api/auth/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
