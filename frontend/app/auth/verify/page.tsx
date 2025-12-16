@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Card, Text, TextInput, Button, Title, Divider, useMantineTheme } from "@mantine/core";
 
 import { Suspense } from "react";
+import { API_BASE_URL } from "@/lib/config";
 
 export default function Page() {
     return (
@@ -24,7 +25,7 @@ function VerifyPage() {
     async function handleVerify(e: any) {
         e.preventDefault();
 
-        const res = await fetch("http://127.0.0.1:5000/api/auth/verify-registration", {
+        const res = await fetch(API_BASE_URL + "/api/auth/verify-registration", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email, code }),

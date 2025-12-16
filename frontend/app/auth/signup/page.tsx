@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Button, Divider, Switch, TextInput, useMantineTheme } from "@mantine/core";
 import Link from "next/link";
 import { redirect, useRouter } from "next/navigation";
+import { API_BASE_URL } from "@/lib/config";
 
 export default function SignupPage() {
     const theme = useMantineTheme();
@@ -24,7 +25,7 @@ export default function SignupPage() {
 
         const role = isChef ? "chef" : "consumer";
 
-        const res = await fetch("http://127.0.0.1:5000/api/auth/register", {
+        const res = await fetch(API_BASE_URL + "/api/auth/register", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
