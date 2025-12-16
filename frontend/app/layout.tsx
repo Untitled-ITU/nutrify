@@ -31,7 +31,8 @@ export const metadata: Metadata = {
 const theme = createTheme({
     fontFamily: "var(--font-quicksand)",
     other: {
-        primaryDark: "#896C6C"
+        primaryDark: "#896C6C",
+        contentBackground: "#F3E7E5"
     }
 })
 
