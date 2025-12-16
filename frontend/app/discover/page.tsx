@@ -69,7 +69,7 @@ export default function DiscoverPage() {
     }, []);
 
     return (
-        <div className="w-full">
+        <div className="w-full px-4">
             <h1 className="text-4xl font-bold mb-8">
                 Discover New Recipes
             </h1>
