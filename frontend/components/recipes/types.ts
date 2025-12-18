@@ -1,9 +1,13 @@
 export type Recipe = {
-    id: string;
-    name: string;
-    ingredients: string[];
+    id: number;
+    title: string;
     cuisine: string;
-    creator: string;
+    category: string;
+    description: string;
+    num_ingredients: number;
+    created_at: string;
+    average_rating: number;
+    rating_count: number;
 };
 
 export type IngredientFilter = {

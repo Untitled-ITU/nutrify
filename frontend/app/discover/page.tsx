@@ -1,72 +1,67 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { RecipeExplorer } from "@/components/recipes/RecipeExplorer";
 import { Recipe } from "@/components/recipes/types";
+import { API_BASE_URL } from "@/lib/config";
+import { authFetch } from "../providers/AuthProvider";
+
+type RecipesResponse = {
+    recipes: Recipe[];
+};
+
+type RecipeFilters = {
+    q?: string;
+    ingredients?: string[];
+    sort_by?: string;
+};
 
 export default function DiscoverPage() {
-    const [allRecipes, setAllRecipes] = useState<Recipe[]>([]);
+    const [recipes, setRecipes] = useState<Recipe[]>([]);
+    const [filters, setFilters] = useState<RecipeFilters>({});
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
 
+    const fetchRecipes = useCallback(async () => {
+        setLoading(true);
+        setError(null);
+
+        try {
+            const params = new URLSearchParams();
+
+            if (filters.q) params.set("q", filters.q);
+            if (filters.sort_by) params.set("sort_by", filters.sort_by);
+            if (filters.ingredients?.length) {
+                params.set("ingredients", filters.ingredients.join(","));
+            }
+            params.set("sort_order", "asc");
+
+            const url =
+                API_BASE_URL +
+                "/api/recipes" +
+                (params.toString() ? `?${params.toString()}` : "");
+
+            const res = await authFetch(url);
+
+            if (!res.ok) {
+                throw new Error("Failed to fetch recipes");
+            }
+
+            const data: RecipesResponse = await res.json();
+            setRecipes(data.recipes);
+        } catch (err) {
+            setError((err as Error).message);
+        } finally {
+            setLoading(false);
+        }
+    }, [filters]);
+
+    /**
+     * 🔥 Refetch when filters change
+     */
     useEffect(() => {
-        setAllRecipes([
-            {
-                id: "1",
-                name: "Veggie Omelette",
-                ingredients: ["Eggs", "Spinach", "Cheese"],
-                cuisine: "Mediterranean",
-                creator: "Admin",
-            },
-            {
-                id: "2",
-                name: "Mushroom Scramble",
-                ingredients: ["Eggs", "Mushroom", "Butter"],
-                cuisine: "French",
-                creator: "Chef Anna",
-            },
-            {
-                id: "3",
-                name: "Spinach & Feta Toast",
-                ingredients: ["Bread", "Spinach", "Feta", "Eggs"],
-                cuisine: "Greek",
-                creator: "Nutrify",
-            },
-            {
-                id: "4",
-                name: "Avocado Egg Bowl",
-                ingredients: ["Eggs", "Avocado", "Rice"],
-                cuisine: "Californian",
-                creator: "Healthy Eats",
-            },
-            {
-                id: "5",
-                name: "Shakshuka (No Onion)",
-                ingredients: ["Eggs", "Tomato", "Bell Pepper"],
-                cuisine: "Middle Eastern",
-                creator: "Home Kitchen",
-            },
-            {
-                id: "6",
-                name: "Cheese & Herb Frittata",
-                ingredients: ["Eggs", "Cheese", "Herbs"],
-                cuisine: "Italian",
-                creator: "Chef Marco",
-            },
-            {
-                id: "7",
-                name: "Egg Fried Rice (Veg)",
-                ingredients: ["Eggs", "Rice", "Carrot", "Peas"],
-                cuisine: "Asian",
-                creator: "Daily Meals",
-            },
-            {
-                id: "8",
-                name: "Zucchini Egg Muffins",
-                ingredients: ["Eggs", "Zucchini", "Cheese"],
-                cuisine: "American",
-                creator: "Nutrify",
-            },
-        ]);
-    }, []);
+        fetchRecipes();
+    }, [fetchRecipes]);
 
     return (
         <div className="w-full px-4">
@@ -74,7 +69,22 @@ export default function DiscoverPage() {
                 Discover New Recipes
             </h1>
 
-            <RecipeExplorer recipes={allRecipes} />
+            <RecipeExplorer
+                recipes={recipes}
+                onFiltersChangeAction={setFilters}
+            />
+
+            {loading && (
+                <div className="text-center py-10 text-gray-500">
+                    Loading recipes...
+                </div>
+            )}
+
+            {error && (
+                <div className="text-center py-10 text-red-500">
+                    {error}
+                </div>
+            )}
         </div>
     );
 }

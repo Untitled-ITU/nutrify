@@ -1,4 +1,5 @@
-import { ActionIcon, useMantineTheme } from "@mantine/core";
+import { useState, useMemo } from "react";
+import { ActionIcon, Pagination, useMantineTheme } from "@mantine/core";
 import { IconExternalLink, IconHeart } from "@tabler/icons-react";
 import { Recipe } from "./types";
 
@@ -6,37 +7,67 @@ type Props = {
     recipes: Recipe[];
     onOpen?: (r: Recipe) => void;
     onFavorite?: (r: Recipe) => void;
+    pageSize?: number;
 };
 
-export function RecipeTable({ recipes, onOpen, onFavorite }: Props) {
+export function RecipeTable({
+    recipes,
+    onOpen,
+    onFavorite,
+    pageSize = 10,
+}: Props) {
     const theme = useMantineTheme();
+    const [page, setPage] = useState(1);
+
+    const totalPages = Math.ceil(recipes.length / pageSize);
+
+    const paginatedRecipes = useMemo(() => {
+        const start = (page - 1) * pageSize;
+        const end = start + pageSize;
+        return recipes.slice(start, end);
+    }, [recipes, page, pageSize]);
 
     return (
         <div
-            className="w-full p-4 rounded-xl min-h-96"
+            className="w-full p-4 rounded-xl min-h-96 flex flex-col"
             style={{ backgroundColor: theme.other.contentBackground }}
         >
+            {/* Pagination */}
+            {totalPages > 1 && (
+                <div className="flex justify-end mb-6">
+                    <Pagination
+                        value={page}
+                        onChange={setPage}
+                        total={totalPages}
+                    />
+                </div>
+            )}
+
+            {/* Header */}
             <div className="bg-[#F6EDEA] rounded-xl px-6 py-4 text-xl font-bold mb-3">
-                <div className="grid grid-cols-[2fr_3fr_2fr_2fr_1fr]">
+                <div className="grid grid-cols-[4fr_2fr_2fr_1fr_1fr]">
                     <span>Recipe Name</span>
-                    <span>Main Ingredients</span>
+                    <span>Category</span>
                     <span>Cuisine</span>
-                    <span>Creator</span>
+                    <span>Rating</span>
                     <span className="text-right">Actions</span>
                 </div>
             </div>
 
-            <div className="space-y-3">
-                {recipes.map((r) => (
+            {/* Rows */}
+            <div className="space-y-3 flex-1">
+                {paginatedRecipes.map((r) => (
                     <div
                         key={r.id}
                         className="bg-[#E7C6BC] rounded-xl px-6 py-4"
                     >
-                        <div className="grid grid-cols-[2fr_3fr_2fr_2fr_1fr] items-center">
-                            <span className="font-medium">{r.name}</span>
-                            <span>{r.ingredients.join(", ")}</span>
+                        <div className="grid grid-cols-[4fr_2fr_2fr_1fr_1fr] items-center">
+                            <span className="font-medium">{r.title}</span>
+                            <span>{r.category}</span>
                             <span>{r.cuisine}</span>
-                            <span>{r.creator}</span>
+                            <span className="font-bold">
+                                {r.average_rating || "-"}
+                            </span>
 
                             <div className="flex justify-end gap-3">
                                 <ActionIcon onClick={() => onOpen?.(r)}>
@@ -56,6 +87,7 @@ export function RecipeTable({ recipes, onOpen, onFavorite }: Props) {
                     </div>
                 )}
             </div>
+
         </div>
     );
 }
