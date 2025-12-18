@@ -16,7 +16,7 @@ class Config:
     DB_NAME = os.getenv("DB_NAME", "nutrify_db")
     CLOUD_SQL_CONNECTION_NAME = os.getenv("CLOUD_SQL_CONNECTION_NAME", "")
 
-    if os.getenv("K_SERVICE"): 
+    if os.getenv("K_SERVICE"):
         # Use unix socket in Cloud Run environment
         SQLALCHEMY_DATABASE_URI = f"postgresql+pg8000://{DB_USER}:{DB_PASSWORD}@/{DB_NAME}?unix_sock=/cloudsql/{CLOUD_SQL_CONNECTION_NAME}/.s.PGSQL.5432"
     else:
@@ -36,15 +36,15 @@ class Config:
         'max_overflow': 2
     }
 
-    SECRET_KEY = os.getenv("SECRET_KEY")
-    JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
+    SECRET_KEY = os.environ["SECRET_KEY"]
+    JWT_SECRET_KEY = os.environ["JWT_SECRET_KEY"]
 
-    MAIL_SERVER = os.getenv("MAIL_SERVER", "smtp.itu.edu.tr")
-    MAIL_PORT = int(os.getenv("MAIL_PORT", "587"))
-    MAIL_USE_TLS = os.getenv("MAIL_USE_TLS", "True").lower() in ['true', '1']
-    MAIL_USE_SSL = os.getenv("MAIL_USE_SSL", "False").lower() in ['true', '1']
-    MAIL_USERNAME = os.getenv("MAIL_USERNAME")
-    MAIL_PASSWORD = os.getenv("MAIL_PASSWORD")
-    MAIL_DEFAULT_SENDER = os.getenv("MAIL_DEFAULT_SENDER", os.getenv("MAIL_USERNAME"))
+    MAIL_SERVER = os.environ["MAIL_SERVER"]
+    MAIL_PORT = int(os.environ["MAIL_PORT"])
+    MAIL_USE_TLS = os.environ["MAIL_USE_TLS"].lower() in ['true', '1']
+    MAIL_USE_SSL = os.environ["MAIL_USE_SSL"].lower() in ['true', '1']
+    MAIL_USERNAME = os.environ["MAIL_USERNAME"]
+    MAIL_PASSWORD = os.environ["MAIL_PASSWORD"]
+    MAIL_DEFAULT_SENDER = os.environ.get("MAIL_DEFAULT_SENDER", os.environ["MAIL_USERNAME"])
 
-    VERIFICATION_CODE_EXPIRY_MINUTES = int(os.getenv("VERIFICATION_CODE_EXPIRY_MINUTES", "10"))
+    ENABLE_DOCS = os.environ["ENABLE_DOCS"].lower() in ['true', '1']
