@@ -1,83 +1,87 @@
-from flask import Blueprint, request, jsonify
+from flask_openapi3 import APIBlueprint, Tag
 
 from ...extensions import db
 from ..auth.models import User
 from ..decorators import admin_required
+from .schemas import (
+    UserIdPath,
+    ResetPasswordBody,
+    UsersListResponse,
+    UserSummary,
+    ChangeRoleBody,
+    MessageResponse
+)
 
 
-admin_bp = Blueprint('admin_bp', __name__, url_prefix='/api/admin')
+admin_tag = Tag(name="Admin", description="Admin-only user management endpoints")
+admin_bp = APIBlueprint('admin_bp', __name__, url_prefix='/api/admin', abp_security=[{"jwt": []}])
 
 
-@admin_bp.route('/users/<int:user_id>/reset-password', methods=['PUT'])
+@admin_bp.put('/users/<int:user_id>/reset-password', tags=[admin_tag],
+    responses={"200": MessageResponse, "404": MessageResponse})
 @admin_required
-def reset_user_password(user_id):
+def reset_user_password(path: UserIdPath, body: ResetPasswordBody):
+    user_id = path.user_id
     user_to_reset = User.query.get(user_id)
 
     if not user_to_reset:
-        return jsonify({"msg": "User not found"}), 404
+        return {"msg": "User not found"}, 404
 
-    data = request.get_json()
-    new_password = data.get('new_password')
-
-    if not new_password:
-        return jsonify({"msg": "New password is required"}), 400
-
-    user_to_reset.set_password(new_password)
+    user_to_reset.set_password(body.new_password)
     db.session.commit()
 
-    return jsonify({"msg": f"Password for user {user_to_reset.email} has been reset successfully"}), 200
+    return {"msg": f"Password for user {user_to_reset.email} has been reset successfully"}, 200
 
 
-@admin_bp.route('/users', methods=['GET'])
+@admin_bp.get('/users', tags=[admin_tag], responses={"200": UsersListResponse})
 @admin_required
 def get_all_users():
     users = User.query.all()
 
-    users_list = []
-    for user in users:
-        users_list.append({
-            "id": user.id,
-            "email": user.email,
-            "username": user.username,
-            "role": user.role
-        })
+    users_list = [
+        UserSummary(
+            id=user.id,
+            email=user.email,
+            username=user.username,
+            role=user.role
+        )
+        for user in users
+    ]
 
-    return jsonify(users_list), 200
+    return {"users": [u.model_dump() for u in users_list]}, 200
 
 
-@admin_bp.route('/users/<int:user_id>/role', methods=['PUT'])
+@admin_bp.put('/users/<int:user_id>/change-role', tags=[admin_tag],
+    responses={"200": MessageResponse, "404": MessageResponse})
 @admin_required
-def change_user_role(user_id):
+def change_user_role(path: UserIdPath, body: ChangeRoleBody):
+    user_id = path.user_id
     user = User.query.get(user_id)
     if not user:
-        return jsonify({"msg": "User not found"}), 404
+        return {"msg": "User not found"}, 404
 
-    data = request.get_json()
-    new_role = data.get('role')
+    if user.role == body.role:
+        return {"msg": f"User already has the '{body.role}' role"}, 200
 
-    if new_role not in ['consumer', 'chef', 'admin']:
-        return jsonify({"msg": "Invalid role. Must be 'consumer', 'chef', or 'admin'"}), 400
-
-    if user.role == new_role:
-        return jsonify({"msg": f"User already has the '{new_role}' role"}), 200
-
-    user.role = new_role
+    user.role = body.role
     db.session.commit()
 
-    return jsonify({"msg": f"User {user.email} role updated to {new_role}"}), 200
+    return {"msg": f"User {user.email} role updated to {body.role}"}, 200
 
 
-@admin_bp.route('/users/<int:user_id>', methods=['DELETE'])
+@admin_bp.delete('/users/<int:user_id>', tags=[admin_tag],
+    responses={"200": MessageResponse, "403": MessageResponse, "404": MessageResponse})
 @admin_required
-def delete_user(user_id):
+def delete_user(path: UserIdPath):
+    user_id = path.user_id
     user = User.query.get(user_id)
     if not user:
-        return jsonify({"msg": "User not found"}), 404
+        return {"msg": "User not found"}, 404
 
     if user.role == 'admin':
-        return jsonify({"msg": "Cannot delete admin account"}), 403
+        return {"msg": "Cannot delete admin account"}, 403
 
     db.session.delete(user)
     db.session.commit()
 
-    return jsonify({"msg": f"User {user.email} has been deleted"}), 200
+    return {"msg": f"User {user.email} has been deleted"}, 200
