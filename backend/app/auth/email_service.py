@@ -10,15 +10,16 @@ def generate_verification_code():
     return ''.join([str(secrets.randbelow(10)) for _ in range(6)])
 
 
-def send_email(to_email, subject, body, html_body=None):
+def send_email(to_email, subject, html_body, body=None):
     try:
         msg = Message(
             subject=subject,
             recipients=[to_email],
-            body=body,
-            html=html_body if html_body else body,
+            html=html_body,
             sender=current_app.config['MAIL_DEFAULT_SENDER']
         )
+        if body:
+            msg.body = body
 
         mail.send(msg)
         current_app.logger.info(f"Email sent successfully to {to_email}")
@@ -30,21 +31,6 @@ def send_email(to_email, subject, body, html_body=None):
 
 def send_verification_email(to_email, verification_code):
     subject = "Nutrify - Email Verification"
-
-    text_body = f"""
-Thank you for registering with Nutrify!
-
-Please use the following code to verify your email address:
-
-Verification Code: {verification_code}
-
-This code is valid for 10 minutes.
-
-If you did not create this account, please ignore this email.
-
-Best regards,
-The Nutrify Team
-    """
 
     html_body = f"""
     <html>
@@ -60,24 +46,11 @@ The Nutrify Team
         </body>
     </html>
     """
-    return send_email(to_email, subject, text_body, html_body)
+    return send_email(to_email, subject, html_body)
 
 
 def send_reset_code_email(to_email, reset_code):
     subject = "Nutrify - Password Reset"
-
-    text_body = f"""
-Please use the following code to reset your password:
-
-Verification Code: {reset_code}
-
-This code is valid for 10 minutes.
-
-If you did not request a password reset, please ignore this email.
-
-Best regards,
-Nutrify Team
-    """
 
     html_body = f"""
     <html>
@@ -93,4 +66,4 @@ Nutrify Team
         </body>
     </html>
     """
-    return send_email(to_email, subject, text_body, html_body)
+    return send_email(to_email, subject, html_body)
