@@ -70,6 +70,12 @@ class BatchAddResponse(BaseModel):
     errors: list[str] = []
 
 
+class RecentItem(BaseModel):
+    id: int
+    ingredient_name: str
+    added_at: Optional[str]
+
+
 class FridgeStatsResponse(BaseModel):
     total_items: int
-    recently_added: list[dict]
+    recently_added: list[RecentItem]

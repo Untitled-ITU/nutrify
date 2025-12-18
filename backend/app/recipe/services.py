@@ -155,9 +155,7 @@ def serialize_recipe_summary(recipe, user_id=None):
     return {
         'id': recipe.id,
         'title': recipe.title,
-        'description': recipe.description[:200] + '...'
-            if recipe.description and len(recipe.description) > 200
-            else recipe.description,
+        'description': recipe.description,
         'category': recipe.category,
         'cuisine': recipe.cuisine,
         'meal_type': recipe.meal_type,

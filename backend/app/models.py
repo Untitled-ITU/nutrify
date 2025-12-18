@@ -221,7 +221,7 @@ class CollectionItem(db.Model):
         return {
             'recipe_id': self.recipe_id,
             'recipe_title': self.recipe.title,
-            'recipe_description': self.recipe.description[:150] + '...' if self.recipe.description and len(self.recipe.description) > 150 else self.recipe.description,
+            'recipe_description': self.recipe.description,
             'recipe_image_url': self.recipe.image_url,
             'recipe_cuisine': self.recipe.cuisine,
             'recipe_category': self.recipe.category,

@@ -46,9 +46,7 @@ def get_chef_recipes():
         recipes.append({
             'id': recipe.id,
             'title': recipe.title,
-            'description': recipe.description[:100] + '...'
-                if recipe.description and len(recipe.description) > 100
-                else recipe.description,
+            'description': recipe.description,
             'category': recipe.category,
             'cuisine': recipe.cuisine,
             'num_ingredients': recipe.num_ingredients,
@@ -202,10 +200,6 @@ def update_recipe(path: RecipeIdPath, body: UpdateRecipeBody):
                 ingredient = Ingredient.query.filter(
                     Ingredient.name.ilike(ingredient_name.strip())
                 ).first()
-                if not ingredient:
-                    ingredient = Ingredient(name=ingredient_name.strip())
-                    db.session.add(ingredient)
-                    db.session.flush()
 
             if ingredient:
                 recipe_ingredient = RecipeIngredient(

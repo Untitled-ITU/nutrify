@@ -39,16 +39,16 @@ def get_all_users():
     users = User.query.all()
 
     users_list = [
-        UserSummary(
-            id=user.id,
-            email=user.email,
-            username=user.username,
-            role=user.role
-        )
+        {
+            "id": user.id,
+            "email": user.email,
+            "username": user.username,
+            "role": user.role
+        }
         for user in users
     ]
 
-    return {"users": [u.model_dump() for u in users_list]}, 200
+    return {"users": users_list}, 200
 
 
 @admin_bp.put('/users/<int:user_id>/change-role', tags=[admin_tag],

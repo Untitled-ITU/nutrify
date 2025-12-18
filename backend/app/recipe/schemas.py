@@ -111,7 +111,7 @@ class FilterOptions(BaseModel):
     categories: list[str]
     cuisines: list[str]
     meal_types: list[str]
-    sort_options: list[dict]
+    sort_options: list[dict[str, str]]
 
 
 class CollectionCreateBody(BaseModel):

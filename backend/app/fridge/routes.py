@@ -114,7 +114,8 @@ def add_fridge_item(body: AddFridgeItemBody):
             },
             'quantity': formatted['quantity'],
             'unit': formatted['unit'],
-            'alternatives': formatted['alternatives']
+            'alternatives': formatted['alternatives'],
+            'added_at': fridge_item.added_at.isoformat() if fridge_item.added_at else None
         }
     }, 201
 
@@ -157,7 +158,8 @@ def update_fridge_item(path: ItemIdPath, body: UpdateFridgeItemBody):
             },
             'quantity': formatted['quantity'],
             'unit': formatted['unit'],
-            'alternatives': formatted['alternatives']
+            'alternatives': formatted['alternatives'],
+            'added_at': item.added_at.isoformat() if item.added_at else None
         }
     }, 200
 
@@ -193,7 +195,7 @@ def search_fridge():
 
     query = request.args.get('q', '')
     if len(query) < 2:
-        return {'items': []}, 200
+        return {'items': [], 'total': 0}, 200
 
     items = FridgeItem.query.join(Ingredient).filter(
         FridgeItem.user_id == user.id,
@@ -245,10 +247,6 @@ def batch_add_items(body: BatchAddBody):
             ingredient = Ingredient.query.filter(
                 Ingredient.name.ilike(item_data.ingredient_name.strip())
             ).first()
-            if not ingredient:
-                ingredient = Ingredient(name=item_data.ingredient_name.strip().lower())
-                db.session.add(ingredient)
-                db.session.flush()
 
         if not ingredient:
             errors.append('Ingredient not found')

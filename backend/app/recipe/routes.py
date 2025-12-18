@@ -213,7 +213,7 @@ def create_new_collection(body: CollectionCreateBody):
 
 
 @recipe_bp.put('/collections/<int:collection_id>',
-    responses={"200": MessageResponse, "404": MessageResponse, "409": MessageResponse})
+    responses={"201": MessageResponse, "404": MessageResponse, "409": MessageResponse})
 @login_required
 def update_collection_endpoint(path: CollectionIdPath, body: CollectionUpdateBody):
     collection_id = path.collection_id

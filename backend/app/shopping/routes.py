@@ -337,7 +337,12 @@ def transfer_to_fridge():
     ).all()
 
     if not purchased_items:
-        return {'msg': 'No purchased items to transfer'}, 200
+        return {
+            'msg': 'No purchased items to transfer',
+            'transferred_count': 0,
+            'updated_count': 0,
+            'total_processed': 0
+        }, 200
 
     transferred_count = 0
     updated_count = 0
