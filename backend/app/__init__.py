@@ -9,34 +9,43 @@ from .shopping.routes import shopping_bp
 from .chef.routes import chef_bp
 from .rating.routes import rating_bp
 
-from flask import Flask, render_template
+from flask_openapi3 import OpenAPI, Info
 from flask_cors import CORS
 
 
 def create_app():
-    app = Flask(__name__,  template_folder='../templates')
+    info = Info(
+        title="Nutrify API", version="1.0.0",
+        description="Backend API for Nutrify application"
+    )
+
+    jwt_scheme = {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+    }
+    security_schemes = {"jwt": jwt_scheme}
+
+    enable_docs = Config.ENABLE_DOCS
+    app = OpenAPI(
+        __name__, info=info, template_folder='../templates',
+        security_schemes=security_schemes, doc_ui=enable_docs
+    )
     app.config.from_object(Config)
 
     jwt.init_app(app)
     db.init_app(app)
     mail.init_app(app)
 
-    CORS(app, resources={
-        r"/api/*": {"origins": "*"}
-    })
+    CORS(app, resources={"/api/*": {"origins": "*"}})
 
-    app.register_blueprint(auth_bp)
-    app.register_blueprint(admin_bp)
-
-    app.register_blueprint(recipe_bp)
-    app.register_blueprint(rating_bp)
-    app.register_blueprint(planning_bp)
-    app.register_blueprint(shopping_bp)
-    app.register_blueprint(fridge_bp)
-    app.register_blueprint(chef_bp)
-
-    @app.route("/")
-    def index():
-        return render_template("index.html")
+    app.register_api(auth_bp)
+    app.register_api(admin_bp)
+    app.register_api(recipe_bp)
+    app.register_api(rating_bp)
+    app.register_api(planning_bp)
+    app.register_api(shopping_bp)
+    app.register_api(fridge_bp)
+    app.register_api(chef_bp)
 
     return app
