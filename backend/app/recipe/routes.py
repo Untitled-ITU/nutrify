@@ -1,4 +1,3 @@
-from flask import request
 from flask_openapi3 import APIBlueprint, Tag
 from flask_jwt_extended import get_jwt_identity
 
@@ -29,7 +28,7 @@ from .schemas import (
     IngredientSearchResponse, FilterOptions, CollectionCreateBody,
     CollectionUpdateBody, CollectionCreateResponse, AddRecipeToCollectionBody,
     BulkAddRecipesBody, BulkAddResponse, CollectionList, CollectionDetail,
-    RecipeCollectionsResponse
+    RecipeCollectionsResponse, RecipeListQuery, IngredientSearchQuery, CollectionListQuery
 )
 
 
@@ -42,26 +41,20 @@ recipe_bp = APIBlueprint(
 
 @recipe_bp.get('', responses={"200": RecipeListResponse})
 @login_required
-def list_recipes():
+def list_recipes(query: RecipeListQuery):
     current_email = get_jwt_identity()
     user = User.query.filter_by(email=current_email).first()
 
-    search_query = request.args.get('q')
-    ingredients_str = request.args.get('ingredients')
+    search_query = query.q
+    ingredients_str = query.ingredients
     ingredients = ingredients_str.split(',') if ingredients_str else None
-    category = request.args.get('category')
-    cuisine = request.args.get('cuisine')
-    is_vegan_str = request.args.get('is_vegan')
-    is_vegan = None
-    if is_vegan_str:
-        is_vegan = is_vegan_str.lower() == 'true'
-    is_vegetarian_str = request.args.get('is_vegetarian')
-    is_vegetarian = None
-    if is_vegetarian_str:
-        is_vegetarian = is_vegetarian_str.lower() == 'true'
-    meal_type = request.args.get('meal_type')
-    sort_by = request.args.get('sort_by', 'created_at')
-    sort_order = request.args.get('sort_order', 'desc')
+    category = query.category
+    cuisine = query.cuisine
+    is_vegan = query.is_vegan
+    is_vegetarian = query.is_vegetarian
+    meal_type = query.meal_type
+    sort_by = query.sort_by
+    sort_order = query.sort_order
 
     result = get_recipe_list(
         search_query=search_query,
@@ -103,15 +96,15 @@ def get_filters():
 
 @recipe_bp.get('/ingredients/search', responses={"200": IngredientSearchResponse})
 @login_required
-def search_ingredients():
-    query = request.args.get('q', '')
-    limit = request.args.get('limit', 10, type=int)
+def search_ingredients(query: IngredientSearchQuery):
+    q = query.q or ''
+    limit = query.limit or 10
 
-    if len(query) < 2:
+    if len(q) < 2:
         return {'ingredients': []}, 200
 
     ingredients = Ingredient.query.filter(
-        Ingredient.name.ilike(f'%{query}%')
+        Ingredient.name.ilike(f'%{q}%')
     ).limit(limit).all()
 
     return {
@@ -167,14 +160,14 @@ def remove_favorite(path: RecipeIdPath):
 
 @recipe_bp.get('/collections', responses={"200": CollectionList, "404": MessageResponse})
 @login_required
-def list_collections():
+def list_collections(query: CollectionListQuery):
     current_email = get_jwt_identity()
     user = User.query.filter_by(email=current_email).first()
 
     if not user:
         return {'msg': 'User not found'}, 404
 
-    include_recipes = request.args.get('include_recipes', 'false').lower() == 'true'
+    include_recipes = query.include_recipes
     result = get_user_collections(user.id, include_recipes=include_recipes)
     return result, 200
 

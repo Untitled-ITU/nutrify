@@ -1,6 +1,5 @@
 from datetime import datetime, timedelta
 
-from flask import request
 from flask_openapi3 import APIBlueprint, Tag
 from flask_jwt_extended import get_jwt_identity
 
@@ -14,7 +13,7 @@ from .schemas import (
     ShoppingListResponse, AddItemBody, AddItemResponse, MessageResponse,
     BulkDeleteBody, BulkDeleteResponse, TransferResponse, CompareResponse,
     FromRecipeResponse, FromMealPlanBody, FromMealPlanResponse,
-    ToggleResponse, UpdateItemBody
+    ToggleResponse, UpdateItemBody, ClearListQuery
 )
 
 
@@ -409,20 +408,20 @@ def transfer_to_fridge():
 
 @shopping_bp.delete('/clear', responses={"200": MessageResponse, "404": MessageResponse})
 @login_required
-def clear_list():
+def clear_list(query: ClearListQuery):
     current_email = get_jwt_identity()
     user = User.query.filter_by(email=current_email).first()
 
     if not user:
         return {'msg': 'User not found'}, 404
 
-    purchased_only = request.args.get('purchased_only', 'false').lower() == 'true'
+    purchased_only = query.purchased_only
 
-    query = ShoppingList.query.filter_by(user_id=user.id)
+    query_obj = ShoppingList.query.filter_by(user_id=user.id)
     if purchased_only:
-        query = query.filter_by(is_purchased=True)
+        query_obj = query_obj.filter_by(is_purchased=True)
 
-    count = query.delete()
+    count = query_obj.delete()
     db.session.commit()
 
     return {
