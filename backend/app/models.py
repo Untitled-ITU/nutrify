@@ -114,6 +114,36 @@ class Favorite(db.Model):
         return f'<Favorite user_id={self.user_id} recipe_id={self.recipe_id}>'
 
 
+class RecipeCollection(db.Model):
+    __tablename__ = 'recipe_collections'
+    
+    id = db.Column(db.BigInteger, primary_key=True)
+    user_id = db.Column(db.BigInteger, db.ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
+    name = db.Column(db.Text, nullable=False)
+    description = db.Column(db.Text)
+    created_at = db.Column(db.DateTime, default=datetime.now)
+    is_public = db.Column(db.Boolean, default=False)
+    
+    user = db.relationship('User', backref='collections')
+    items = db.relationship('CollectionItem', backref='collection', cascade='all, delete-orphan')
+
+    def __repr__(self):
+        return f'<RecipeCollection {self.name}>'
+
+
+class CollectionItem(db.Model):
+    __tablename__ = 'collection_items'
+    
+    collection_id = db.Column(db.BigInteger, db.ForeignKey('recipe_collections.id', ondelete='CASCADE'), primary_key=True)
+    recipe_id = db.Column(db.BigInteger, db.ForeignKey('recipe.id', ondelete='CASCADE'), primary_key=True)
+    added_at = db.Column(db.DateTime, default=datetime.now)
+    
+    recipe = db.relationship('Recipe')
+
+    def __repr__(self):
+        return f'<CollectionItem collection={self.collection_id} recipe={self.recipe_id}>'
+
+
 class FridgeItem(db.Model):
     __tablename__ = 'fridge_items'
 
