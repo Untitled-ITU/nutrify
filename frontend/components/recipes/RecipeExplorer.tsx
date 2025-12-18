@@ -16,6 +16,8 @@ type Props = {
         ingredients?: string[];
         sort_by?: string;
     }) => void;
+    disableFavorite?: boolean;
+    disableIngredientFilter?: boolean;
 };
 
 const INGREDIENT_UNITS = ingredientsJson as Record<string, string[]>;
@@ -26,7 +28,7 @@ const formatIngredientLabel = (value: string) =>
         .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
         .join(" ");
 
-export function RecipeExplorer({ recipes, onFiltersChangeAction: onFiltersChange }: Props) {
+export function RecipeExplorer({ recipes, onFiltersChangeAction: onFiltersChange, disableFavorite, disableIngredientFilter }: Props) {
     const [search, setSearch] = useState("");
     const [sort, setSort] = useState("created_at");
     const [includeValue, setIncludeValue] = useState<string | null>(null);
@@ -64,18 +66,53 @@ export function RecipeExplorer({ recipes, onFiltersChangeAction: onFiltersChange
         .filter((f) => f.type === "exclude")
         .map((f) => f.value);
 
-    /**
-     * 🔥 Emit filters to parent (DiscoverPage)
-     */
+    const visibleRecipes = useMemo(() => {
+        let data = [...recipes];
+
+        // 🔍 Local search
+        if (search.trim()) {
+            const q = search.toLowerCase();
+            data = data.filter((r) =>
+                r.title.toLowerCase().includes(q)
+            );
+        }
+
+        // 🔃 Local sort
+        switch (sort) {
+            case "rating":
+                data.sort(
+                    (a, b) => (b.average_rating ?? 0) - (a.average_rating ?? 0)
+                );
+                break;
+
+            case "title":
+                data.sort((a, b) => a.title.localeCompare(b.title));
+                break;
+
+            case "category":
+                data.sort((a, b) => a.category.localeCompare(b.category));
+                break;
+
+            case "cuisine":
+                data.sort((a, b) => a.cuisine.localeCompare(b.cuisine));
+                break;
+
+            case "created_at":
+            default:
+                // assume backend already returns newest first
+                break;
+        }
+
+        return data;
+    }, [recipes, search, sort]);
+
     useEffect(() => {
         onFiltersChange({
-            q: search || undefined,
             ingredients: filters.ingredients
                 .filter((f) => f.type === "include")
                 .map((f) => f.value),
-            sort_by: sort,
         });
-    }, [search, filters, sort, onFiltersChange]);
+    }, [filters, onFiltersChange]);
 
     return (
         <>
@@ -108,41 +145,43 @@ export function RecipeExplorer({ recipes, onFiltersChangeAction: onFiltersChange
                     </div>
                 </div>
 
-                {/* Ingredient filters */}
-                <div className="flex gap-3 justify-end">
-                    <Select
-                        placeholder="Include ingredient"
-                        searchable
-                        value={includeValue}
-                        data={ALL_INGREDIENTS
-                            .filter((i) => !usedIngredients.includes(i))
-                            .map((i) => ({
-                                value: i,
-                                label: formatIngredientLabel(i),
-                            }))}
-                        onChange={(v) =>
-                            v && addIngredientFilter("include", v)
+                {!disableIngredientFilter && (
+                    <div className="flex gap-3 justify-end">
+                        <Select
+                            placeholder="Include ingredient"
+                            searchable
+                            value={includeValue}
+                            data={ALL_INGREDIENTS
+                                .filter((i) => !usedIngredients.includes(i))
+                                .map((i) => ({
+                                    value: i,
+                                    label: formatIngredientLabel(i),
+                                }))}
+                            onChange={(v) =>
+                                v && addIngredientFilter("include", v)
+                            }
+                        />
+                        {
+                            /*
+                               <Select
+                               placeholder="Exclude ingredient"
+                               searchable
+                               value={excludeValue}
+                               data={ALL_INGREDIENTS
+                               .filter((i) => !excludedIngredients.includes(i))
+                               .map((i) => ({
+                                    value: i,
+                                    label: formatIngredientLabel(i),
+                                    }))}
+                                    onChange={(v) =>
+                                    v && addIngredientFilter("exclude", v)
+                                    }
+                                    />
+                             */
                         }
-                    />
-                    {
-                        /*
-                           <Select
-                           placeholder="Exclude ingredient"
-                           searchable
-                           value={excludeValue}
-                           data={ALL_INGREDIENTS
-                           .filter((i) => !excludedIngredients.includes(i))
-                           .map((i) => ({
-value: i,
-label: formatIngredientLabel(i),
-}))}
-onChange={(v) =>
-v && addIngredientFilter("exclude", v)
-}
-/>
-                         */
-                    }
-                </div>
+                    </div>
+                )
+                }
 
                 {/* Active filters */}
                 <div className="flex flex-wrap gap-2">
@@ -166,7 +205,10 @@ v && addIngredientFilter("exclude", v)
             </div>
 
             {/* Results */}
-            <RecipeTable recipes={recipes} />
+            <RecipeTable
+                recipes={visibleRecipes}
+                disableFavorites={disableFavorite}
+            />
         </>
     );
 }

@@ -1,6 +1,8 @@
 "use client"
 import { useAuth } from "@/app/providers/AuthProvider";
 import { AppShell, Burger, Button, Center, Group, useMantineTheme } from "@mantine/core";
+import { Menu } from "@mantine/core";
+import { IconHeart, IconBook, IconArrowDown, IconChevronDown } from "@tabler/icons-react";
 import { useDisclosure } from "@mantine/hooks";
 import Link from "next/link";
 
@@ -40,6 +42,33 @@ export default function Navbar() {
                                     user ? (
                                         <>
                                             <Button variant="subtle" size="xl" fz="h3" color={theme.white} radius={0} component={Link} href="/discover" >Discover</Button>
+
+                                            <Menu
+                                                trigger="click" openDelay={100} closeDelay={200} withinPortal
+                                            >
+                                                <Menu.Target>
+                                                    <Button
+                                                        variant="subtle" size="xl" fz="h3" color={theme.white} radius={0}
+                                                    >
+                                                        Recipes
+                                                        <IconChevronDown />
+                                                    </Button>
+                                                </Menu.Target>
+
+                                                <Menu.Dropdown>
+                                                    <Menu.Item
+                                                        leftSection={<IconHeart size={18} />} component={Link} href="/recipes/favorites"
+                                                    >
+                                                        Favorites
+                                                    </Menu.Item>
+
+                                                    <Menu.Item
+                                                        leftSection={<IconBook size={18} />} component={Link} href="/recipes/collections"
+                                                    >
+                                                        Collections
+                                                    </Menu.Item>
+                                                </Menu.Dropdown>
+                                            </Menu>
                                             <Button variant="subtle" size="xl" fz="h3" color={theme.white} radius={0} component={Link} href="/user/profile" >Profile</Button>
                                             <Button
                                                 variant="subtle"

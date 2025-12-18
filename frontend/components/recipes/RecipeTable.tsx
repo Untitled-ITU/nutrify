@@ -2,30 +2,65 @@ import { useState, useMemo } from "react";
 import { ActionIcon, Pagination, useMantineTheme } from "@mantine/core";
 import { IconExternalLink, IconHeart } from "@tabler/icons-react";
 import { Recipe } from "./types";
+import { authFetch } from "@/app/providers/AuthProvider";
+import { API_BASE_URL } from "@/lib/config";
 
 type Props = {
     recipes: Recipe[];
     onOpen?: (r: Recipe) => void;
-    onFavorite?: (r: Recipe) => void;
     pageSize?: number;
+    disableFavorites?: boolean;
 };
+
+async function addFavorite(recipeId: number) {
+    const res = await authFetch(
+        `${API_BASE_URL}/api/recipes/favorites`,
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ recipe_id: recipeId }),
+        }
+    );
+
+    if (!res.ok) {
+        throw new Error("Failed to add favorite");
+    }
+
+    return res.json();
+}
 
 export function RecipeTable({
     recipes,
     onOpen,
-    onFavorite,
     pageSize = 10,
+    disableFavorites = false,
 }: Props) {
     const theme = useMantineTheme();
     const [page, setPage] = useState(1);
+
+    const [favorited, setFavorited] = useState<Record<number, boolean>>({});
 
     const totalPages = Math.ceil(recipes.length / pageSize);
 
     const paginatedRecipes = useMemo(() => {
         const start = (page - 1) * pageSize;
-        const end = start + pageSize;
-        return recipes.slice(start, end);
+        return recipes.slice(start, start + pageSize);
     }, [recipes, page, pageSize]);
+
+    const handleAddFavorite = async (r: Recipe) => {
+        if (favorited[r.id]) return;
+
+        setFavorited((prev) => ({ ...prev, [r.id]: true }));
+
+        try {
+            await addFavorite(r.id);
+        } catch {
+            // rollback if API fails
+            setFavorited((prev) => ({ ...prev, [r.id]: false }));
+        }
+    };
 
     return (
         <div
@@ -71,11 +106,18 @@ export function RecipeTable({
 
                             <div className="flex justify-end gap-3">
                                 <ActionIcon onClick={() => onOpen?.(r)}>
-                                    <IconExternalLink size={32} />
+                                    <IconExternalLink size={28} />
                                 </ActionIcon>
-                                <ActionIcon onClick={() => onFavorite?.(r)}>
-                                    <IconHeart size={32} />
-                                </ActionIcon>
+
+                                {!disableFavorites && (
+                                    <ActionIcon
+                                        color="red"
+                                        variant="light"
+                                        onClick={() => handleAddFavorite(r)}
+                                    >
+                                        <IconHeart size={28} />
+                                    </ActionIcon>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -87,7 +129,6 @@ export function RecipeTable({
                     </div>
                 )}
             </div>
-
         </div>
     );
 }

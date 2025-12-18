@@ -4,10 +4,10 @@ import { useCallback, useEffect, useState } from "react";
 import { RecipeExplorer } from "@/components/recipes/RecipeExplorer";
 import { Recipe } from "@/components/recipes/types";
 import { API_BASE_URL } from "@/lib/config";
-import { authFetch } from "../providers/AuthProvider";
+import { authFetch } from "@/app/providers/AuthProvider";
 
 type RecipesResponse = {
-    recipes: Recipe[];
+    favorites: Recipe[];
 };
 
 type RecipeFilters = {
@@ -16,7 +16,7 @@ type RecipeFilters = {
     sort_by?: string;
 };
 
-export default function DiscoverPage() {
+export default function FavoritesPage() {
     const [recipes, setRecipes] = useState<Recipe[]>([]);
     const [filters, setFilters] = useState<RecipeFilters>({});
     const [loading, setLoading] = useState(false);
@@ -38,7 +38,7 @@ export default function DiscoverPage() {
 
             const url =
                 API_BASE_URL +
-                "/api/recipes" +
+                "/api/recipes/favorites" +
                 (params.toString() ? `?${params.toString()}` : "");
 
             const res = await authFetch(url);
@@ -48,7 +48,7 @@ export default function DiscoverPage() {
             }
 
             const data: RecipesResponse = await res.json();
-            setRecipes(data.recipes);
+            setRecipes(data.favorites);
         } catch (err) {
             setError((err as Error).message);
         } finally {
@@ -66,12 +66,14 @@ export default function DiscoverPage() {
     return (
         <div className="w-full px-4">
             <h1 className="text-4xl font-bold mb-8">
-                Discover New Recipes
+                Favorite Recipes
             </h1>
 
             <RecipeExplorer
                 recipes={recipes}
                 onFiltersChangeAction={setFilters}
+                disableFavorite={true}
+                disableIngredientFilter={true}
             />
 
             {loading && (
