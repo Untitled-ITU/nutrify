@@ -177,3 +177,24 @@ class RecipeCollectionsResponse(BaseModel):
     recipe_id: int
     recipe_title: str
     collections: list[RecipeCollectionInfo]
+
+
+class RecipeListQuery(BaseModel):
+    q: Optional[str] = None
+    ingredients: Optional[str] = None
+    category: Optional[str] = None
+    cuisine: Optional[str] = None
+    is_vegan: Optional[bool] = None
+    is_vegetarian: Optional[bool] = None
+    meal_type: Optional[str] = None
+    sort_by: Optional[str] = "created_at"
+    sort_order: Optional[str] = "desc"
+
+
+class IngredientSearchQuery(BaseModel):
+    q: Optional[str] = None
+    limit: Optional[int] = 10
+
+
+class CollectionListQuery(BaseModel):
+    include_recipes: Optional[bool] = False

@@ -113,3 +113,15 @@ class PlanningStatsResponse(BaseModel):
     week_start: str
     week_end: str
     meal_type_distribution: dict[str, int]
+
+
+class WeeklyPlanQuery(BaseModel):
+    start_date: Optional[str] = None
+
+
+class MissingIngredientsQuery(BaseModel):
+    start_date: Optional[str] = None
+
+
+class ClearWeekQuery(BaseModel):
+    start_date: Optional[str] = None

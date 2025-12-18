@@ -1,7 +1,6 @@
 from datetime import datetime, timedelta
 
 from flask_openapi3 import APIBlueprint, Tag
-from flask import request
 from flask_jwt_extended import get_jwt_identity
 from sqlalchemy import func
 
@@ -14,7 +13,8 @@ from .schemas import (
     MealIdPath,
     WeeklyPlanResponse, AddMealBody, MealResponse, UpdateMealBody,
     MessageResponse, NeededIngredientsResponse, BulkImportBody,
-    BulkImportResponse, PlanningStatsResponse, ClearWeekResponse
+    BulkImportResponse, PlanningStatsResponse, ClearWeekResponse,
+    WeeklyPlanQuery, MissingIngredientsQuery, ClearWeekQuery
 )
 
 
@@ -27,14 +27,14 @@ planning_bp = APIBlueprint(
 
 @planning_bp.get('/weekly', responses={"200": WeeklyPlanResponse, "404": MessageResponse})
 @login_required
-def get_weekly_plan():
+def get_weekly_plan(query: WeeklyPlanQuery):
     current_email = get_jwt_identity()
     user = User.query.filter_by(email=current_email).first()
 
     if not user:
         return {'msg': 'User not found'}, 404
 
-    start_date_str = request.args.get('start_date')
+    start_date_str = query.start_date
 
     if start_date_str:
         start_date = datetime.fromisoformat(start_date_str.replace('Z', '+00:00')).date()
@@ -205,14 +205,14 @@ def delete_meal(path: MealIdPath):
 @planning_bp.get('/missing-ingredients',
     responses={"200": NeededIngredientsResponse, "404": MessageResponse})
 @login_required
-def get_missing_ingredients():
+def get_missing_ingredients(query: MissingIngredientsQuery):
     current_email = get_jwt_identity()
     user = User.query.filter_by(email=current_email).first()
 
     if not user:
         return {'msg': 'User not found'}, 404
 
-    start_date_str = request.args.get('start_date')
+    start_date_str = query.start_date
 
     if start_date_str:
         start_date = datetime.fromisoformat(start_date_str.replace('Z', '+00:00')).date()
@@ -385,14 +385,14 @@ def bulk_import_meals(body: BulkImportBody):
 
 @planning_bp.delete('/clear-week', responses={"200": ClearWeekResponse, "404": MessageResponse})
 @login_required
-def clear_week():
+def clear_week(query: ClearWeekQuery):
     current_email = get_jwt_identity()
     user = User.query.filter_by(email=current_email).first()
 
     if not user:
         return {'msg': 'User not found'}, 404
 
-    start_date_str = request.args.get('start_date')
+    start_date_str = query.start_date
 
     if start_date_str:
         start_date = datetime.fromisoformat(start_date_str.replace('Z', '+00:00')).date()

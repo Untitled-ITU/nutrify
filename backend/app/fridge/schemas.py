@@ -79,3 +79,7 @@ class RecentItem(BaseModel):
 class FridgeStatsResponse(BaseModel):
     total_items: int
     recently_added: list[RecentItem]
+
+
+class FridgeSearchQuery(BaseModel):
+    q: Optional[str] = None

@@ -1,5 +1,4 @@
 from flask_openapi3 import APIBlueprint, Tag
-from flask import request
 from flask_jwt_extended import get_jwt_identity
 
 from ...extensions import db
@@ -11,7 +10,7 @@ from .schemas import (
     ItemIdPath,
     FridgeListResponse, AddFridgeItemBody, FridgeItemResponse,
     UpdateFridgeItemBody, MessageResponse, BatchAddBody, BatchAddResponse,
-    FridgeStatsResponse
+    FridgeStatsResponse, FridgeSearchQuery
 )
 
 
@@ -186,20 +185,20 @@ def delete_fridge_item(path: ItemIdPath):
 
 @fridge_bp.get('/search', responses={"200": FridgeListResponse, "404": MessageResponse})
 @login_required
-def search_fridge():
+def search_fridge(query: FridgeSearchQuery):
     current_email = get_jwt_identity()
     user = User.query.filter_by(email=current_email).first()
 
     if not user:
         return {'msg': 'User not found'}, 404
 
-    query = request.args.get('q', '')
-    if len(query) < 2:
+    q = query.q
+    if len(q) < 2:
         return {'items': [], 'total': 0}, 200
 
     items = FridgeItem.query.join(Ingredient).filter(
         FridgeItem.user_id == user.id,
-        Ingredient.name.ilike(f'%{query}%')
+        Ingredient.name.ilike(f'%{q}%')
     ).all()
 
     result_items = []
