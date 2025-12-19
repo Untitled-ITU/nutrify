@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import { Notifications } from "@mantine/notifications";
 import { Geist, Geist_Mono, Quicksand, Urbanist } from "next/font/google";
 import "./globals.css";
 
 import '@mantine/core/styles.css';
+import '@mantine/notifications/styles.css';
 
-import { ColorSchemeScript, MantineProvider, createTheme, mantineHtmlProps } from '@mantine/core';
+import { ColorSchemeScript, MantineProvider, Notification, createTheme, mantineHtmlProps } from '@mantine/core';
 import Navbar from "@/components/Navbar";
 import { generateColors } from "@mantine/colors-generator";
 import { AuthProvider } from "./providers/AuthProvider";
@@ -51,6 +53,7 @@ export default function RootLayout({
             >
                 <AuthProvider>
                     <MantineProvider theme={theme}>
+                        <Notifications position="top-right" />
                         <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
                             <Navbar />
                             <main className="flex flex-col gap-8 row-start-2 self-start items-center sm:items-start w-full max-w-7xl">

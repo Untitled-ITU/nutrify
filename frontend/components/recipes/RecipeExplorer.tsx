@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { Select, TextInput } from "@mantine/core";
-import { IconArrowsSort, IconSearch } from "@tabler/icons-react";
+import { ActionIcon, Menu, Select, TextInput, useMantineTheme } from "@mantine/core";
+import { IconArrowsSort, IconBookmark, IconCheck, IconHeart, IconPlus, IconSearch, IconX } from "@tabler/icons-react";
 
 import ingredientsJson from "@/ingredients.json";
 import { Recipe, FiltersState } from "./types";
@@ -16,7 +16,9 @@ type Props = {
         ingredients?: string[];
         sort_by?: string;
     }) => void;
-    disableFavorite?: boolean;
+
+    renderActions?: (recipe: Recipe) => React.ReactNode;
+
     disableIngredientFilter?: boolean;
 };
 
@@ -28,11 +30,18 @@ const formatIngredientLabel = (value: string) =>
         .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
         .join(" ");
 
-export function RecipeExplorer({ recipes, onFiltersChangeAction: onFiltersChange, disableFavorite, disableIngredientFilter }: Props) {
+export function RecipeExplorer({
+    recipes,
+    onFiltersChangeAction: onFiltersChange,
+    renderActions,
+    disableIngredientFilter,
+}: Props) {
+    const theme = useMantineTheme();
     const [search, setSearch] = useState("");
     const [sort, setSort] = useState("created_at");
     const [includeValue, setIncludeValue] = useState<string | null>(null);
     const [excludeValue, setExcludeValue] = useState<string | null>(null);
+
 
     const [filters, setFilters] = useState<FiltersState>({
         vegetarian: false,
@@ -207,7 +216,8 @@ export function RecipeExplorer({ recipes, onFiltersChangeAction: onFiltersChange
             {/* Results */}
             <RecipeTable
                 recipes={visibleRecipes}
-                disableFavorites={disableFavorite}
+                onOpen={(r) => console.log("open", r.id)}
+                renderActions={renderActions}
             />
         </>
     );

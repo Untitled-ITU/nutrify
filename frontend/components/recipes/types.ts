@@ -19,3 +19,14 @@ export type FiltersState = {
     vegetarian: boolean;
     ingredients: IngredientFilter[];
 };
+
+export type Collection = {
+  id: number;
+  name: string;
+  description?: string;
+  is_public: boolean;
+  recipe_count: number;
+  created_at: string;
+  updated_at: string;
+  recipes: Recipe[];
+};

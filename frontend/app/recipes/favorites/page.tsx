@@ -5,6 +5,9 @@ import { RecipeExplorer } from "@/components/recipes/RecipeExplorer";
 import { Recipe } from "@/components/recipes/types";
 import { API_BASE_URL } from "@/lib/config";
 import { authFetch } from "@/app/providers/AuthProvider";
+import { ActionIcon, Menu, Select, TextInput, useMantineTheme } from "@mantine/core";
+import { IconArrowsSort, IconBookmark, IconCheck, IconHeart, IconHeartBroken, IconPlus, IconSearch, IconX } from "@tabler/icons-react";
+import { handleAddFavorite, handleRemoveFavorite } from "@/lib/tableActions";
 
 type RecipesResponse = {
     favorites: Recipe[];
@@ -21,6 +24,19 @@ export default function FavoritesPage() {
     const [filters, setFilters] = useState<RecipeFilters>({});
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+
+    const theme = useMantineTheme();
+    const onRemove = async (r: Recipe) => {
+        try {
+            const removedId = await handleRemoveFavorite(r);
+
+            setRecipes((prev) =>
+                prev.filter((recipe) => recipe.id !== removedId)
+            );
+        } catch {
+            // notification already shown
+        }
+    };
 
     const fetchRecipes = useCallback(async () => {
         setLoading(true);
@@ -72,8 +88,30 @@ export default function FavoritesPage() {
             <RecipeExplorer
                 recipes={recipes}
                 onFiltersChangeAction={setFilters}
-                disableFavorite={true}
                 disableIngredientFilter={true}
+                renderActions={(r) => (
+                    <Menu shadow="md" width={200} position="bottom-end">
+                        <Menu.Target>
+                            <ActionIcon style={{ backgroundColor: theme.other.primaryDark }}>
+                                <IconPlus size={28} />
+                            </ActionIcon>
+                        </Menu.Target>
+
+                        <Menu.Dropdown>
+                            <Menu.Item
+                                leftSection={<IconHeartBroken size={16} />}
+                                onClick={() => onRemove(r)}
+                            >
+                                Remove from favorites
+                            </Menu.Item>
+                            <Menu.Item
+                                leftSection={<IconBookmark size={16} />}
+                            >
+                                Add to collection
+                            </Menu.Item>
+                        </Menu.Dropdown>
+                    </Menu>
+                )}
             />
 
             {loading && (
