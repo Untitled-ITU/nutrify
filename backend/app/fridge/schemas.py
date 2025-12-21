@@ -60,7 +60,7 @@ class BatchAddItem(BaseModel):
 
 
 class BatchAddBody(BaseModel):
-    items: list[BatchAddItem] = Field(min_items=1)
+    items: list[BatchAddItem] = Field(min_length=1)
 
 
 class BatchAddResponse(BaseModel):
@@ -82,4 +82,4 @@ class FridgeStatsResponse(BaseModel):
 
 
 class FridgeSearchQuery(BaseModel):
-    q: Optional[str] = None
+    q: str = Field(min_length=2)

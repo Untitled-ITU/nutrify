@@ -33,8 +33,8 @@ class AlternativeUnit(BaseModel):
 class RecipeIngredientDetail(BaseModel):
     id: int
     name: str
-    quantity: Optional[float] = None
-    unit: Optional[str] = None
+    quantity: float
+    unit: str
     alternatives: list[AlternativeUnit] = []
 
 
@@ -131,7 +131,7 @@ class AddRecipeToCollectionBody(BaseModel):
 
 
 class BulkAddRecipesBody(BaseModel):
-    recipe_ids: list[int] = Field(min_items=1)
+    recipe_ids: list[int] = Field(min_length=1)
 
 
 class BulkAddResponse(BaseModel):
@@ -193,7 +193,7 @@ class RecipeListQuery(BaseModel):
 
 
 class IngredientSearchQuery(BaseModel):
-    q: Optional[str] = None
+    q: str = Field(min_length=2)
     limit: Optional[int] = 10
 
 

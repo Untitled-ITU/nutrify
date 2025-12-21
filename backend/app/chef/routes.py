@@ -8,8 +8,7 @@ from ..decorators import chef_required
 from ..models import Recipe, Ingredient, RecipeIngredient, Rating, ChefProfile
 from ..utils.unit_converter import format_quantity_with_conversions
 from .schemas import (
-    RecipeIdPath,
-    ChefRecipesResponse, CreateRecipeBody, RecipeResponse,
+    RecipeIdPath, ChefRecipesResponse, CreateRecipeBody, RecipeResponse,
     RecipeDetail, UpdateRecipeBody, MessageResponse, ChefStatsResponse,
     ChefProfileResponse, UpdateChefProfileBody
 )
@@ -83,7 +82,7 @@ def create_recipe(body: CreateRecipeBody):
     for ing_data in body.ingredients:
         ingredient = None
         if ing_data.ingredient_id:
-            ingredient = Ingredient.query.get(ing_data.ingredient_id)
+            ingredient = db.session.get(Ingredient, ing_data.ingredient_id)
         elif ing_data.name:
             ingredient = Ingredient.query.filter(
                 Ingredient.name.ilike(ing_data.name.strip())
@@ -118,7 +117,7 @@ def get_recipe_for_edit(path: RecipeIdPath):
     if not user:
         return {'msg': 'User not found'}, 404
 
-    recipe = Recipe.query.get(recipe_id)
+    recipe = db.session.get(Recipe, recipe_id)
     if not recipe:
         return {'msg': 'Recipe not found'}, 404
 
@@ -162,7 +161,7 @@ def update_recipe(path: RecipeIdPath, body: UpdateRecipeBody):
     if not user:
         return {'msg': 'User not found'}, 404
 
-    recipe = Recipe.query.get(recipe_id)
+    recipe = db.session.get(Recipe, recipe_id)
     if not recipe:
         return {'msg': 'Recipe not found'}, 404
 
@@ -196,7 +195,7 @@ def update_recipe(path: RecipeIdPath, body: UpdateRecipeBody):
 
             ingredient = None
             if ingredient_id:
-                ingredient = Ingredient.query.get(ingredient_id)
+                ingredient = db.session.get(Ingredient, ingredient_id)
             elif ingredient_name:
                 ingredient = Ingredient.query.filter(
                     Ingredient.name.ilike(ingredient_name.strip())
@@ -227,7 +226,7 @@ def delete_recipe(path: RecipeIdPath):
     if not user:
         return {'msg': 'User not found'}, 404
 
-    recipe = Recipe.query.get(recipe_id)
+    recipe = db.session.get(Recipe, recipe_id)
     if not recipe:
         return {'msg': 'Recipe not found'}, 404
 

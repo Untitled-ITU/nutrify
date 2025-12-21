@@ -82,7 +82,7 @@ def add_item(body: AddItemBody):
 
     ingredient = None
     if body.ingredient_id:
-        ingredient = Ingredient.query.get(body.ingredient_id)
+        ingredient = db.session.get(Ingredient, body.ingredient_id)
     elif body.ingredient_name:
         ingredient = Ingredient.query.filter(
             Ingredient.name.ilike(body.ingredient_name.strip())
@@ -131,7 +131,7 @@ def add_from_recipe(path: RecipeIdPath):
     if not user:
         return {'msg': 'User not found'}, 404
 
-    recipe = Recipe.query.get(recipe_id)
+    recipe = db.session.get(Recipe, recipe_id)
     if not recipe:
         return {'msg': 'Recipe not found'}, 404
 

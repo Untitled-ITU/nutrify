@@ -1,6 +1,6 @@
 from pydantic import BaseModel, EmailStr, Field
 
-from typing import Optional
+from typing import Literal, Optional
 
 
 class LoginBody(BaseModel):
@@ -16,7 +16,7 @@ class RegisterBody(BaseModel):
     email: EmailStr
     username: str = Field(min_length=3, max_length=50)
     password: str = Field(min_length=6)
-    role: Optional[str] = Field(default="consumer")
+    role: Optional[Literal["consumer", "chef", "admin"]] = Field(default="consumer")
 
 
 class RegisterResponse(BaseModel):
