@@ -114,7 +114,7 @@ export function CollectionsTable({ collections, onCollectionsUpdated }: Props) {
     <div className="w-full p-4 rounded-xl min-h-96 flex flex-col" style={{ backgroundColor: theme.other.contentBackground }}>
       {/* Create Collection Button */}
       <div className="flex justify-end mb-4">
-        <Button leftSection={<IconPlus />} color="green" onClick={() => openEditModal()}>
+        <Button leftSection={<IconPlus />} style={{ backgroundColor: theme.other.accentColor }} onClick={() => openEditModal()}>
           Create Collection
         </Button>
       </div>
@@ -143,11 +143,11 @@ export function CollectionsTable({ collections, onCollectionsUpdated }: Props) {
               <span className="font-medium">{c.name}</span>
               <span>{c.recipe_count ?? "-"}</span>
               <div className="flex justify-end gap-3">
-                <ActionIcon style={{ backgroundColor: theme.other.primaryDark }} onClick={() => router.push(`/recipes/collections/${c.id}`)}>
+                <ActionIcon style={{ backgroundColor: theme.other.accentColor }} onClick={() => router.push(`/recipes/collections/${c.id}`)}>
                   <IconExternalLink size={28} />
                 </ActionIcon>
 
-                <ActionIcon style={{ backgroundColor: theme.other.primaryDark }} onClick={() => openEditModal(c)}>
+                <ActionIcon style={{ backgroundColor: theme.other.accentColor }} onClick={() => openEditModal(c)}>
                   <IconEdit size={28} />
                 </ActionIcon>
 
@@ -165,11 +165,11 @@ export function CollectionsTable({ collections, onCollectionsUpdated }: Props) {
       </div>
 
       {/* Edit/Create Modal */}
-      <Modal opened={editModalOpen} onClose={() => setEditModalOpen(false)} title={currentCollection ? "Edit Collection" : "Create Collection"}>
+      <Modal centered={true} radius="lg" opened={editModalOpen} onClose={() => setEditModalOpen(false)} title={currentCollection ? "Edit Collection" : "Create Collection"}>
         <TextInput label="Collection Name" placeholder="Enter collection name" required mb="sm" value={name} onChange={(e) => setName(e.currentTarget.value)} />
         <Textarea label="Description" placeholder="Optional description" mb="sm" value={description} onChange={(e) => setDescription(e.currentTarget.value)} />
         <Switch label="Public" checked={isPublic} onChange={(e) => setIsPublic(e.currentTarget.checked)} mb="md" />
-        <Button fullWidth loading={saving} onClick={handleSaveCollection}>
+        <Button fullWidth loading={saving} style={{ backgroundColor: theme.other.accentColor }} onClick={handleSaveCollection}>
           {currentCollection ? "Update Collection" : "Create Collection"}
         </Button>
       </Modal>
