@@ -4,14 +4,13 @@ import { useCallback, useEffect, useState } from "react";
 import { RecipeExplorer } from "@/components/recipes/RecipeExplorer";
 import { Recipe } from "@/components/recipes/types";
 import { API_BASE_URL } from "@/lib/config";
-import { authFetch } from "../providers/AuthProvider";
+import { authFetch } from "@/app/providers/AuthProvider";
 import { ActionIcon, Menu, Select, TextInput, useMantineTheme } from "@mantine/core";
-import { IconArrowsSort, IconBookmark, IconCheck, IconHeart, IconPlus, IconSearch, IconX } from "@tabler/icons-react";
-import { handleAddFavorite } from "@/lib/tableActions";
-import { AddToCollectionMenu } from "@/components/recipes/AddToCollectionMenu";
+import { IconArrowsSort, IconBookmark, IconCheck, IconHeart, IconHeartBroken, IconPlus, IconSearch, IconX } from "@tabler/icons-react";
+import { handleAddFavorite, handleRemoveFavorite } from "@/lib/tableActions";
 
 type RecipesResponse = {
-    recipes: Recipe[];
+    favorites: Recipe[];
 };
 
 type RecipeFilters = {
@@ -20,13 +19,24 @@ type RecipeFilters = {
     sort_by?: string;
 };
 
-export default function DiscoverPage() {
+export default function FavoritesPage() {
     const [recipes, setRecipes] = useState<Recipe[]>([]);
     const [filters, setFilters] = useState<RecipeFilters>({});
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    
+
     const theme = useMantineTheme();
+    const onRemove = async (r: Recipe) => {
+        try {
+            const removedId = await handleRemoveFavorite(r);
+
+            setRecipes((prev) =>
+                prev.filter((recipe) => recipe.id !== removedId)
+            );
+        } catch {
+            // notification already shown
+        }
+    };
 
     const fetchRecipes = useCallback(async () => {
         setLoading(true);
@@ -44,7 +54,7 @@ export default function DiscoverPage() {
 
             const url =
                 API_BASE_URL +
-                "/api/recipes" +
+                "/api/recipes/favorites" +
                 (params.toString() ? `?${params.toString()}` : "");
 
             const res = await authFetch(url);
@@ -54,7 +64,7 @@ export default function DiscoverPage() {
             }
 
             const data: RecipesResponse = await res.json();
-            setRecipes(data.recipes);
+            setRecipes(data.favorites);
         } catch (err) {
             setError((err as Error).message);
         } finally {
@@ -72,12 +82,13 @@ export default function DiscoverPage() {
     return (
         <div className="w-full px-4">
             <h1 className="text-4xl font-bold mb-8">
-                Discover New Recipes
+                Favorite Recipes
             </h1>
 
             <RecipeExplorer
                 recipes={recipes}
                 onFiltersChangeAction={setFilters}
+                disableIngredientFilter={true}
                 renderActions={(r) => (
                     <Menu shadow="md" width={200} position="bottom-end">
                         <Menu.Target>
@@ -88,13 +99,16 @@ export default function DiscoverPage() {
 
                         <Menu.Dropdown>
                             <Menu.Item
-                                leftSection={<IconHeart size={16} />}
-                                onClick={() => handleAddFavorite(r)}
+                                leftSection={<IconHeartBroken size={16} />}
+                                onClick={() => onRemove(r)}
                             >
-                                Add to favorites
+                                Remove from favorites
                             </Menu.Item>
-
-                            <AddToCollectionMenu recipe={r} />
+                            <Menu.Item
+                                leftSection={<IconBookmark size={16} />}
+                            >
+                                Add to collection
+                            </Menu.Item>
                         </Menu.Dropdown>
                     </Menu>
                 )}
