@@ -9,7 +9,7 @@ from ..models import (
 
 
 def get_recipe_list(
-    search_query=None, ingredients=None, category=None, cuisine=None,
+    search_query=None, ingredients=None, exclude_ingredients=None, category=None, cuisine=None,
     is_vegan=None, is_vegetarian=None, meal_type=None, sort_by='created_at',
     sort_order='desc', user_id=None
 ):
@@ -34,6 +34,19 @@ def get_recipe_list(
                     func.lower(Ingredient.name).contains(ing)
                 ).subquery()
                 query = query.filter(Recipe.id.in_(subquery))
+
+    if exclude_ingredients:
+        exclude_list = [i.strip().lower() for i in exclude_ingredients if i.strip()]
+        if exclude_list:
+            # Find recipes that contain ANY of the excluded ingredients
+            conditions = [Ingredient.name.ilike(f'%{ing}%') for ing in exclude_list]
+            subquery = db.session.query(RecipeIngredient.recipe_id).join(
+                Ingredient, RecipeIngredient.ingredient_id == Ingredient.id
+            ).filter(
+                or_(*conditions)
+            ).subquery()
+            # Select recipes that are NOT in that list
+            query = query.filter(~Recipe.id.in_(subquery))
 
     if category:
         query = query.filter(func.lower(Recipe.category) == category.lower())
@@ -266,7 +279,7 @@ def get_available_filters():
 
 def get_user_collections(user_id, include_recipes=False):
     collections = RecipeCollection.query.filter_by(user_id=user_id).order_by(
-        RecipeCollection.updated_at.desc()
+        RecipeCollection.created_at.desc()
     ).all()
 
     return {

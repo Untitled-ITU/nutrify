@@ -48,6 +48,10 @@ def list_recipes(query: RecipeListQuery):
     search_query = query.q
     ingredients_str = query.ingredients
     ingredients = ingredients_str.split(',') if ingredients_str else None
+    
+    exclude_str = query.exclude_ingredients
+    exclude_ingredients = exclude_str.split(',') if exclude_str else None
+
     category = query.category
     cuisine = query.cuisine
     is_vegan = query.is_vegan
@@ -59,6 +63,7 @@ def list_recipes(query: RecipeListQuery):
     result = get_recipe_list(
         search_query=search_query,
         ingredients=ingredients,
+        exclude_ingredients=exclude_ingredients,
         category=category,
         cuisine=cuisine,
         is_vegan=is_vegan,
