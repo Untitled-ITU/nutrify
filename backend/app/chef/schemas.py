@@ -94,3 +94,18 @@ class ChefStatsResponse(BaseModel):
     total_ratings: int
     average_rating: Optional[float]
     recipes_by_category: dict[str, int]
+
+
+class ChefProfileResponse(BaseModel):
+    bio: Optional[str] = None
+    website: Optional[str] = None
+    location: Optional[str] = None
+    avatar_url: Optional[str] = None
+
+
+class UpdateChefProfileBody(BaseModel):
+    bio: Optional[str] = None
+    website: Optional[str] = None
+    location: Optional[str] = None
+    avatar_url: Optional[str] = None
+

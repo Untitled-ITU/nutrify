@@ -110,3 +110,13 @@ CREATE TABLE IF NOT EXISTS verification_codes (
     pending_password_hash TEXT,
     pending_role TEXT
 );
+
+-- 12. Chef Profiles
+CREATE TABLE IF NOT EXISTS chef_profiles (
+    id BIGSERIAL PRIMARY KEY,
+    user_id BIGINT REFERENCES users(id) ON DELETE CASCADE NOT NULL UNIQUE,
+    bio TEXT,
+    website TEXT,
+    location TEXT,
+    avatar_url TEXT
+);
