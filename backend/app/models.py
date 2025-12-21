@@ -228,3 +228,19 @@ class CollectionItem(db.Model):
             'average_rating': round(avg_rating, 1) if avg_rating else None,
             'added_at': self.added_at.isoformat() if self.added_at else None
         }
+
+
+class ChefProfile(db.Model):
+    __tablename__ = 'chef_profiles'
+
+    id = db.Column(db.BigInteger, primary_key=True)
+    user_id = db.Column(db.BigInteger, db.ForeignKey('users.id', ondelete='CASCADE'), nullable=False, unique=True)
+    bio = db.Column(db.Text)
+    website = db.Column(db.Text)
+    location = db.Column(db.Text)
+    avatar_url = db.Column(db.Text)
+
+    user = db.relationship('User', backref=db.backref('chef_profile', uselist=False))
+
+    def __repr__(self):
+        return f'<ChefProfile user_id={self.user_id}>'
