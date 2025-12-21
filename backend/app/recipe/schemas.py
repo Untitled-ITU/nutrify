@@ -33,8 +33,8 @@ class AlternativeUnit(BaseModel):
 class RecipeIngredientDetail(BaseModel):
     id: int
     name: str
-    quantity: float
-    unit: str
+    quantity: Optional[float] = None
+    unit: Optional[str] = None
     alternatives: list[AlternativeUnit] = []
 
 
@@ -182,6 +182,7 @@ class RecipeCollectionsResponse(BaseModel):
 class RecipeListQuery(BaseModel):
     q: Optional[str] = None
     ingredients: Optional[str] = None
+    exclude_ingredients: Optional[str] = None
     category: Optional[str] = None
     cuisine: Optional[str] = None
     is_vegan: Optional[bool] = None
