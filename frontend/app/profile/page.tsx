@@ -31,7 +31,7 @@ import {
   fetchChefStats,
   fetchProfile,
   updateUsername,
-  createChefRecipe,re
+  createChefRecipe,
   updateChefRecipe,
   deleteChefRecipe,
 } from "@/lib/chef";
