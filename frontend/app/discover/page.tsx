@@ -81,7 +81,7 @@ export default function DiscoverPage() {
                 renderActions={(r) => (
                     <Menu shadow="md" width={200} position="bottom-end">
                         <Menu.Target>
-                            <ActionIcon style={{ backgroundColor: theme.other.primaryDark }}>
+                            <ActionIcon style={{ backgroundColor: theme.other.accentColor }}>
                                 <IconPlus size={28} />
                             </ActionIcon>
                         </Menu.Target>

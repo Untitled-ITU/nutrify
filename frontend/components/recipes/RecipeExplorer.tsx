@@ -6,7 +6,7 @@ import { IconArrowsSort, IconBookmark, IconCheck, IconHeart, IconPlus, IconSearc
 
 import ingredientsJson from "@/ingredients.json";
 import { Recipe, FiltersState } from "./types";
-import { RecipeTable } from "./RecipeTable";
+import { RecipeTable, SortKey } from "./RecipeTable";
 import { FilterChip } from "./FilterChip";
 
 type Props = {
@@ -38,19 +38,41 @@ export function RecipeExplorer({
 }: Props) {
     const theme = useMantineTheme();
     const [search, setSearch] = useState("");
-    const [sort, setSort] = useState("created_at");
     const [includeValue, setIncludeValue] = useState<string | null>(null);
     const [excludeValue, setExcludeValue] = useState<string | null>(null);
+    const [sortBy, setSortBy] = useState<SortKey>("title");
+    const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
 
+    const handleSortChange = (key: SortKey) => {
+        if (sortBy === key) {
+            setSortDir((d) => (d === "asc" ? "desc" : "asc"));
+        } else {
+            setSortBy(key);
+            setSortDir("asc");
+        }
+        console.log(sortDir, sortBy);
+    };
 
     const [filters, setFilters] = useState<FiltersState>({
         vegetarian: false,
         ingredients: [],
+        cuisines: [],
+        categories: [],
     });
 
     const ALL_INGREDIENTS = useMemo(
         () => Object.keys(INGREDIENT_UNITS).sort(),
         []
+    );
+
+    const ALL_CUISINES = useMemo(
+        () => Array.from(new Set(recipes.map((r) => r.cuisine))).sort(),
+        [recipes]
+    );
+
+    const ALL_CATEGORIES = useMemo(
+        () => Array.from(new Set(recipes.map((r) => r.category))).sort(),
+        [recipes]
     );
 
     const addIngredientFilter = (
@@ -86,34 +108,60 @@ export function RecipeExplorer({
             );
         }
 
+        // 🍽 Cuisine filter
+        if (filters.cuisines.length) {
+            data = data.filter((r) =>
+                filters.cuisines.includes(r.cuisine)
+            );
+        }
+
+        // 🗂 Category filter
+        if (filters.categories.length) {
+            data = data.filter((r) =>
+                filters.categories.includes(r.category)
+            );
+        }
+
         // 🔃 Local sort
-        switch (sort) {
+        const dir = (sortDir === "asc" ? 1 : -1);
+
+        switch (sortBy) {
             case "rating":
                 data.sort(
-                    (a, b) => (b.average_rating ?? 0) - (a.average_rating ?? 0)
+                    (a, b) =>
+                        ((a.average_rating ?? 0) - (b.average_rating ?? 0)) * dir
                 );
                 break;
 
             case "title":
-                data.sort((a, b) => a.title.localeCompare(b.title));
+                data.sort((a, b) => a.title.localeCompare(b.title) * dir);
                 break;
 
             case "category":
-                data.sort((a, b) => a.category.localeCompare(b.category));
+                data.sort((a, b) => a.category.localeCompare(b.category) * dir);
                 break;
 
             case "cuisine":
-                data.sort((a, b) => a.cuisine.localeCompare(b.cuisine));
+                data.sort((a, b) => a.cuisine.localeCompare(b.cuisine) * dir);
                 break;
 
-            case "created_at":
-            default:
-                // assume backend already returns newest first
-                break;
+            // default:
+            //     // Newest first by default
+            //     if (sortDir === "asc") {
+            //         data.reverse();
+            //     }
+            //     break;
         }
 
         return data;
-    }, [recipes, search, sort]);
+    }, [
+        recipes,
+        search,
+        sortBy,
+        sortDir,
+        filters.cuisines,
+        filters.categories,
+    ]);
 
     useEffect(() => {
         onFiltersChange({
@@ -138,59 +186,65 @@ export function RecipeExplorer({
                         className="flex-1 max-w-lg"
                     />
 
-                    <div className="flex items-center gap-2">
-                        <IconArrowsSort />
+                    <div className="flex gap-3 justify-end">
                         <Select
-                            value={sort}
-                            onChange={(v) => setSort(v ?? "created_at")}
-                            data={[
-                                { value: "created_at", label: "Newest" },
-                                { value: "rating", label: "Rating" },
-                                { value: "title", label: "Title" },
-                                { value: "category", label: "Category" },
-                                { value: "cuisine", label: "Cuisine" },
-                            ]}
+                            placeholder="Cuisine"
+                            searchable
+                            value={null}
+                            data={ALL_CUISINES
+                                .filter((c) => !filters.cuisines.includes(c))
+                                .map((c) => ({
+                                    value: c,
+                                    label: formatIngredientLabel(c),
+                                }))}
+                            onChange={(v) =>
+                                v &&
+                                setFilters((prev) => ({
+                                    ...prev,
+                                    cuisines: [...prev.cuisines, v],
+                                }))
+                            }
                         />
+
+                        <Select
+                            placeholder="Category"
+                            searchable
+                            value={null}
+                            data={ALL_CATEGORIES
+                                .filter((c) => !filters.categories.includes(c))
+                                .map((c) => ({
+                                    value: c,
+                                    label: formatIngredientLabel(c),
+                                }))}
+                            onChange={(v) =>
+                                v &&
+                                setFilters((prev) => ({
+                                    ...prev,
+                                    categories: [...prev.categories, v],
+                                }))
+                            }
+                        />
+                        {!disableIngredientFilter && (
+
+                            <Select
+                                placeholder="Include ingredient"
+                                searchable
+                                value={includeValue}
+                                data={ALL_INGREDIENTS
+                                    .filter((i) => !usedIngredients.includes(i))
+                                    .map((i) => ({
+                                        value: i,
+                                        label: formatIngredientLabel(i),
+                                    }))}
+                                onChange={(v) =>
+                                    v && addIngredientFilter("include", v)
+                                }
+                            />
+                        )
+                        }
                     </div>
                 </div>
 
-                {!disableIngredientFilter && (
-                    <div className="flex gap-3 justify-end">
-                        <Select
-                            placeholder="Include ingredient"
-                            searchable
-                            value={includeValue}
-                            data={ALL_INGREDIENTS
-                                .filter((i) => !usedIngredients.includes(i))
-                                .map((i) => ({
-                                    value: i,
-                                    label: formatIngredientLabel(i),
-                                }))}
-                            onChange={(v) =>
-                                v && addIngredientFilter("include", v)
-                            }
-                        />
-                        {
-                            /*
-                               <Select
-                               placeholder="Exclude ingredient"
-                               searchable
-                               value={excludeValue}
-                               data={ALL_INGREDIENTS
-                               .filter((i) => !excludedIngredients.includes(i))
-                               .map((i) => ({
-                                    value: i,
-                                    label: formatIngredientLabel(i),
-                                    }))}
-                                    onChange={(v) =>
-                                    v && addIngredientFilter("exclude", v)
-                                    }
-                                    />
-                             */
-                        }
-                    </div>
-                )
-                }
 
                 {/* Active filters */}
                 <div className="flex flex-wrap gap-2">
@@ -210,13 +264,42 @@ export function RecipeExplorer({
                             }
                         />
                     ))}
+                    {filters.cuisines.map((c, i) => (
+                        <FilterChip
+                            key={`cuisine-${c}-${i}`}
+                            label={`Cuisine "${formatIngredientLabel(c)}"`}
+                            onRemove={() =>
+                                setFilters((prev) => ({
+                                    ...prev,
+                                    cuisines: prev.cuisines.filter((_, idx) => idx !== i),
+                                }))
+                            }
+                        />
+                    ))}
+
+                    {filters.categories.map((c, i) => (
+                        <FilterChip
+                            key={`category-${c}-${i}`}
+                            label={`Category "${formatIngredientLabel(c)}"`}
+                            onRemove={() =>
+                                setFilters((prev) => ({
+                                    ...prev,
+                                    categories: prev.categories.filter((_, idx) => idx !== i),
+                                }))
+                            }
+                        />
+                    ))}
                 </div>
             </div>
 
             {/* Results */}
+
             <RecipeTable
                 recipes={visibleRecipes}
-                onOpen={(r) => console.log("open", r.id)}
+                sortBy={sortBy}
+                sortDir={sortDir}
+                onSortChange={handleSortChange}
+                onOpen={(r) => console.log(r.id)}
                 renderActions={renderActions}
             />
         </>

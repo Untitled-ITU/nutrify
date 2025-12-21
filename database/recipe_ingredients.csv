@@ -1,0 +1,2670 @@
+﻿recipe_id,ingredient_idx,name,quantity,unit
+1,0,salmon,4.0,piece
+1,1,honey,3.0,tablespoon
+1,2,soy sauce,2.0,tablespoon
+1,3,garlic,4.0,piece
+1,4,ginger,1.0,teaspoon
+1,5,oil,2.0,tablespoon
+1,6,sesame seeds,1.0,teaspoon
+2,0,chickpea,2.0,cup
+2,1,cucumber,1.0,piece
+2,2,tomato,2.0,piece
+2,3,feta cheese,1.0,cup
+2,4,olive,0.5,cup
+2,5,lemon,1.0,piece
+2,6,oil,3.0,tablespoon
+2,7,oregano,1.0,teaspoon
+3,0,noodles,0.5,pound
+3,1,peanut butter,0.5,cup
+3,2,soy sauce,3.0,tablespoon
+3,3,lime,2.0,piece
+3,4,carrot,2.0,piece
+3,5,bell pepper,1.0,piece
+3,6,cilantro,0.5,cup
+3,7,peanut,0.25,cup
+4,0,chicken breast,1.0,pound
+4,1,rice,0.5,cup
+4,2,chicken broth,8.0,cup
+4,3,egg,3.0,piece
+4,4,lemon,2.0,piece
+4,5,dill,2.0,tablespoon
+5,0,chocolate,0.5,pound
+5,1,butter,6.0,tablespoon
+5,2,egg,2.0,piece
+5,3,egg yolk,2.0,piece
+5,4,sugar,4.0,tablespoon
+5,5,flour,2.0,tablespoon
+6,0,chicken wing,3.0,pound
+6,1,hot sauce,0.5,cup
+6,2,butter,8.0,tablespoon
+6,3,blue cheese,0.5,cup
+6,4,sour cream,0.5,cup
+6,5,celery,6.0,piece
+7,0,chicken thigh,1.5,pound
+7,1,soy sauce,8.0,tablespoon
+7,2,rice,2.0,cup
+7,3,broccoli,3.0,cup
+7,4,honey,3.0,tablespoon
+7,5,ginger,1.0,tablespoon
+7,6,garlic,3.0,piece
+8,0,bread,8.0,piece
+8,1,egg,4.0,piece
+8,2,milk,0.75,cup
+8,3,cinnamon,1.0,teaspoon
+8,4,vanilla,1.0,teaspoon
+8,5,butter,4.0,tablespoon
+9,0,ground beef,1.5,pound
+9,1,kidney beans,2.0,cup
+9,2,tomato,2.0,piece
+9,3,onion,1.0,piece
+9,4,chili powder,2.0,tablespoon
+9,5,cumin,1.0,tablespoon
+9,6,bell pepper,1.0,piece
+9,7,beef broth,1.0,cup
+10,0,butternut squash,1.0,piece
+10,1,onion,1.0,piece
+10,2,vegetable broth,4.0,cup
+10,3,coconut milk,1.0,cup
+10,4,ginger,1.0,tablespoon
+10,5,nutmeg,0.25,teaspoon
+10,6,olive oil,2.0,tablespoon
+11,0,pasta,1.0,pound
+11,1,feta cheese,1.0,cup
+11,2,olive,1.0,cup
+11,3,cherry tomato,2.0,cup
+11,4,cucumber,1.0,piece
+11,5,red onion,0.5,piece
+11,6,lemon,2.0,piece
+11,7,oregano,1.0,teaspoon
+12,0,chicken breast,1.0,pound
+12,1,tortilla,8.0,piece
+12,2,enchilada sauce,2.0,cup
+12,3,cheddar cheese,2.0,cup
+12,4,sour cream,0.5,cup
+12,5,onion,1.0,piece
+12,6,cumin,1.0,teaspoon
+13,0,oats,1.0,cup
+13,1,blueberry,1.5,cup
+13,2,almond milk,3.0,cup
+13,3,maple syrup,3.0,tablespoon
+13,4,cinnamon,1.0,teaspoon
+13,5,vanilla,1.0,teaspoon
+14,0,rice noodles,0.5,pound
+14,1,shrimp,0.5,pound
+14,2,tamarind paste,2.0,tablespoon
+14,3,fish sauce,3.0,tablespoon
+14,4,egg,2.0,piece
+14,5,bean sprout,2.0,cup
+14,6,peanut,0.5,cup
+14,7,scallion,4.0,piece
+15,0,sourdough bread,4.0,piece
+15,1,avocado,2.0,piece
+15,2,cherry tomato,1.0,cup
+15,3,lemon,1.0,piece
+15,4,red pepper flakes,0.5,teaspoon
+16,0,chicken thigh,1.5,pound
+16,1,coconut milk,0.5,cup
+16,2,curry powder,1.0,tablespoon
+16,3,peanut butter,0.5,cup
+16,4,soy sauce,3.0,tablespoon
+16,5,lime,2.0,piece
+16,6,honey,2.0,tablespoon
+17,0,ground lamb,1.5,pound
+17,1,onion,1.0,piece
+17,2,parsley,8.0,tablespoon
+17,3,cumin,2.0,teaspoon
+17,4,coriander,1.0,teaspoon
+17,5,garlic,4.0,piece
+18,0,rice noodles,0.5,pound
+18,1,shrimp,0.5,pound
+18,2,curry powder,2.0,tablespoon
+18,3,bell pepper,1.0,piece
+18,4,egg,2.0,piece
+18,5,soy sauce,3.0,tablespoon
+18,6,scallion,4.0,piece
+19,0,onion,4.0,piece
+19,1,beef broth,6.0,cup
+19,2,butter,3.0,tablespoon
+19,3,bread,4.0,piece
+19,4,gruyere cheese,1.5,cup
+19,5,white wine,0.5,cup
+19,6,thyme,2.0,teaspoon
+20,0,egg,8.0,piece
+20,1,bell pepper,1.0,piece
+20,2,zucchini,1.0,piece
+20,3,onion,1.0,piece
+20,4,feta cheese,0.75,cup
+20,5,milk,0.25,cup
+21,0,chicken breast,1.5,pound
+21,1,breadcrumbs,1.5,cup
+21,2,marinara sauce,2.0,cup
+21,3,mozzarella,1.5,cup
+21,4,parmesan,0.5,cup
+21,5,egg,2.0,piece
+21,6,flour,8.0,tablespoon
+22,0,tortilla,4.0,piece
+22,1,egg,6.0,piece
+22,2,black beans,1.0,cup
+22,3,cheddar cheese,1.0,cup
+22,4,salsa,0.5,cup
+22,5,avocado,1.0,piece
+23,0,broccoli,4.0,cup
+23,1,cheddar cheese,2.0,cup
+23,2,onion,1.0,piece
+23,3,butter,4.0,tablespoon
+23,4,flour,4.0,tablespoon
+23,5,milk,3.0,cup
+23,6,chicken broth,2.0,cup
+24,0,spaghetti,1.0,pound
+24,1,pancetta,0.5,pound
+24,2,egg,4.0,piece
+24,3,parmesan,1.5,cup
+24,4,black pepper,2.0,teaspoon
+24,5,garlic,2.0,piece
+25,0,tortilla,4.0,piece
+25,1,cheddar cheese,2.0,cup
+25,2,bell pepper,1.0,piece
+25,3,onion,0.5,piece
+25,4,sour cream,0.5,cup
+26,0,egg,4.0,piece
+26,1,tortilla,4.0,piece
+26,2,black beans,1.0,cup
+26,3,salsa,1.0,cup
+26,4,cheddar cheese,0.5,cup
+26,5,avocado,1.0,piece
+27,0,corn,4.0,cup
+27,1,potato,3.0,piece
+27,2,bacon,6.0,piece
+27,3,onion,1.0,piece
+27,4,chicken broth,3.0,cup
+27,5,heavy cream,1.0,cup
+27,6,thyme,1.0,teaspoon
+28,0,potato,4.0,piece
+28,1,egg,4.0,piece
+28,2,bell pepper,1.0,piece
+28,3,onion,1.0,piece
+28,4,cheddar cheese,0.5,cup
+28,5,paprika,1.0,teaspoon
+29,0,jalapeno,12.0,piece
+29,1,cream cheese,1.0,cup
+29,2,cheddar cheese,0.5,cup
+29,3,bacon,6.0,piece
+29,4,garlic powder,0.5,teaspoon
+30,0,mushroom,1.0,pound
+30,1,barley,0.75,cup
+30,2,carrot,2.0,piece
+30,3,celery,2.0,piece
+30,4,onion,1.0,piece
+30,5,vegetable broth,8.0,cup
+30,6,thyme,1.0,teaspoon
+31,0,chocolate,0.5,pound
+31,1,butter,6.0,tablespoon
+31,2,egg,2.0,piece
+31,3,egg yolk,2.0,piece
+31,4,sugar,4.0,tablespoon
+31,5,flour,2.0,tablespoon
+32,0,egg,6.0,piece
+32,1,tomato,2.0,piece
+32,2,bell pepper,2.0,piece
+32,3,onion,1.0,piece
+32,4,cumin,1.0,teaspoon
+32,5,paprika,1.0,teaspoon
+32,6,feta cheese,0.5,cup
+33,0,salmon,4.0,piece
+33,1,lemon,2.0,piece
+33,2,oil,2.0,tablespoon
+33,3,dill,1.0,tablespoon
+33,4,garlic,2.0,piece
+33,5,salt,1.0,teaspoon
+33,6,asparagus,1.0,pound
+34,0,beef,1.0,pound
+34,1,onion,1.0,piece
+34,2,cumin,1.0,teaspoon
+34,3,chili,1.0,teaspoon
+34,4,paprika,0.5,teaspoon
+34,5,tortilla,8.0,piece
+34,6,cilantro,0.25,cup
+34,7,lime,1.0,piece
+35,0,quinoa,1.0,cup
+35,1,water,2.0,cup
+35,2,cucumber,1.0,piece
+35,3,tomato,2.0,piece
+35,4,olive,0.5,cup
+35,5,feta cheese,0.5,cup
+35,6,oil,3.0,tablespoon
+35,7,lemon,1.0,piece
+36,0,chicken breast,1.0,pound
+36,1,broccoli,2.0,cup
+36,2,bell pepper,1.0,piece
+36,3,soy sauce,4.0,tablespoon
+36,4,ginger,1.0,tablespoon
+36,5,garlic,2.0,piece
+36,6,sesame oil,1.0,tablespoon
+36,7,cornstarch,1.0,teaspoon
+36,8,rice,2.0,cup
+37,0,chicken,1.0,pound
+37,1,soy sauce,8.0,tablespoon
+37,2,sugar,4.0,tablespoon
+37,3,mirin,2.0,tablespoon
+37,4,ginger,1.0,teaspoon
+37,5,garlic,2.0,piece
+37,6,cornstarch,1.0,teaspoon
+37,7,oil,1.0,tablespoon
+38,0,egg,8.0,piece
+38,1,milk,0.25,cup
+38,2,spinach,2.0,cup
+38,3,mushroom,0.2,pound
+38,4,onion,0.5,piece
+38,5,parmesan,0.5,cup
+38,6,olive oil,1.0,tablespoon
+38,7,salt,0.5,teaspoon
+39,0,beef,1.0,pound
+39,1,broccoli,3.5,cup
+39,2,soy sauce,5.0,tablespoon
+39,3,brown sugar,1.0,tablespoon
+39,4,sesame oil,1.0,teaspoon
+39,5,ginger,1.0,teaspoon
+39,6,garlic,2.0,piece
+39,7,oil,2.0,tablespoon
+40,0,tortilla,4.0,piece
+40,1,chicken,0.3,pound
+40,2,cheese,1.5,cup
+40,3,bell pepper,0.5,piece
+40,4,onion,0.25,piece
+40,5,cumin,0.5,teaspoon
+40,6,butter,1.0,tablespoon
+41,0,yogurt,1.0,cup
+41,1,granola,0.5,cup
+41,2,honey,1.0,tablespoon
+41,3,strawberry,0.5,cup
+41,4,blueberry,0.25,cup
+42,0,noodles,0.5,pound
+42,1,butter,2.0,tablespoon
+42,2,onion,1.0,piece
+42,3,mushroom,1.0,pound
+42,4,vegetable broth,1.5,cup
+42,5,sour cream,0.5,cup
+42,6,flour,1.0,tablespoon
+42,7,thyme,1.0,teaspoon
+43,0,chicken breast,1.0,pound
+43,1,bell pepper,2.0,piece
+43,2,onion,1.0,piece
+43,3,lime,1.0,piece
+43,4,chili powder,1.0,teaspoon
+43,5,cumin,1.0,teaspoon
+43,6,oil,2.0,tablespoon
+43,7,tortilla,6.0,piece
+44,0,lentil,1.0,cup
+44,1,onion,1.0,piece
+44,2,carrot,1.0,piece
+44,3,celery,1.0,piece
+44,4,tomato sauce,2.0,cup
+44,5,vegetable broth,2.0,cup
+44,6,spaghetti,0.5,pound
+44,7,olive oil,1.0,tablespoon
+44,8,oregano,1.0,teaspoon
+45,0,beef,1.0,pound
+45,1,broccoli,3.5,cup
+45,2,soy sauce,5.0,tablespoon
+45,3,ginger,1.0,teaspoon
+45,4,garlic,2.0,piece
+45,5,brown sugar,1.0,tablespoon
+45,6,sesame oil,1.0,teaspoon
+45,7,cornstarch,1.0,tablespoon
+46,0,bread,4.0,piece
+46,1,egg,2.0,piece
+46,2,milk,0.5,cup
+46,3,cinnamon,0.5,teaspoon
+46,4,vanilla,1.0,teaspoon
+46,5,butter,1.0,tablespoon
+46,6,maple syrup,4.0,tablespoon
+47,0,spaghetti,1.0,pound
+47,1,pancetta,0.5,pound
+47,2,parmesan,0.75,cup
+47,3,egg,3.0,piece
+47,4,garlic,2.0,piece
+47,5,black pepper,1.0,teaspoon
+48,0,tortilla,4.0,piece
+48,1,chicken breast,0.3,pound
+48,2,cheddar cheese,1.0,cup
+48,3,salsa,0.5,cup
+48,4,butter,1.0,tablespoon
+48,5,sour cream,0.25,cup
+49,0,rice,3.0,cup
+49,1,egg,2.0,piece
+49,2,peas,0.5,cup
+49,3,carrot,1.0,piece
+49,4,scallion,2.0,piece
+49,5,soy sauce,3.0,tablespoon
+49,6,oil,2.0,tablespoon
+50,0,baguette,1.0,piece
+50,1,tomato,4.0,piece
+50,2,basil,4.0,tablespoon
+50,3,garlic,2.0,piece
+50,4,olive oil,4.0,tablespoon
+50,5,balsamic vinegar,1.0,tablespoon
+50,6,salt,0.5,teaspoon
+51,0,beef,1.5,pound
+51,1,bell pepper,2.0,piece
+51,2,red onion,1.0,piece
+51,3,mushroom,0.3,pound
+51,4,soy sauce,4.0,tablespoon
+51,5,olive oil,4.0,tablespoon
+51,6,garlic,2.0,piece
+52,0,ground beef,1.0,pound
+52,1,potato,4.0,piece
+52,2,onion,1.0,piece
+52,3,peas,0.5,cup
+52,4,carrot,1.0,piece
+52,5,butter,2.0,tablespoon
+52,6,milk,0.25,cup
+52,7,beef broth,0.5,cup
+53,0,chicken breast,1.0,pound
+53,1,egg noodle,2.0,cup
+53,2,carrot,2.0,piece
+53,3,celery,2.0,piece
+53,4,onion,1.0,piece
+53,5,chicken broth,6.0,cup
+53,6,thyme,0.5,teaspoon
+54,0,egg,4.0,piece
+54,1,tomato,4.0,piece
+54,2,bell pepper,1.0,piece
+54,3,onion,1.0,piece
+54,4,garlic,2.0,piece
+54,5,cumin,1.0,teaspoon
+54,6,paprika,1.0,teaspoon
+54,7,olive oil,2.0,tablespoon
+55,0,tomato,6.0,piece
+55,1,cucumber,1.0,piece
+55,2,bell pepper,1.0,piece
+55,3,onion,0.5,piece
+55,4,garlic,1.0,piece
+55,5,vinegar,2.0,tablespoon
+55,6,olive oil,4.0,tablespoon
+56,0,eggplant,1.0,piece
+56,1,zucchini,2.0,piece
+56,2,bell pepper,1.0,piece
+56,3,tomato,4.0,piece
+56,4,onion,1.0,piece
+56,5,garlic,2.0,piece
+56,6,olive oil,3.0,tablespoon
+56,7,thyme,1.0,teaspoon
+57,0,chicken breast,1.0,pound
+57,1,peanut butter,0.5,cup
+57,2,soy sauce,2.0,tablespoon
+57,3,lime juice,1.0,tablespoon
+57,4,brown sugar,1.0,tablespoon
+57,5,garlic,1.0,piece
+57,6,coconut milk,0.25,cup
+58,0,egg,6.0,piece
+58,1,mayonnaise,4.0,tablespoon
+58,2,mustard,1.0,teaspoon
+58,3,chive,1.0,tablespoon
+58,4,salt,0.25,teaspoon
+58,5,pepper,0.25,teaspoon
+59,0,egg,6.0,piece
+59,1,milk,0.25,cup
+59,2,potato,1.0,piece
+59,3,onion,0.5,piece
+59,4,spinach,2.0,cup
+59,5,cheddar cheese,0.5,cup
+59,6,olive oil,2.0,tablespoon
+60,0,onion,4.0,piece
+60,1,butter,3.0,tablespoon
+60,2,beef broth,6.0,cup
+60,3,white wine,0.5,cup
+60,4,thyme,1.0,teaspoon
+60,5,baguette,10.0,piece
+60,6,gruyere cheese,1.0,cup
+61,0,bell pepper,4.0,piece
+61,1,ground beef,0.5,pound
+61,2,rice,1.0,cup
+61,3,tomato sauce,1.0,cup
+61,4,onion,0.5,piece
+61,5,garlic,1.0,piece
+61,6,mozzarella,0.5,cup
+62,0,quinoa,1.0,cup
+62,1,water,2.0,cup
+62,2,mango,1.0,piece
+62,3,jalapeno,1.0,piece
+62,4,cilantro,0.25,cup
+62,5,lime,1.0,piece
+62,6,olive oil,2.0,tablespoon
+62,7,salt,0.5,teaspoon
+63,0,sweet potato,2.0,piece
+63,1,black beans,2.5,cup
+63,2,tortilla,8.0,piece
+63,3,enchilada sauce,2.0,cup
+63,4,cheese,1.5,cup
+63,5,cumin,1.0,teaspoon
+63,6,chili powder,1.0,teaspoon
+63,7,onion,1.0,piece
+64,0,lentil,1.0,cup
+64,1,onion,1.0,piece
+64,2,garlic,2.0,piece
+64,3,ginger,1.0,tablespoon
+64,4,curry powder,1.5,tablespoon
+64,5,coconut milk,1.5,cup
+64,6,vegetable broth,4.0,cup
+64,7,spinach,2.0,cup
+64,8,oil,1.0,tablespoon
+65,0,chickpea,6.0,cup
+65,1,tomato,4.0,piece
+65,2,onion,1.0,piece
+65,3,garlic,3.0,piece
+65,4,cumin,1.0,teaspoon
+65,5,paprika,1.0,teaspoon
+65,6,spinach,3.0,cup
+65,7,olive oil,2.0,tablespoon
+66,0,arborio rice,1.5,cup
+66,1,mushroom,0.5,pound
+66,2,chicken broth,5.0,cup
+66,3,white wine,0.5,cup
+66,4,onion,1.0,piece
+66,5,butter,3.0,tablespoon
+66,6,parmesan,0.5,cup
+67,0,salmon,2.0,piece
+67,1,asparagus,1.0,pound
+67,2,lemon,1.0,piece
+67,3,butter,2.0,tablespoon
+67,4,garlic,2.0,piece
+67,5,dill,1.0,teaspoon
+67,6,olive oil,1.0,tablespoon
+68,0,tofu,1.0,pound
+68,1,soy sauce,4.0,tablespoon
+68,2,mirin,2.0,tablespoon
+68,3,brown sugar,1.0,tablespoon
+68,4,ginger,1.0,teaspoon
+68,5,cornstarch,2.0,tablespoon
+68,6,rice,1.0,cup
+68,7,oil,2.0,tablespoon
+69,0,spaghetti,1.0,pound
+69,1,bacon,6.0,piece
+69,2,egg,3.0,piece
+69,3,parmesan,1.0,cup
+69,4,garlic,2.0,piece
+69,5,black pepper,1.0,teaspoon
+70,0,tofu,1.0,pound
+70,1,cornstarch,2.0,tablespoon
+70,2,soy sauce,4.0,tablespoon
+70,3,maple syrup,2.0,tablespoon
+70,4,sesame oil,1.0,tablespoon
+70,5,ginger,1.0,tablespoon
+70,6,garlic,2.0,piece
+70,7,broccoli,3.5,cup
+70,8,oil,2.0,tablespoon
+71,0,yogurt,1.0,cup
+71,1,granola,0.5,cup
+71,2,blueberry,0.25,cup
+71,3,strawberry,0.25,cup
+71,4,honey,1.0,tablespoon
+72,0,red lentil,1.0,cup
+72,1,onion,1.0,piece
+72,2,carrot,1.0,piece
+72,3,cumin,1.0,teaspoon
+72,4,turmeric,0.5,teaspoon
+72,5,vegetable broth,4.0,cup
+72,6,lemon,1.0,piece
+72,7,olive oil,1.0,tablespoon
+73,0,shrimp,1.0,pound
+73,1,linguine,0.5,pound
+73,2,butter,4.0,tablespoon
+73,3,garlic,4.0,piece
+73,4,lemon,1.0,piece
+73,5,parsley,4.0,tablespoon
+73,6,parmesan,0.5,cup
+74,0,kidney beans,2.5,cup
+74,1,black beans,2.5,cup
+74,2,tomato,4.0,piece
+74,3,corn,1.0,cup
+74,4,onion,1.0,piece
+74,5,bell pepper,1.0,piece
+74,6,chili powder,2.0,tablespoon
+74,7,cumin,1.0,teaspoon
+75,0,tortilla,4.0,piece
+75,1,chicken breast,0.5,pound
+75,2,cheese,1.0,cup
+75,3,onion,0.5,piece
+75,4,bell pepper,0.5,piece
+75,5,butter,1.0,tablespoon
+76,0,greek yogurt,1.0,cup
+76,1,granola,0.5,cup
+76,2,honey,1.0,tablespoon
+76,3,blueberry,0.25,cup
+76,4,strawberry,0.25,cup
+77,0,tomato,4.0,piece
+77,1,vegetable broth,2.0,cup
+77,2,onion,1.0,piece
+77,3,garlic,2.0,piece
+77,4,heavy cream,0.5,cup
+77,5,basil,4.0,tablespoon
+77,6,butter,2.0,tablespoon
+78,0,cauliflower,1.5,pound
+78,1,coconut milk,1.5,cup
+78,2,chickpea,3.0,cup
+78,3,curry powder,2.0,tablespoon
+78,4,onion,1.0,piece
+78,5,peas,0.5,cup
+78,6,oil,1.0,tablespoon
+79,0,vegetable broth,4.0,cup
+79,1,kidney beans,2.5,cup
+79,2,pasta,0.1,pound
+79,3,tomato,2.0,piece
+79,4,carrot,2.0,piece
+79,5,celery,2.0,piece
+79,6,spinach,1.0,cup
+80,0,sourdough bread,4.0,piece
+80,1,cheddar cheese,0.5,cup
+80,2,gruyere cheese,0.5,cup
+80,3,onion,1.0,piece
+80,4,butter,3.0,tablespoon
+80,5,balsamic vinegar,1.0,teaspoon
+81,0,chickpea,3.0,cup
+81,1,parsley,9.0,tablespoon
+81,2,garlic,2.0,piece
+81,3,cumin,1.0,teaspoon
+81,4,flour,2.0,tablespoon
+81,5,tortilla,4.0,piece
+81,6,tahini,4.0,tablespoon
+81,7,oil,4.0,tablespoon
+82,0,salmon,2.0,piece
+82,1,breadcrumbs,0.5,cup
+82,2,egg,2.0,piece
+82,3,dill,1.0,tablespoon
+82,4,mayonnaise,2.0,tablespoon
+82,5,lemon,1.0,piece
+82,6,oil,2.0,tablespoon
+83,0,egg,6.0,piece
+83,1,spinach,2.0,cup
+83,2,mushroom,0.2,pound
+83,3,onion,1.0,piece
+83,4,milk,0.25,cup
+83,5,cheddar cheese,0.5,cup
+83,6,butter,1.0,tablespoon
+84,0,quinoa,1.0,cup
+84,1,cucumber,1.0,piece
+84,2,tomato,2.0,piece
+84,3,feta cheese,0.5,cup
+84,4,olive,0.25,cup
+84,5,lemon,1.0,piece
+84,6,olive oil,2.0,tablespoon
+85,0,shrimp,1.0,pound
+85,1,lemon,2.0,piece
+85,2,garlic,3.0,piece
+85,3,olive oil,4.0,tablespoon
+85,4,parsley,2.0,tablespoon
+85,5,paprika,1.0,teaspoon
+86,0,chicken breast,1.0,pound
+86,1,peanut butter,0.5,cup
+86,2,coconut milk,0.25,cup
+86,3,soy sauce,2.0,tablespoon
+86,4,lime,1.0,piece
+86,5,curry powder,1.0,teaspoon
+86,6,sugar,1.0,teaspoon
+87,0,chicken breast,1.0,pound
+87,1,chicken broth,6.0,cup
+87,2,noodles,0.7,pound
+87,3,carrot,2.0,piece
+87,4,celery,2.0,piece
+87,5,onion,1.0,piece
+87,6,thyme,1.0,teaspoon
+88,0,sweet potato,2.0,piece
+88,1,cornstarch,1.0,tablespoon
+88,2,paprika,1.0,teaspoon
+88,3,oil,2.0,tablespoon
+88,4,garlic powder,0.5,teaspoon
+89,0,lettuce,4.0,cup
+89,1,chicken breast,0.5,pound
+89,2,bacon,3.0,piece
+89,3,egg,2.0,piece
+89,4,avocado,1.0,piece
+89,5,blue cheese,0.25,cup
+89,6,tomato,1.0,piece
+90,0,egg,4.0,piece
+90,1,tomato,4.0,piece
+90,2,onion,1.0,piece
+90,3,bell pepper,1.0,piece
+90,4,garlic,2.0,piece
+90,5,cumin,1.0,teaspoon
+90,6,paprika,1.0,teaspoon
+90,7,feta cheese,0.25,cup
+91,0,zucchini,2.0,piece
+91,1,flour,8.0,tablespoon
+91,2,parmesan,0.25,cup
+91,3,egg,1.0,piece
+91,4,garlic,1.0,piece
+91,5,oil,4.0,tablespoon
+91,6,scallion,2.0,piece
+92,0,chicken breast,1.5,pound
+92,1,honey,5.0,tablespoon
+92,2,mustard,4.0,tablespoon
+92,3,mayonnaise,2.0,tablespoon
+92,4,lemon,0.5,piece
+92,5,paprika,1.0,teaspoon
+93,0,barley,1.0,cup
+93,1,mushroom,0.6,pound
+93,2,carrot,2.0,piece
+93,3,celery,2.0,piece
+93,4,onion,1.0,piece
+93,5,vegetable broth,6.0,cup
+93,6,thyme,1.0,teaspoon
+94,0,greek yogurt,1.0,cup
+94,1,cucumber,1.0,piece
+94,2,garlic,2.0,piece
+94,3,dill,1.0,tablespoon
+94,4,lemon,0.5,piece
+94,5,olive oil,1.0,tablespoon
+94,6,salt,0.5,teaspoon
+95,0,chicken,1.0,pound
+95,1,lemon,1.0,piece
+95,2,garlic,3.0,piece
+95,3,basil,1.0,tablespoon
+95,4,oil,2.0,tablespoon
+95,5,salt,1.0,teaspoon
+95,6,pepper,1.0,teaspoon
+96,0,noodles,0.5,pound
+96,1,tomato,3.0,piece
+96,2,basil,2.0,tablespoon
+96,3,oil,2.0,tablespoon
+96,4,salt,1.0,teaspoon
+96,5,pepper,1.0,teaspoon
+96,6,garlic,2.0,piece
+97,0,lentil,1.0,cup
+97,1,tomato,3.0,piece
+97,2,onion,1.0,piece
+97,3,garlic,3.0,piece
+97,4,water,5.0,cup
+97,5,salt,1.0,teaspoon
+97,6,pepper,1.0,teaspoon
+98,0,salmon,3.0,piece
+98,1,honey,2.0,tablespoon
+98,2,orange,1.0,piece
+98,3,salt,1.0,teaspoon
+98,4,pepper,1.0,teaspoon
+98,5,oil,1.0,tablespoon
+99,0,chickpea,1.0,cup
+99,1,spinach,3.0,cup
+99,2,tomato,2.0,piece
+99,3,onion,1.0,piece
+99,4,oil,2.0,tablespoon
+99,5,salt,1.0,teaspoon
+99,6,pepper,1.0,teaspoon
+100,0,beef,0.5,pound
+100,1,rice,1.0,cup
+100,2,onion,1.0,piece
+100,3,oil,2.0,tablespoon
+100,4,salt,1.0,teaspoon
+100,5,pepper,1.0,teaspoon
+100,6,water,2.0,cup
+101,0,lettuce,3.0,cup
+101,1,mint,1.0,tablespoon
+101,2,lemon,1.0,piece
+101,3,oil,1.0,tablespoon
+101,4,salt,1.0,teaspoon
+101,5,pepper,1.0,teaspoon
+102,0,chicken breast,1.0,pound
+102,1,olive oil,2.0,tablespoon
+102,2,lemon,1.0,piece
+102,3,garlic,3.0,piece
+102,4,basil,1.0,tablespoon
+102,5,black pepper,1.0,teaspoon
+102,6,salt,1.0,teaspoon
+103,0,noodles,0.5,pound
+103,1,tomato,4.0,piece
+103,2,red onion,1.0,piece
+103,3,olive oil,2.0,tablespoon
+103,4,chili,1.0,teaspoon
+103,5,salt,1.0,teaspoon
+103,6,black pepper,1.0,teaspoon
+104,0,rice,1.0,cup
+104,1,ginger,1.0,tablespoon
+104,2,soy sauce,1.0,tablespoon
+104,3,tofu,0.3,pound
+104,4,green onion,1.0,piece
+104,5,oil,1.0,tablespoon
+105,0,lentil,1.0,cup
+105,1,carrot,1.0,piece
+105,2,onion,1.0,piece
+105,3,garlic,2.0,piece
+105,4,water,5.0,cup
+105,5,salt,1.0,teaspoon
+105,6,cumin,1.0,teaspoon
+106,0,salmon,3.0,piece
+106,1,orange,1.0,piece
+106,2,soy sauce,2.0,tablespoon
+106,3,honey,1.0,tablespoon
+106,4,black pepper,1.0,teaspoon
+106,5,oil,1.0,tablespoon
+107,0,chickpea,1.0,cup
+107,1,red pepper,1.0,piece
+107,2,tomato,2.0,piece
+107,3,onion,1.0,piece
+107,4,oil,2.0,tablespoon
+107,5,salt,1.0,teaspoon
+107,6,black pepper,1.0,teaspoon
+108,0,ground beef,0.5,pound
+108,1,tomato,3.0,piece
+108,2,onion,1.0,piece
+108,3,rice,1.0,cup
+108,4,oil,2.0,tablespoon
+108,5,salt,1.0,teaspoon
+108,6,black pepper,1.0,teaspoon
+109,0,couscous,1.0,cup
+109,1,mint,2.0,tablespoon
+109,2,lemon,1.0,piece
+109,3,olive oil,1.0,tablespoon
+109,4,salt,1.0,teaspoon
+109,5,black pepper,1.0,teaspoon
+110,0,chicken breast,0.5,pound
+110,1,rice,1.0,cup
+110,2,soy sauce,2.0,tablespoon
+110,3,carrot,1.0,piece
+110,4,onion,1.0,piece
+110,5,olive oil,1.0,tablespoon
+111,0,shrimp,0.5,pound
+111,1,garlic,3.0,piece
+111,2,lemon,1.0,piece
+111,3,butter,2.0,tablespoon
+111,4,parsley,2.5,tablespoon
+111,5,salt,1.0,teaspoon
+111,6,black pepper,1.0,teaspoon
+112,0,egg,3.0,piece
+112,1,spinach,1.5,cup
+112,2,tomato,1.0,piece
+112,3,onion,1.0,piece
+112,4,olive oil,1.0,tablespoon
+112,5,salt,1.0,teaspoon
+113,0,chickpea,1.0,cup
+113,1,cucumber,1.0,piece
+113,2,tomato,2.0,piece
+113,3,parsley,5.0,tablespoon
+113,4,olive oil,2.0,tablespoon
+113,5,lemon,1.0,piece
+113,6,salt,1.0,teaspoon
+114,0,noodles,0.5,pound
+114,1,ground beef,0.5,pound
+114,2,soy sauce,2.0,tablespoon
+114,3,onion,1.0,piece
+114,4,garlic,2.0,piece
+114,5,carrot,1.0,piece
+115,0,potato,3.0,piece
+115,1,carrot,2.0,piece
+115,2,onion,1.0,piece
+115,3,garlic,2.0,piece
+115,4,olive oil,1.0,tablespoon
+115,5,salt,1.0,teaspoon
+115,6,black pepper,1.0,teaspoon
+116,0,rice,1.0,cup
+116,1,butter,2.0,tablespoon
+116,2,garlic,2.0,piece
+116,3,salt,1.0,teaspoon
+116,4,black pepper,1.0,teaspoon
+117,0,bread,2.0,piece
+117,1,egg,1.0,piece
+117,2,mushroom,0.2,pound
+117,3,butter,1.0,tablespoon
+117,4,salt,1.0,teaspoon
+117,5,black pepper,1.0,teaspoon
+118,0,pasta,0.5,pound
+118,1,tuna,0.3,pound
+118,2,olive oil,2.0,tablespoon
+118,3,parsley,2.5,tablespoon
+118,4,lemon,1.0,piece
+118,5,salt,1.0,teaspoon
+119,0,potato,3.0,piece
+119,1,tuna,0.3,pound
+119,2,olive oil,1.0,tablespoon
+119,3,parsley,2.5,tablespoon
+119,4,salt,1.0,teaspoon
+119,5,lemon,1.0,piece
+120,0,rice,2.0,cup
+120,1,egg,2.0,piece
+120,2,soy sauce,1.0,tablespoon
+120,3,onion,1.0,piece
+120,4,carrot,1.0,piece
+120,5,olive oil,1.0,tablespoon
+121,0,lentil,1.0,cup
+121,1,spinach,2.0,cup
+121,2,onion,1.0,piece
+121,3,tomato,1.0,piece
+121,4,olive oil,1.0,tablespoon
+121,5,salt,1.0,teaspoon
+122,0,shrimp,0.5,pound
+122,1,butter,2.0,tablespoon
+122,2,garlic,3.0,piece
+122,3,parsley,2.5,tablespoon
+122,4,salt,1.0,teaspoon
+122,5,black pepper,1.0,teaspoon
+123,0,ground beef,0.5,pound
+123,1,tomato,2.0,piece
+123,2,onion,1.0,piece
+123,3,garlic,2.0,piece
+123,4,salt,1.0,teaspoon
+123,5,olive oil,1.0,tablespoon
+124,0,beans,1.0,cup
+124,1,rice,1.0,cup
+124,2,onion,1.0,piece
+124,3,chili powder,1.0,teaspoon
+124,4,salt,1.0,teaspoon
+124,5,olive oil,1.0,tablespoon
+125,0,carrot,2.0,piece
+125,1,red pepper,1.0,piece
+125,2,parsley,2.5,tablespoon
+125,3,lemon,1.0,piece
+125,4,olive oil,1.0,tablespoon
+125,5,salt,1.0,teaspoon
+126,0,egg,3.0,piece
+126,1,tomato,2.0,piece
+126,2,salt,1.0,teaspoon
+126,3,black pepper,1.0,teaspoon
+126,4,olive oil,1.0,tablespoon
+127,0,rice,1.0,cup
+127,1,lemon,1.0,piece
+127,2,parsley,2.5,tablespoon
+127,3,olive oil,1.0,tablespoon
+127,4,salt,1.0,teaspoon
+128,0,chicken breast,0.5,pound
+128,1,carrot,1.0,piece
+128,2,onion,1.0,piece
+128,3,parsley,2.5,tablespoon
+128,4,salt,1.0,teaspoon
+128,5,black pepper,1.0,teaspoon
+129,0,tofu,0.3,pound
+129,1,rice,1.0,cup
+129,2,soy sauce,1.0,tablespoon
+129,3,onion,1.0,piece
+129,4,olive oil,1.0,tablespoon
+130,0,pasta,0.5,pound
+130,1,zucchini,1.0,piece
+130,2,olive oil,2.0,tablespoon
+130,3,garlic,2.0,piece
+130,4,salt,1.0,teaspoon
+130,5,black pepper,1.0,teaspoon
+131,0,chickpea,1.0,cup
+131,1,tomato,2.0,piece
+131,2,onion,1.0,piece
+131,3,curry powder,1.0,tablespoon
+131,4,olive oil,2.0,tablespoon
+131,5,salt,1.0,teaspoon
+132,0,peas,1.0,cup
+132,1,carrot,2.0,piece
+132,2,potato,2.0,piece
+132,3,onion,1.0,piece
+132,4,olive oil,2.0,tablespoon
+132,5,salt,1.0,teaspoon
+133,0,eggplant,2.0,piece
+133,1,tomato,2.0,piece
+133,2,olive oil,3.0,tablespoon
+133,3,salt,1.0,teaspoon
+133,4,black pepper,1.0,teaspoon
+134,0,rice,1.0,cup
+134,1,spinach,1.5,cup
+134,2,garlic,2.0,piece
+134,3,salt,1.0,teaspoon
+134,4,olive oil,1.0,tablespoon
+135,0,yogurt,1.0,cup
+135,1,cucumber,1.0,piece
+135,2,garlic,1.0,piece
+135,3,salt,1.0,teaspoon
+135,4,olive oil,1.0,tablespoon
+136,0,chicken breast,1.0,pound
+136,1,lemon juice,3.0,tablespoon
+136,2,olive oil,2.0,tablespoon
+136,3,garlic,2.0,piece
+136,4,basil,1.0,tablespoon
+136,5,black pepper,1.0,teaspoon
+137,0,rice,1.0,cup
+137,1,tomato,2.0,piece
+137,2,onion,1.0,piece
+137,3,olive oil,2.0,tablespoon
+137,4,salt,1.0,teaspoon
+137,5,black pepper,0.5,teaspoon
+138,0,white beans,2.0,cup
+138,1,coconut milk,1.0,cup
+138,2,onion,1.0,piece
+138,3,garlic,3.0,piece
+138,4,curry powder,1.0,tablespoon
+138,5,salt,1.0,teaspoon
+138,6,black pepper,0.5,teaspoon
+139,0,pasta,0.5,pound
+139,1,butter,3.0,tablespoon
+139,2,garlic,3.0,piece
+139,3,parmesan,0.5,cup
+139,4,salt,1.0,teaspoon
+139,5,black pepper,0.5,teaspoon
+140,0,chicken thigh,1.2,pound
+140,1,soy sauce,3.0,tablespoon
+140,2,honey,2.0,tablespoon
+140,3,garlic,2.0,piece
+140,4,ginger,1.0,teaspoon
+140,5,olive oil,1.0,tablespoon
+141,0,bread,2.0,piece
+141,1,egg,2.0,piece
+141,2,basil,1.0,teaspoon
+141,3,butter,1.0,tablespoon
+141,4,salt,0.5,teaspoon
+141,5,black pepper,0.25,teaspoon
+142,0,noodles,0.5,pound
+142,1,mushroom,0.5,pound
+142,2,soy sauce,2.0,tablespoon
+142,3,olive oil,2.0,tablespoon
+142,4,onion,1.0,piece
+142,5,black pepper,0.5,teaspoon
+143,0,potato,3.0,piece
+143,1,red pepper,1.0,piece
+143,2,olive oil,3.0,tablespoon
+143,3,salt,1.0,teaspoon
+143,4,thyme,1.0,teaspoon
+143,5,black pepper,0.5,teaspoon
+144,0,shrimp,0.5,pound
+144,1,lime juice,2.0,tablespoon
+144,2,olive oil,2.0,tablespoon
+144,3,garlic,2.0,piece
+144,4,salt,0.5,teaspoon
+144,5,black pepper,0.25,teaspoon
+145,0,chicken breast,1.0,pound
+145,1,olive oil,3.0,tablespoon
+145,2,lemon juice,2.0,tablespoon
+145,3,garlic,2.0,piece
+145,4,basil,1.0,teaspoon
+145,5,black pepper,0.5,teaspoon
+145,6,salt,1.0,teaspoon
+146,0,tomato,5.0,piece
+146,1,onion,1.0,piece
+146,2,basil,1.0,tablespoon
+146,3,olive oil,2.0,tablespoon
+146,4,salt,1.0,teaspoon
+146,5,black pepper,0.5,teaspoon
+147,0,shrimp,0.5,pound
+147,1,butter,3.0,tablespoon
+147,2,garlic,3.0,piece
+147,3,lemon juice,1.0,tablespoon
+147,4,salt,0.5,teaspoon
+147,5,black pepper,0.25,teaspoon
+148,0,rice,1.0,cup
+148,1,mushroom,0.5,pound
+148,2,onion,1.0,piece
+148,3,soy sauce,2.0,tablespoon
+148,4,olive oil,2.0,tablespoon
+148,5,black pepper,0.5,teaspoon
+149,0,egg,3.0,piece
+149,1,spinach,1.0,cup
+149,2,butter,1.0,tablespoon
+149,3,salt,0.5,teaspoon
+149,4,black pepper,0.25,teaspoon
+150,0,noodles,0.5,pound
+150,1,soy sauce,2.0,tablespoon
+150,2,honey,1.0,tablespoon
+150,3,olive oil,1.0,tablespoon
+150,4,onion,1.0,piece
+150,5,black pepper,0.25,teaspoon
+151,0,pasta,0.5,pound
+151,1,chicken breast,0.5,pound
+151,2,olive oil,2.0,tablespoon
+151,3,basil,1.0,tablespoon
+151,4,parmesan,0.5,cup
+151,5,salt,1.0,teaspoon
+152,0,potato,3.0,piece
+152,1,carrot,2.0,piece
+152,2,olive oil,3.0,tablespoon
+152,3,thyme,1.0,teaspoon
+152,4,salt,1.0,teaspoon
+152,5,black pepper,0.5,teaspoon
+153,0,rice,1.0,cup
+153,1,lime juice,1.0,tablespoon
+153,2,olive oil,1.0,tablespoon
+153,3,salt,0.5,teaspoon
+153,4,basil,0.5,teaspoon
+154,0,pasta,0.5,pound
+154,1,white beans,1.0,cup
+154,2,olive oil,2.0,tablespoon
+154,3,lemon juice,1.0,tablespoon
+154,4,salt,0.5,teaspoon
+154,5,black pepper,0.25,teaspoon
+155,0,egg,3.0,piece
+155,1,tomato,2.0,piece
+155,2,olive oil,1.0,tablespoon
+155,3,salt,0.5,teaspoon
+155,4,black pepper,0.25,teaspoon
+156,0,carrot,4.0,piece
+156,1,onion,1.0,piece
+156,2,ginger,1.0,teaspoon
+156,3,olive oil,1.0,tablespoon
+156,4,salt,1.0,teaspoon
+156,5,black pepper,0.5,teaspoon
+157,0,pasta,0.5,pound
+157,1,olive oil,3.0,tablespoon
+157,2,olive,0.5,cup
+157,3,basil,1.0,teaspoon
+157,4,salt,1.0,teaspoon
+158,0,rice,1.0,cup
+158,1,coconut milk,1.0,cup
+158,2,water,1.0,cup
+158,3,salt,0.5,teaspoon
+158,4,sugar,0.5,teaspoon
+159,0,potato,4.0,piece
+159,1,butter,2.0,tablespoon
+159,2,milk,0.5,cup
+159,3,garlic,2.0,piece
+159,4,salt,1.0,teaspoon
+160,0,chicken thigh,1.0,pound
+160,1,soy sauce,3.0,tablespoon
+160,2,ginger,1.0,teaspoon
+160,3,honey,1.0,tablespoon
+160,4,olive oil,1.0,tablespoon
+161,0,oats,1.0,cup
+161,1,water,1.5,cup
+161,2,cinnamon,0.5,teaspoon
+161,3,sugar,1.0,tablespoon
+161,4,salt,0.25,teaspoon
+162,0,bread,2.0,piece
+162,1,tomato,1.0,piece
+162,2,olive,0.25,cup
+162,3,olive oil,1.0,tablespoon
+162,4,salt,0.25,teaspoon
+163,0,lentil,1.0,cup
+163,1,onion,1.0,piece
+163,2,carrot,1.0,piece
+163,3,olive oil,1.0,tablespoon
+163,4,salt,1.0,teaspoon
+163,5,black pepper,0.5,teaspoon
+164,0,rice,2.0,cup
+164,1,water,3.0,cup
+164,2,saffron,1.0,teaspoon
+164,3,olive oil,2.0,tablespoon
+164,4,salt,1.0,teaspoon
+164,5,garlic,2.0,piece
+164,6,onion,1.0,piece
+165,0,beef,1.0,pound
+165,1,tomato,2.0,piece
+165,2,onion,1.0,piece
+165,3,beans,1.0,cup
+165,4,chili powder,1.0,tablespoon
+165,5,salt,1.0,teaspoon
+165,6,black pepper,1.0,teaspoon
+165,7,water,2.0,cup
+166,0,bell pepper,4.0,piece
+166,1,quinoa,1.0,cup
+166,2,black beans,1.0,cup
+166,3,corn,0.5,cup
+166,4,onion,1.0,piece
+166,5,cumin,1.0,teaspoon
+166,6,chili powder,0.5,teaspoon
+166,7,tomato sauce,0.5,cup
+167,0,arborio rice,1.0,cup
+167,1,mushroom,0.5,pound
+167,2,onion,1.0,piece
+167,3,vegetable broth,4.0,cup
+167,4,white wine,0.5,cup
+167,5,butter,2.0,tablespoon
+167,6,parmesan,0.5,cup
+167,7,olive oil,1.0,tablespoon
+168,0,chia seeds,4.0,tablespoon
+168,1,coconut milk,1.0,cup
+168,2,mango,1.0,piece
+168,3,honey,2.0,tablespoon
+168,4,vanilla,0.5,teaspoon
+168,5,lime,1.0,piece
+169,0,beef,1.0,pound
+169,1,broccoli,2.0,cup
+169,2,soy sauce,4.0,tablespoon
+169,3,ginger,1.0,teaspoon
+169,4,garlic,2.0,piece
+169,5,sesame oil,1.0,tablespoon
+169,6,brown sugar,1.0,tablespoon
+169,7,cornstarch,1.0,teaspoon
+170,0,avocado,2.0,piece
+170,1,egg,2.0,piece
+170,2,bread,2.0,piece
+170,3,lemon,0.5,piece
+170,4,salt,0.25,teaspoon
+170,5,black pepper,0.25,teaspoon
+170,6,red pepper flakes,0.25,teaspoon
+171,0,greek yogurt,2.0,cup
+171,1,granola,1.0,cup
+171,2,strawberry,1.0,cup
+171,3,blueberry,0.5,cup
+171,4,honey,2.0,tablespoon
+171,5,almond,0.25,cup
+172,0,salmon,1.0,piece
+172,1,rice,1.0,cup
+172,2,broccoli,1.0,cup
+172,3,soy sauce,4.0,tablespoon
+172,4,brown sugar,2.0,tablespoon
+172,5,ginger,1.0,teaspoon
+172,6,sesame seeds,1.0,teaspoon
+173,0,red lentil,1.0,cup
+173,1,carrot,2.0,piece
+173,2,onion,1.0,piece
+173,3,vegetable broth,4.0,cup
+173,4,cumin,1.0,teaspoon
+173,5,olive oil,1.0,tablespoon
+173,6,lemon,1.0,piece
+173,7,salt,0.5,teaspoon
+174,0,tomato,2.0,piece
+174,1,carrot,2.0,piece
+174,2,zucchini,1.0,piece
+174,3,white beans,1.0,cup
+174,4,pasta,0.1,pound
+174,5,vegetable broth,4.0,cup
+174,6,olive oil,1.0,tablespoon
+174,7,basil,1.0,teaspoon
+175,0,mixed berries,2.0,cup
+175,1,greek yogurt,1.0,cup
+175,2,almond milk,0.5,cup
+175,3,banana,1.0,piece
+175,4,granola,0.25,cup
+175,5,almond,0.25,cup
+175,6,honey,1.0,teaspoon
+176,0,onion,4.0,piece
+176,1,beef broth,4.0,cup
+176,2,baguette,4.0,piece
+176,3,gruyere cheese,1.0,cup
+176,4,butter,2.0,tablespoon
+176,5,thyme,1.0,teaspoon
+176,6,white wine,0.5,cup
+177,0,quinoa,1.0,cup
+177,1,cucumber,1.0,piece
+177,2,feta cheese,0.5,cup
+177,3,cherry tomato,1.0,cup
+177,4,lemon,1.0,piece
+177,5,olive oil,2.0,tablespoon
+177,6,mint,2.0,tablespoon
+178,0,chickpea,1.0,cup
+178,1,pita bread,4.0,piece
+178,2,tahini,4.0,tablespoon
+178,3,tomato,1.0,piece
+178,4,cucumber,1.0,piece
+178,5,parsley,2.5,tablespoon
+178,6,cumin,1.0,teaspoon
+178,7,olive oil,2.0,tablespoon
+179,0,rice noodles,0.5,pound
+179,1,broccoli,1.0,cup
+179,2,carrot,1.0,piece
+179,3,bell pepper,1.0,piece
+179,4,soy sauce,2.0,tablespoon
+179,5,ginger,1.0,teaspoon
+179,6,sesame oil,1.0,tablespoon
+179,7,green onion,2.0,piece
+180,0,ground turkey,1.0,pound
+180,1,tomato sauce,2.0,cup
+180,2,breadcrumbs,0.5,cup
+180,3,egg,1.0,piece
+180,4,parmesan,0.25,cup
+180,5,garlic,2.0,piece
+180,6,oregano,1.0,teaspoon
+180,7,olive oil,1.0,tablespoon
+181,0,ground lamb,1.0,pound
+181,1,onion,1.0,piece
+181,2,cumin,1.0,teaspoon
+181,3,coriander,1.0,teaspoon
+181,4,parsley,4.0,tablespoon
+181,5,yogurt,0.5,cup
+181,6,garlic,1.0,piece
+181,7,olive oil,1.0,tablespoon
+182,0,spaghetti,0.5,pound
+182,1,pancetta,0.25,pound
+182,2,egg,2.0,piece
+182,3,parmesan,0.5,cup
+182,4,black pepper,1.0,teaspoon
+182,5,olive oil,1.0,tablespoon
+183,0,mushroom,1.0,pound
+183,1,egg noodle,1.5,cup
+183,2,sour cream,0.5,cup
+183,3,onion,1.0,piece
+183,4,beef broth,1.0,cup
+183,5,butter,2.0,tablespoon
+183,6,flour,1.0,tablespoon
+183,7,mustard,1.0,teaspoon
+184,0,shrimp,1.0,pound
+184,1,coconut milk,1.0,cup
+184,2,tomato,2.0,piece
+184,3,onion,1.0,piece
+184,4,curry powder,2.0,teaspoon
+184,5,ginger,1.0,teaspoon
+184,6,cilantro,0.25,cup
+184,7,olive oil,1.0,tablespoon
+185,0,zucchini,2.0,piece
+185,1,eggplant,1.0,piece
+185,2,tomato,3.0,piece
+185,3,bell pepper,1.0,piece
+185,4,tomato sauce,1.0,cup
+185,5,olive oil,2.0,tablespoon
+185,6,thyme,1.0,teaspoon
+185,7,garlic,2.0,piece
+186,0,butternut squash,1.0,piece
+186,1,onion,1.0,piece
+186,2,vegetable broth,3.0,cup
+186,3,coconut milk,0.5,cup
+186,4,nutmeg,0.25,teaspoon
+186,5,olive oil,1.0,tablespoon
+186,6,ginger,1.0,teaspoon
+187,0,chicken breast,1.0,pound
+187,1,pita bread,4.0,piece
+187,2,yogurt,0.5,cup
+187,3,cucumber,1.0,piece
+187,4,tomato,1.0,piece
+187,5,cumin,1.0,teaspoon
+187,6,paprika,1.0,teaspoon
+187,7,garlic,1.0,piece
+188,0,beef,1.0,pound
+188,1,soy sauce,4.0,tablespoon
+188,2,brown sugar,2.0,tablespoon
+188,3,sesame oil,1.0,tablespoon
+188,4,garlic,3.0,piece
+188,5,ginger,1.0,teaspoon
+188,6,green onion,2.0,piece
+188,7,rice,1.0,cup
+189,0,red lentil,1.0,cup
+189,1,onion,1.0,piece
+189,2,garlic,3.0,piece
+189,3,cumin,1.0,teaspoon
+189,4,turmeric,0.5,teaspoon
+189,5,tomato,1.0,piece
+189,6,vegetable broth,3.0,cup
+189,7,cilantro,0.25,cup
+190,0,eggplant,2.0,piece
+190,1,marinara sauce,2.0,cup
+190,2,mozzarella,1.0,cup
+190,3,breadcrumbs,1.0,cup
+190,4,egg,2.0,piece
+190,5,parmesan,0.25,cup
+190,6,basil,4.0,tablespoon
+190,7,olive oil,2.0,tablespoon
+191,0,avocado,2.0,piece
+191,1,egg,2.0,piece
+191,2,tomato,1.0,piece
+191,3,salt,0.25,teaspoon
+191,4,black pepper,0.25,teaspoon
+191,5,chive,1.0,tablespoon
+192,0,sweet potato,2.0,piece
+192,1,mayonnaise,4.0,tablespoon
+192,2,garlic,1.0,piece
+192,3,olive oil,2.0,tablespoon
+192,4,paprika,0.5,teaspoon
+192,5,lemon,0.5,piece
+192,6,salt,0.5,teaspoon
+193,0,couscous,1.0,cup
+193,1,zucchini,1.0,piece
+193,2,bell pepper,2.0,piece
+193,3,cherry tomato,1.0,cup
+193,4,olive oil,2.0,tablespoon
+193,5,cumin,0.5,teaspoon
+193,6,lemon,1.0,piece
+193,7,parsley,4.0,tablespoon
+194,0,ground turkey,1.0,pound
+194,1,kidney beans,1.0,cup
+194,2,tomato,2.0,piece
+194,3,onion,1.0,piece
+194,4,chili powder,2.0,teaspoon
+194,5,cumin,1.0,teaspoon
+194,6,vegetable broth,2.0,cup
+194,7,olive oil,1.0,tablespoon
+195,0,cauliflower,1.5,pound
+195,1,hot sauce,0.5,cup
+195,2,butter,2.0,tablespoon
+195,3,flour,8.0,tablespoon
+195,4,garlic powder,1.0,teaspoon
+195,5,milk,0.5,cup
+195,6,olive oil,1.0,tablespoon
+196,0,salmon,2.0,piece
+196,1,breadcrumbs,0.5,cup
+196,2,egg,1.0,piece
+196,3,mayonnaise,4.0,tablespoon
+196,4,lemon,1.0,piece
+196,5,dill,1.0,tablespoon
+196,6,olive oil,2.0,tablespoon
+196,7,salt,0.25,teaspoon
+197,0,tortilla,2.0,piece
+197,1,egg,2.0,piece
+197,2,black beans,0.5,cup
+197,3,cheddar cheese,0.25,cup
+197,4,salsa,0.25,cup
+197,5,avocado,0.5,piece
+197,6,olive oil,1.0,teaspoon
+198,0,spinach,4.0,cup
+198,1,strawberry,2.0,cup
+198,2,almond,0.25,cup
+198,3,balsamic vinegar,2.0,tablespoon
+198,4,olive oil,2.0,tablespoon
+198,5,honey,1.0,teaspoon
+198,6,salt,0.25,teaspoon
+199,0,shrimp,1.0,pound
+199,1,linguine,0.5,pound
+199,2,white wine,0.5,cup
+199,3,butter,4.0,tablespoon
+199,4,garlic,4.0,piece
+199,5,lemon,1.0,piece
+199,6,parsley,4.0,tablespoon
+199,7,red pepper flakes,0.25,teaspoon
+200,0,rice noodles,0.5,pound
+200,1,tofu,0.25,pound
+200,2,egg,2.0,piece
+200,3,bean sprout,1.0,cup
+200,4,tamarind paste,2.0,tablespoon
+200,5,fish sauce,2.0,tablespoon
+200,6,sugar,2.0,tablespoon
+200,7,peanut,0.25,cup
+200,8,lime,1.0,piece
+201,0,rice,2.0,cup
+201,1,carrot,1.0,piece
+201,2,peas,0.5,cup
+201,3,soy sauce,2.0,tablespoon
+201,4,green onion,3.0,piece
+201,5,egg,2.0,piece
+201,6,sesame oil,1.0,tablespoon
+201,7,ginger,1.0,teaspoon
+202,0,eggplant,2.0,piece
+202,1,tahini,4.0,tablespoon
+202,2,garlic,2.0,piece
+202,3,lemon,1.0,piece
+202,4,olive oil,2.0,tablespoon
+202,5,cumin,0.5,teaspoon
+202,6,parsley,4.0,tablespoon
+202,7,salt,0.5,teaspoon
+203,0,cottage cheese,1.0,cup
+203,1,egg,4.0,piece
+203,2,flour,4.0,tablespoon
+203,3,sugar,1.0,tablespoon
+203,4,vanilla,0.5,teaspoon
+203,5,butter,1.0,tablespoon
+203,6,blueberry,0.5,cup
+204,0,chicken breast,1.0,pound
+204,1,bell pepper,3.0,piece
+204,2,tortilla,6.0,piece
+204,3,lime,1.0,piece
+204,4,cumin,1.0,teaspoon
+204,5,chili powder,1.0,teaspoon
+204,6,olive oil,2.0,tablespoon
+204,7,onion,1.0,piece
+205,0,chickpea,2.0,cup
+205,1,tahini,4.0,tablespoon
+205,2,lemon,1.0,piece
+205,3,garlic,2.0,piece
+205,4,olive oil,2.0,tablespoon
+205,5,cumin,0.5,teaspoon
+205,6,salt,0.5,teaspoon
+205,7,paprika,0.25,teaspoon
+206,0,broccoli,4.0,cup
+206,1,cheddar cheese,2.0,cup
+206,2,onion,1.0,piece
+206,3,vegetable broth,3.0,cup
+206,4,milk,1.0,cup
+206,5,butter,2.0,tablespoon
+206,6,flour,2.0,tablespoon
+206,7,nutmeg,0.25,teaspoon
+207,0,bell pepper,4.0,piece
+207,1,ground beef,0.5,pound
+207,2,rice,1.0,cup
+207,3,tomato sauce,1.0,cup
+207,4,onion,1.0,piece
+207,5,cheddar cheese,0.5,cup
+207,6,cumin,1.0,teaspoon
+207,7,olive oil,1.0,tablespoon
+208,0,mixed berries,2.0,cup
+208,1,yogurt,1.0,cup
+208,2,banana,1.0,piece
+208,3,milk,0.5,cup
+208,4,honey,1.0,tablespoon
+208,5,chia seeds,1.0,tablespoon
+209,0,beef,1.0,pound
+209,1,mushroom,0.5,pound
+209,2,sour cream,1.0,cup
+209,3,onion,1.0,piece
+209,4,beef broth,1.0,cup
+209,5,flour,2.0,tablespoon
+209,6,butter,2.0,tablespoon
+209,7,egg noodle,1.5,cup
+210,0,blue cheese,0.5,cup
+210,1,mayonnaise,4.0,tablespoon
+210,2,sour cream,0.25,cup
+210,3,lemon,0.5,piece
+210,4,garlic powder,0.25,teaspoon
+210,5,salt,0.25,teaspoon
+210,6,black pepper,0.25,teaspoon
+210,7,chive,1.0,tablespoon
+211,0,arborio rice,1.0,cup
+211,1,saffron,0.25,teaspoon
+211,2,onion,1.0,piece
+211,3,vegetable broth,4.0,cup
+211,4,white wine,0.5,cup
+211,5,butter,2.0,tablespoon
+211,6,parmesan,0.5,cup
+211,7,olive oil,1.0,tablespoon
+212,0,mushroom,0.5,pound
+212,1,spinach,2.0,cup
+212,2,feta cheese,0.5,cup
+212,3,breadcrumbs,0.25,cup
+212,4,garlic,2.0,piece
+212,5,olive oil,2.0,tablespoon
+212,6,lemon,0.5,piece
+212,7,salt,0.25,teaspoon
+213,0,tomato,6.0,piece
+213,1,cucumber,1.0,piece
+213,2,bell pepper,1.0,piece
+213,3,onion,0.5,piece
+213,4,olive oil,2.0,tablespoon
+213,5,vinegar,2.0,tablespoon
+213,6,garlic,1.0,piece
+213,7,salt,0.5,teaspoon
+214,0,asparagus,1.0,pound
+214,1,balsamic vinegar,2.0,tablespoon
+214,2,olive oil,1.0,tablespoon
+214,3,salt,0.25,teaspoon
+214,4,black pepper,0.25,teaspoon
+214,5,parmesan,0.25,cup
+215,0,spinach,8.0,cup
+215,1,garlic,2.0,piece
+215,2,olive oil,1.0,tablespoon
+215,3,lemon,0.5,piece
+215,4,salt,0.25,teaspoon
+215,5,red pepper flakes,0.25,teaspoon
+216,0,corn,4.0,cup
+216,1,butter,2.0,tablespoon
+216,2,heavy cream,0.5,cup
+216,3,sugar,1.0,teaspoon
+216,4,salt,0.25,teaspoon
+216,5,black pepper,0.25,teaspoon
+216,6,parsley,1.0,tablespoon
+217,0,zucchini,2.0,piece
+217,1,eggplant,1.0,piece
+217,2,tomato,4.0,piece
+217,3,bell pepper,1.0,piece
+217,4,onion,1.0,piece
+217,5,olive oil,2.0,tablespoon
+217,6,thyme,1.0,teaspoon
+217,7,garlic,2.0,piece
+218,0,zucchini,2.0,piece
+218,1,olive oil,1.0,tablespoon
+218,2,salt,0.5,teaspoon
+218,3,black pepper,0.25,teaspoon
+218,4,parmesan,0.25,cup
+218,5,oregano,0.5,teaspoon
+219,0,cauliflower,1.5,pound
+219,1,butter,2.0,tablespoon
+219,2,milk,0.25,cup
+219,3,garlic,1.0,piece
+219,4,chive,2.0,tablespoon
+219,5,salt,0.5,teaspoon
+219,6,black pepper,0.25,teaspoon
+220,0,egg,6.0,piece
+220,1,mayonnaise,2.0,tablespoon
+220,2,mustard,1.0,teaspoon
+220,3,paprika,0.25,teaspoon
+220,4,salt,0.25,teaspoon
+220,5,black pepper,0.25,teaspoon
+220,6,vinegar,0.5,teaspoon
+220,7,chive,1.0,teaspoon
+221,0,avocado,3.0,piece
+221,1,lime,1.0,piece
+221,2,tomato,1.0,piece
+221,3,onion,0.25,piece
+221,4,cilantro,0.25,cup
+221,5,salt,0.5,teaspoon
+221,6,jalapeno,1.0,piece
+221,7,garlic,1.0,piece
+222,0,baguette,1.0,piece
+222,1,tomato,4.0,piece
+222,2,basil,4.0,tablespoon
+222,3,olive oil,2.0,tablespoon
+222,4,garlic,1.0,piece
+222,5,balsamic vinegar,1.0,teaspoon
+222,6,salt,0.25,teaspoon
+223,0,shrimp,0.5,pound
+223,1,lime,4.0,piece
+223,2,onion,1.0,piece
+223,3,cilantro,0.25,cup
+223,4,jalapeno,1.0,piece
+223,5,salt,0.5,teaspoon
+223,6,orange,1.0,piece
+224,0,chicken wing,2.0,pound
+224,1,hot sauce,0.5,cup
+224,2,butter,4.0,tablespoon
+224,3,olive oil,1.0,tablespoon
+224,4,salt,0.5,teaspoon
+224,5,black pepper,0.25,teaspoon
+224,6,celery,4.0,piece
+224,7,blue cheese,0.25,cup
+225,0,tuna,0.5,pound
+225,1,avocado,1.0,piece
+225,2,soy sauce,1.0,tablespoon
+225,3,ginger,1.0,teaspoon
+225,4,sesame oil,1.0,teaspoon
+225,5,green onion,1.0,piece
+225,6,lime,1.0,piece
+225,7,salt,0.25,teaspoon
+226,0,jalapeno,12.0,piece
+226,1,cream cheese,1.0,cup
+226,2,bacon,6.0,piece
+226,3,cheddar cheese,0.25,cup
+226,4,salt,0.25,teaspoon
+226,5,black pepper,0.25,teaspoon
+227,0,carrot,3.0,piece
+227,1,celery,3.0,piece
+227,2,cucumber,1.0,piece
+227,3,bell pepper,1.0,piece
+227,4,yogurt,1.0,cup
+227,5,lemon,0.5,piece
+227,6,dill,1.0,tablespoon
+227,7,salt,0.25,teaspoon
+228,0,ground beef,1.0,pound
+228,1,breadcrumbs,0.5,cup
+228,2,egg,1.0,piece
+228,3,parmesan,0.25,cup
+228,4,garlic,1.0,piece
+228,5,marinara sauce,1.0,cup
+228,6,olive oil,1.0,tablespoon
+228,7,salt,0.5,teaspoon
+229,0,tortilla,6.0,piece
+229,1,tomato,4.0,piece
+229,2,onion,0.5,piece
+229,3,cilantro,0.25,cup
+229,4,lime,1.0,piece
+229,5,salt,0.5,teaspoon
+229,6,jalapeno,1.0,piece
+229,7,olive oil,1.0,tablespoon
+230,0,onion,4.0,piece
+230,1,beef broth,4.0,cup
+230,2,gruyere cheese,1.0,cup
+230,3,baguette,4.0,piece
+230,4,butter,2.0,tablespoon
+230,5,thyme,1.0,teaspoon
+230,6,white wine,0.5,cup
+230,7,salt,0.5,teaspoon
+231,0,chicken breast,1.0,pound
+231,1,egg noodle,2.0,cup
+231,2,carrot,2.0,piece
+231,3,celery,2.0,piece
+231,4,chicken broth,8.0,cup
+231,5,onion,1.0,piece
+231,6,olive oil,1.0,tablespoon
+231,7,salt,1.0,teaspoon
+232,0,tomato,6.0,piece
+232,1,cucumber,1.0,piece
+232,2,bell pepper,1.0,piece
+232,3,onion,0.5,piece
+232,4,olive oil,4.0,tablespoon
+232,5,vinegar,2.0,tablespoon
+232,6,garlic,1.0,piece
+232,7,salt,0.5,teaspoon
+233,0,chicken breast,1.0,pound
+233,1,tortilla,4.0,piece
+233,2,tomato,4.0,piece
+233,3,onion,1.0,piece
+233,4,chicken broth,6.0,cup
+233,5,avocado,1.0,piece
+233,6,lime,2.0,piece
+233,7,cilantro,0.25,cup
+234,0,red lentil,1.0,cup
+234,1,onion,1.0,piece
+234,2,carrot,2.0,piece
+234,3,vegetable broth,4.0,cup
+234,4,cumin,1.0,teaspoon
+234,5,olive oil,1.0,tablespoon
+234,6,lemon,1.0,piece
+234,7,salt,0.5,teaspoon
+235,0,carrot,6.0,piece
+235,1,onion,1.0,piece
+235,2,vegetable broth,4.0,cup
+235,3,ginger,1.0,tablespoon
+235,4,coconut milk,0.5,cup
+235,5,olive oil,1.0,tablespoon
+235,6,cumin,0.5,teaspoon
+235,7,salt,0.5,teaspoon
+236,0,beef,1.0,pound
+236,1,mushroom,0.5,pound
+236,2,sour cream,1.0,cup
+236,3,onion,1.0,piece
+236,4,beef broth,1.0,cup
+236,5,flour,2.0,tablespoon
+236,6,butter,2.0,tablespoon
+236,7,egg noodle,1.5,cup
+237,0,chickpea,1.0,cup
+237,1,pita bread,4.0,piece
+237,2,tahini,4.0,tablespoon
+237,3,tomato,1.0,piece
+237,4,cucumber,1.0,piece
+237,5,parsley,4.0,tablespoon
+237,6,cumin,1.0,teaspoon
+237,7,olive oil,2.0,tablespoon
+238,0,greek yogurt,2.0,cup
+238,1,granola,1.0,cup
+238,2,mixed berries,2.0,cup
+238,3,honey,2.0,tablespoon
+238,4,almond,0.25,cup
+239,0,egg,4.0,piece
+239,1,tomato,4.0,piece
+239,2,onion,1.0,piece
+239,3,bell pepper,1.0,piece
+239,4,cumin,1.0,teaspoon
+239,5,paprika,1.0,teaspoon
+239,6,olive oil,2.0,tablespoon
+239,7,feta cheese,0.25,cup
+240,0,egg,3.0,piece
+240,1,cheddar cheese,0.25,cup
+240,2,butter,1.0,tablespoon
+240,3,salt,0.25,teaspoon
+240,4,black pepper,0.25,teaspoon
+240,5,chive,1.0,tablespoon
+241,0,cottage cheese,1.0,cup
+241,1,tomato,1.0,piece
+241,2,basil,2.0,tablespoon
+241,3,olive oil,1.0,teaspoon
+241,4,salt,0.25,teaspoon
+241,5,black pepper,0.25,teaspoon
+242,0,chicken breast,1.0,pound
+242,1,lemon,1.0,piece
+242,2,garlic,2.0,piece
+242,3,olive oil,2.0,tablespoon
+242,4,thyme,1.0,teaspoon
+242,5,salt,0.5,teaspoon
+243,0,shrimp,1.0,pound
+243,1,butter,2.0,tablespoon
+243,2,garlic,3.0,piece
+243,3,lemon,1.0,piece
+243,4,parsley,4.0,tablespoon
+243,5,salt,0.5,teaspoon
+244,0,egg,6.0,piece
+244,1,spinach,2.0,cup
+244,2,milk,0.25,cup
+244,3,parmesan,0.5,cup
+244,4,salt,0.5,teaspoon
+244,5,black pepper,0.25,teaspoon
+245,0,lentil,1.0,cup
+245,1,carrot,2.0,piece
+245,2,tomato,1.0,piece
+245,3,onion,1.0,piece
+245,4,garlic,2.0,piece
+245,5,olive oil,1.0,tablespoon
+246,0,banana,1.0,piece
+246,1,oats,1.0,cup
+246,2,egg,1.0,piece
+246,3,milk,0.5,cup
+246,4,cinnamon,0.5,teaspoon
+246,5,baking powder,1.0,teaspoon
+247,0,tofu,1.0,pound
+247,1,soy sauce,3.0,tablespoon
+247,2,mirin,1.0,tablespoon
+247,3,sugar,1.0,tablespoon
+247,4,rice,1.0,cup
+247,5,green onion,2.0,piece
+248,0,oats,1.0,cup
+248,1,apple,1.0,piece
+248,2,egg,1.0,piece
+248,3,milk,0.5,cup
+248,4,sugar,2.0,tablespoon
+248,5,baking powder,1.0,teaspoon
+249,0,mango,1.0,piece
+249,1,red onion,0.25,piece
+249,2,lime,1.0,piece
+249,3,cilantro,0.25,cup
+249,4,salt,0.25,teaspoon
+249,5,jalapeno,0.25,piece
+250,0,potato,1.0,piece
+250,1,carrot,2.0,piece
+250,2,peas,1.0,cup
+250,3,coconut milk,1.0,cup
+250,4,curry powder,1.0,tablespoon
+250,5,onion,1.0,piece
+251,0,quinoa,1.0,cup
+251,1,cucumber,1.0,piece
+251,2,tomato,2.0,piece
+251,3,parsley,8.0,tablespoon
+251,4,lemon,1.0,piece
+251,5,olive oil,2.0,tablespoon
+251,6,salt,0.5,teaspoon
+252,0,salmon,2.0,piece
+252,1,garlic,4.0,piece
+252,2,lemon,1.0,piece
+252,3,olive oil,2.0,tablespoon
+252,4,parsley,2.0,tablespoon
+252,5,black pepper,0.5,teaspoon
+252,6,salt,0.5,teaspoon
+253,0,mushroom,0.3,pound
+253,1,onion,1.0,piece
+253,2,garlic,2.0,piece
+253,3,butter,2.0,tablespoon
+253,4,sour cream,0.5,cup
+253,5,pasta,1.0,pound
+253,6,salt,0.5,teaspoon
+254,0,chickpea,1.5,cup
+254,1,tortilla,4.0,piece
+254,2,yogurt,0.5,cup
+254,3,chili powder,1.0,teaspoon
+254,4,cucumber,1.0,piece
+254,5,lettuce,1.0,cup
+255,0,potato,3.0,piece
+255,1,carrot,2.0,piece
+255,2,zucchini,1.0,piece
+255,3,olive oil,2.0,tablespoon
+255,4,thyme,1.0,teaspoon
+255,5,salt,0.5,teaspoon
+255,6,black pepper,0.25,teaspoon
+256,0,shrimp,1.0,pound
+256,1,butter,2.0,tablespoon
+256,2,garlic,4.0,piece
+256,3,lemon,1.0,piece
+256,4,parsley,2.0,tablespoon
+256,5,pasta,1.0,pound
+256,6,salt,0.5,teaspoon
+257,0,tomato,4.0,piece
+257,1,onion,1.0,piece
+257,2,garlic,2.0,piece
+257,3,basil,2.0,tablespoon
+257,4,olive oil,1.0,tablespoon
+257,5,vegetable broth,3.0,cup
+258,0,chicken breast,1.0,pound
+258,1,romaine lettuce,2.0,cup
+258,2,parmesan,0.25,cup
+258,3,tortilla,4.0,piece
+258,4,caesar dressing,3.0,tablespoon
+258,5,croutons,0.5,cup
+259,0,black beans,1.0,cup
+259,1,corn,1.0,cup
+259,2,red pepper,1.0,piece
+259,3,red onion,0.25,piece
+259,4,cilantro,0.25,cup
+259,5,lime,1.0,piece
+259,6,olive oil,1.0,tablespoon
+260,0,bell pepper,4.0,piece
+260,1,rice,1.0,cup
+260,2,ground beef,1.0,pound
+260,3,tomato,1.0,piece
+260,4,onion,1.0,piece
+260,5,cheddar cheese,0.5,cup
+260,6,salt,0.5,teaspoon
+261,0,kale,3.0,cup
+261,1,garlic,3.0,piece
+261,2,olive oil,1.0,tablespoon
+261,3,lemon,1.0,piece
+261,4,salt,0.25,teaspoon
+261,5,black pepper,0.25,teaspoon
+262,0,salmon,2.0,piece
+262,1,soy sauce,3.0,tablespoon
+262,2,honey,1.0,tablespoon
+262,3,rice,1.0,cup
+262,4,broccoli,1.0,cup
+262,5,sesame seeds,1.0,tablespoon
+262,6,green onion,2.0,piece
+263,0,oats,1.0,cup
+263,1,pumpkin puree,0.5,cup
+263,2,milk,1.0,cup
+263,3,cinnamon,1.0,teaspoon
+263,4,nutmeg,0.25,teaspoon
+263,5,maple syrup,1.0,tablespoon
+264,0,chicken breast,1.0,pound
+264,1,yogurt,0.5,cup
+264,2,lemon,1.0,piece
+264,3,garlic,2.0,piece
+264,4,oregano,1.0,teaspoon
+264,5,olive oil,1.0,tablespoon
+265,0,rice,2.0,cup
+265,1,egg,2.0,piece
+265,2,peas,0.5,cup
+265,3,carrot,1.0,piece
+265,4,soy sauce,1.0,tablespoon
+265,5,green onion,2.0,piece
+265,6,oil,1.0,tablespoon
+266,0,broccoli,5.0,cup
+266,1,garlic,3.0,piece
+266,2,lemon,1.0,piece
+266,3,olive oil,1.0,tablespoon
+266,4,salt,0.5,teaspoon
+266,5,black pepper,0.25,teaspoon
+267,0,lentil,1.0,cup
+267,1,cucumber,1.0,piece
+267,2,tomato,1.0,piece
+267,3,red onion,0.25,piece
+267,4,lemon,1.0,piece
+267,5,olive oil,2.0,tablespoon
+267,6,parsley,2.0,tablespoon
+268,0,flour,1.0,cup
+268,1,blueberry,0.5,cup
+268,2,egg,1.0,piece
+268,3,milk,0.75,cup
+268,4,baking powder,1.0,teaspoon
+268,5,sugar,1.0,tablespoon
+268,6,butter,1.0,tablespoon
+269,0,shrimp,1.0,pound
+269,1,garlic,4.0,piece
+269,2,heavy cream,1.0,cup
+269,3,parmesan,0.5,cup
+269,4,spinach,2.0,cup
+269,5,tomato,1.0,piece
+269,6,butter,2.0,tablespoon
+270,0,beef sirloin,1.5,pound
+270,1,soy sauce,5.0,tablespoon
+270,2,brown sugar,3.0,tablespoon
+270,3,sesame oil,2.0,tablespoon
+270,4,garlic,5.0,piece
+270,5,pear,0.5,piece
+270,6,scallion,4.0,piece
+271,0,egg,6.0,piece
+271,1,tomato,4.0,piece
+271,2,bell pepper,1.0,piece
+271,3,onion,1.0,piece
+271,4,cumin,1.0,teaspoon
+271,5,paprika,1.0,teaspoon
+271,6,olive oil,2.0,tablespoon
+272,0,black beans,2.0,cup
+272,1,tortilla,8.0,piece
+272,2,avocado,2.0,piece
+272,3,tomato,2.0,piece
+272,4,lime,2.0,piece
+272,5,cilantro,0.5,cup
+272,6,cumin,1.0,teaspoon
+273,0,red lentil,1.5,cup
+273,1,coconut milk,1.0,cup
+273,2,onion,1.0,piece
+273,3,curry powder,2.0,tablespoon
+273,4,garlic,4.0,piece
+273,5,ginger,1.0,tablespoon
+273,6,vegetable broth,2.0,cup
+274,0,mozzarella,4.0,cup
+274,1,tomato,4.0,piece
+274,2,basil,8.0,tablespoon
+274,3,olive oil,3.0,tablespoon
+274,4,balsamic vinegar,2.0,tablespoon
+275,0,banana,2.0,piece
+275,1,flour,1.0,cup
+275,2,egg,2.0,piece
+275,3,milk,0.75,cup
+275,4,baking powder,1.0,teaspoon
+275,5,butter,2.0,tablespoon
+276,0,bell pepper,6.0,piece
+276,1,ground beef,1.0,pound
+276,2,rice,1.0,cup
+276,3,tomato sauce,1.0,cup
+276,4,onion,1.0,piece
+276,5,cheddar cheese,1.0,cup
+276,6,garlic,3.0,piece
+277,0,spinach,2.0,cup
+277,1,artichoke heart,1.0,cup
+277,2,cream cheese,0.5,cup
+277,3,sour cream,0.5,cup
+277,4,parmesan,0.5,cup
+277,5,garlic,3.0,piece
+278,0,greek yogurt,2.0,cup
+278,1,granola,1.0,cup
+278,2,strawberry,1.0,cup
+278,3,blueberry,0.5,cup
+278,4,honey,2.0,tablespoon
+279,0,beef sirloin,1.5,pound
+279,1,mushroom,0.5,pound
+279,2,onion,1.0,piece
+279,3,sour cream,1.0,cup
+279,4,beef broth,1.0,cup
+279,5,butter,3.0,tablespoon
+279,6,egg noodle,4.0,cup
+280,0,shrimp,1.0,pound
+280,1,spaghetti,1.0,pound
+280,2,butter,6.0,tablespoon
+280,3,garlic,6.0,piece
+280,4,lemon,1.0,piece
+280,5,parsley,8.0,tablespoon
+280,6,red pepper flakes,0.5,teaspoon
+281,0,oats,1.0,cup
+281,1,apple,2.0,piece
+281,2,almond milk,2.0,cup
+281,3,cinnamon,1.0,teaspoon
+281,4,maple syrup,2.0,tablespoon
+281,5,walnut,0.25,cup
+282,0,eggplant,2.0,piece
+282,1,marinara sauce,2.0,cup
+282,2,mozzarella,4.0,cup
+282,3,breadcrumbs,1.0,cup
+282,4,egg,2.0,piece
+282,5,parmesan,0.5,cup
+283,0,chicken breast,1.0,pound
+283,1,tortilla,4.0,piece
+283,2,romaine lettuce,3.0,cup
+283,3,parmesan,0.5,cup
+283,4,caesar dressing,8.0,tablespoon
+284,0,chickpea,2.0,cup
+284,1,carrot,3.0,piece
+284,2,sweet potato,2.0,piece
+284,3,onion,1.0,piece
+284,4,cumin,1.0,teaspoon
+284,5,cinnamon,0.5,teaspoon
+284,6,vegetable broth,2.0,cup
+285,0,quinoa,1.0,cup
+285,1,sweet potato,1.0,piece
+285,2,chickpea,1.0,cup
+285,3,kale,2.0,cup
+285,4,avocado,1.0,piece
+285,5,tahini,3.0,tablespoon
+285,6,lemon,1.0,piece
+286,0,shrimp,1.5,pound
+286,1,linguine,1.0,pound
+286,2,butter,6.0,tablespoon
+286,3,garlic,6.0,piece
+286,4,white wine,0.5,cup
+286,5,lemon,2.0,piece
+286,6,parsley,8.0,tablespoon
+287,0,mushroom,1.0,pound
+287,1,onion,1.0,piece
+287,2,sour cream,1.0,cup
+287,3,vegetable broth,1.0,cup
+287,4,butter,3.0,tablespoon
+287,5,egg noodle,4.0,cup
+287,6,thyme,1.0,teaspoon
+288,0,carrot,10.0,piece
+288,1,onion,1.0,piece
+288,2,ginger,2.0,tablespoon
+288,3,vegetable broth,4.0,cup
+288,4,coconut milk,0.5,cup
+288,5,olive oil,2.0,tablespoon
+289,0,chicken breast,1.0,pound
+289,1,tortilla,4.0,piece
+289,2,cheddar cheese,2.0,cup
+289,3,bell pepper,1.0,piece
+289,4,onion,0.5,piece
+289,5,cumin,1.0,teaspoon
+290,0,baguette,1.0,piece
+290,1,tomato,4.0,piece
+290,2,basil,8.0,tablespoon
+290,3,garlic,3.0,piece
+290,4,olive oil,4.0,tablespoon
+290,5,balsamic vinegar,1.0,tablespoon
+291,0,rice,3.0,cup
+291,1,carrot,2.0,piece
+291,2,peas,1.0,cup
+291,3,scallion,4.0,piece
+291,4,soy sauce,3.0,tablespoon
+291,5,sesame oil,1.0,tablespoon
+291,6,garlic,3.0,piece
+292,0,eggplant,2.0,piece
+292,1,ground lamb,1.0,pound
+292,2,tomato,3.0,piece
+292,3,onion,1.0,piece
+292,4,milk,2.0,cup
+292,5,butter,4.0,tablespoon
+292,6,cinnamon,0.5,teaspoon
+293,0,carrot,10.0,piece
+293,1,butter,3.0,tablespoon
+293,2,honey,3.0,tablespoon
+293,3,thyme,1.0,teaspoon
+293,4,parsley,2.0,tablespoon
+294,0,chicken breast,1.0,pound
+294,1,bacon,8.0,piece
+294,2,romaine lettuce,4.0,cup
+294,3,egg,4.0,piece
+294,4,avocado,2.0,piece
+294,5,blue cheese,0.5,cup
+294,6,cherry tomato,1.0,cup
+295,0,pumpkin puree,2.0,cup
+295,1,pie crust,1.0,piece
+295,2,egg,3.0,piece
+295,3,heavy cream,1.0,cup
+295,4,sugar,0.75,cup
+295,5,cinnamon,1.0,teaspoon
+295,6,nutmeg,0.5,teaspoon
+296,0,potato,6.0,piece
+296,1,lemon,2.0,piece
+296,2,garlic,6.0,piece
+296,3,olive oil,4.0,tablespoon
+296,4,oregano,1.0,tablespoon
+296,5,chicken broth,1.0,cup
+297,0,salmon,2.0,piece
+297,1,rice,2.0,cup
+297,2,avocado,1.0,piece
+297,3,cucumber,1.0,piece
+297,4,soy sauce,3.0,tablespoon
+297,5,sesame oil,1.0,tablespoon
+297,6,scallion,3.0,piece
+298,0,lasagna noodles,12.0,piece
+298,1,zucchini,2.0,piece
+298,2,spinach,3.0,cup
+298,3,ricotta cheese,2.0,cup
+298,4,mozzarella,2.0,cup
+298,5,marinara sauce,3.0,cup
+298,6,parmesan,0.5,cup
+299,0,chicken breast,1.0,pound
+299,1,rice,4.0,cup
+299,2,egg,3.0,piece
+299,3,peas,1.0,cup
+299,4,carrot,2.0,piece
+299,5,soy sauce,4.0,tablespoon
+299,6,sesame oil,1.0,tablespoon
+300,0,chickpea,2.0,cup
+300,1,tahini,4.0,tablespoon
+300,2,lemon,1.0,piece
+300,3,garlic,2.0,piece
+300,4,olive oil,3.0,tablespoon
+300,5,pita bread,4.0,piece
+301,0,ground beef,1.0,pound
+301,1,rice,2.0,cup
+301,2,black beans,1.0,cup
+301,3,corn,1.0,cup
+301,4,avocado,1.0,piece
+301,5,sour cream,0.5,cup
+301,6,lime,2.0,piece
+302,0,chicken breast,2.0,pound
+302,1,spinach,2.0,cup
+302,2,feta cheese,1.0,cup
+302,3,cream cheese,0.25,cup
+302,4,garlic,3.0,piece
+302,5,olive oil,2.0,tablespoon
+303,0,coconut milk,2.0,cup
+303,1,curry paste,3.0,tablespoon
+303,2,tofu,1.0,pound
+303,3,bell pepper,2.0,piece
+303,4,bamboo shoots,1.0,cup
+303,5,basil,8.0,tablespoon
+303,6,fish sauce,2.0,tablespoon
+304,0,mushroom,0.6,pound
+304,1,cream cheese,0.5,cup
+304,2,parmesan,0.5,cup
+304,3,breadcrumbs,0.5,cup
+304,4,garlic,3.0,piece
+304,5,parsley,4.0,tablespoon
+305,0,chicken wing,2.0,pound
+305,1,soy sauce,4.0,tablespoon
+305,2,honey,4.0,tablespoon
+305,3,garlic,4.0,piece
+305,4,ginger,1.0,tablespoon
+305,5,sesame seeds,2.0,tablespoon
+306,0,black beans,3.0,cup
+306,1,onion,1.0,piece
+306,2,garlic,4.0,piece
+306,3,vegetable broth,4.0,cup
+306,4,cumin,2.0,teaspoon
+306,5,lime,2.0,piece
+306,6,cilantro,0.5,cup
+307,0,tomato,6.0,piece
+307,1,onion,1.0,piece
+307,2,garlic,4.0,piece
+307,3,vegetable broth,2.0,cup
+307,4,heavy cream,0.5,cup
+307,5,basil,8.0,tablespoon
+308,0,beef,1.5,pound
+308,1,soy sauce,8.0,tablespoon
+308,2,brown sugar,8.0,tablespoon
+308,3,garlic,4.0,piece
+308,4,ginger,1.0,tablespoon
+308,5,scallion,6.0,piece
+308,6,cornstarch,4.0,tablespoon
+309,0,potato,2.0,piece
+309,1,cauliflower,0.5,pound
+309,2,peas,1.0,cup
+309,3,coconut milk,1.0,cup
+309,4,curry powder,2.0,tablespoon
+309,5,onion,1.0,piece
+309,6,garlic,4.0,piece
+310,0,onion,4.0,piece
+310,1,beef broth,6.0,cup
+310,2,butter,4.0,tablespoon
+310,3,baguette,1.0,piece
+310,4,gruyere cheese,1.5,cup
+310,5,thyme,1.0,teaspoon
+311,0,shrimp,1.0,pound
+311,1,rice,4.0,cup
+311,2,egg,3.0,piece
+311,3,peas,1.0,cup
+311,4,carrot,2.0,piece
+311,5,soy sauce,4.0,tablespoon
+311,6,sesame oil,1.0,tablespoon
+312,0,tuna,1.0,pound
+312,1,mayonnaise,8.0,tablespoon
+312,2,celery,2.0,piece
+312,3,bread,8.0,piece
+312,4,lemon,1.0,piece
+312,5,lettuce,1.0,cup
+313,0,chicken breast,2.0,pound
+313,1,breadcrumbs,1.0,cup
+313,2,marinara sauce,2.0,cup
+313,3,mozzarella,1.5,cup
+313,4,parmesan,0.5,cup
+313,5,egg,2.0,piece
+314,0,zucchini,2.0,piece
+314,1,bell pepper,2.0,piece
+314,2,red onion,1.0,piece
+314,3,cherry tomato,2.0,cup
+314,4,olive oil,4.0,tablespoon
+314,5,oregano,1.0,tablespoon
+315,0,corn,4.0,cup
+315,1,potato,2.0,piece
+315,2,onion,1.0,piece
+315,3,milk,2.0,cup
+315,4,butter,3.0,tablespoon
+315,5,vegetable broth,2.0,cup
+316,0,ground lamb,1.5,pound
+316,1,pita bread,6.0,piece
+316,2,cucumber,1.0,piece
+316,3,yogurt,1.0,cup
+316,4,tomato,2.0,piece
+316,5,oregano,1.0,tablespoon
+316,6,garlic,4.0,piece
+317,0,fettuccine,1.0,pound
+317,1,mushroom,1.0,pound
+317,2,heavy cream,1.0,cup
+317,3,garlic,4.0,piece
+317,4,parmesan,0.5,cup
+317,5,butter,3.0,tablespoon
+318,0,banana,4.0,piece
+318,1,flour,2.0,cup
+318,2,sugar,0.75,cup
+318,3,egg,2.0,piece
+318,4,butter,8.0,tablespoon
+318,5,walnut,0.5,cup
+319,0,broccoli,2.0,cup
+319,1,bell pepper,2.0,piece
+319,2,carrot,2.0,piece
+319,3,peas,1.0,cup
+319,4,soy sauce,3.0,tablespoon
+319,5,garlic,4.0,piece
+319,6,ginger,1.0,tablespoon
+320,0,chicken breast,1.0,pound
+320,1,egg noodle,2.0,cup
+320,2,carrot,3.0,piece
+320,3,celery,3.0,piece
+320,4,chicken broth,8.0,cup
+320,5,onion,1.0,piece
+321,0,chicken breast,1.5,pound
+321,1,fettuccine,1.0,pound
+321,2,heavy cream,2.0,cup
+321,3,parmesan,1.5,cup
+321,4,butter,4.0,tablespoon
+321,5,garlic,4.0,piece
+322,0,flour,2.0,cup
+322,1,blueberry,1.5,cup
+322,2,sugar,0.75,cup
+322,3,egg,2.0,piece
+322,4,milk,0.5,cup
+322,5,butter,8.0,tablespoon
+323,0,apple,8.0,piece
+323,1,pie crust,2.0,piece
+323,2,sugar,0.75,cup
+323,3,cinnamon,1.0,teaspoon
+323,4,butter,2.0,tablespoon
+323,5,flour,2.0,tablespoon
+324,0,broccoli,2.0,cup
+324,1,bell pepper,1.0,piece
+324,2,carrot,2.0,piece
+324,3,soy sauce,2.0,tablespoon
+324,4,garlic,2.0,piece
+324,5,ginger,1.0,teaspoon
+324,6,oil,1.0,tablespoon
+325,0,flour,2.0,cup
+325,1,butter,8.0,tablespoon
+325,2,sugar,0.75,cup
+325,3,brown sugar,4.0,tablespoon
+325,4,egg,1.0,piece
+325,5,vanilla,1.0,teaspoon
+325,6,baking soda,0.5,teaspoon
+325,7,salt,0.25,teaspoon
+325,8,chocolate chips,1.0,cup
+326,0,beef,1.0,pound
+326,1,broccoli,2.0,cup
+326,2,bell pepper,1.0,piece
+326,3,soy sauce,3.0,tablespoon
+326,4,garlic,3.0,piece
+326,5,ginger,1.0,teaspoon
+326,6,oil,2.0,tablespoon
+327,0,chicken,1.0,pound
+327,1,onion,1.0,piece
+327,2,garlic,4.0,piece
+327,3,curry powder,2.0,tablespoon
+327,4,coconut milk,1.0,cup
+327,5,tomato,2.0,piece
+327,6,oil,1.0,tablespoon
+328,0,flour,1.0,cup
+328,1,milk,1.0,cup
+328,2,egg,1.0,piece
+328,3,sugar,2.0,tablespoon
+328,4,baking powder,1.0,teaspoon
+328,5,salt,0.25,teaspoon
+328,6,butter,2.0,tablespoon
+329,0,ground beef,1.0,pound
+329,1,taco seasoning,2.0,tablespoon
+329,2,tortilla,8.0,piece
+329,3,lettuce,1.0,cup
+329,4,cheese,0.5,cup
+329,5,tomato,2.0,piece
+329,6,sour cream,0.25,cup
+330,0,arborio rice,1.0,cup
+330,1,mushroom,0.3,pound
+330,2,onion,1.0,piece
+330,3,garlic,2.0,piece
+330,4,white wine,0.5,cup
+330,5,vegetable broth,4.0,cup
+330,6,parmesan,0.5,cup
+331,0,flour,2.0,cup
+331,1,sugar,0.75,cup
+331,2,blueberry,1.0,cup
+331,3,milk,0.75,cup
+331,4,egg,1.0,piece
+331,5,butter,4.0,tablespoon
+331,6,baking powder,1.0,teaspoon
+332,0,lasagna noodles,9.0,piece
+332,1,ricotta cheese,1.0,cup
+332,2,spinach,2.0,cup
+332,3,zucchini,1.0,piece
+332,4,marinara sauce,2.0,cup
+332,5,mozzarella,1.0,cup
+332,6,parmesan,0.25,cup
+333,0,apple,6.0,piece
+333,1,sugar,0.75,cup
+333,2,cinnamon,1.0,teaspoon
+333,3,flour,2.0,cup
+333,4,butter,8.0,tablespoon
+333,5,pie crust,2.0,piece
+333,6,lemon juice,1.0,tablespoon
+334,0,bread,2.0,piece
+334,1,cheddar cheese,0.5,cup
+334,2,butter,1.0,tablespoon
+334,3,salt,0.25,teaspoon
+334,4,pepper,0.25,teaspoon
+335,0,beef,1.0,pound
+335,1,potato,2.0,piece
+335,2,carrot,2.0,piece
+335,3,onion,1.0,piece
+335,4,beef broth,2.0,cup
+335,5,flour,2.0,tablespoon
+335,6,thyme,1.0,teaspoon
+336,0,quinoa,1.0,cup
+336,1,cucumber,1.0,piece
+336,2,tomato,2.0,piece
+336,3,feta cheese,0.25,cup
+336,4,olive oil,2.0,tablespoon
+336,5,lemon juice,1.0,tablespoon
+336,6,parsley,2.0,tablespoon
+337,0,flour,2.0,cup
+337,1,sugar,2.0,cup
+337,2,cocoa powder,0.75,cup
+337,3,baking soda,1.0,teaspoon
+337,4,egg,2.0,piece
+337,5,milk,1.0,cup
+337,6,butter,8.0,tablespoon
+338,0,rice,2.0,cup
+338,1,egg,2.0,piece
+338,2,carrot,1.0,piece
+338,3,peas,0.5,cup
+338,4,soy sauce,2.0,tablespoon
+338,5,scallion,2.0,piece
+338,6,oil,1.0,tablespoon
+339,0,tomato,3.0,piece
+339,1,mozzarella,2.0,cup
+339,2,basil,4.0,tablespoon
+339,3,olive oil,2.0,tablespoon
+339,4,balsamic vinegar,1.0,tablespoon
+339,5,salt,0.25,teaspoon
+339,6,pepper,0.25,teaspoon
+340,0,broccoli,2.0,cup
+340,1,bell pepper,1.0,piece
+340,2,carrot,2.0,piece
+340,3,soy sauce,3.0,tablespoon
+340,4,garlic,3.0,piece
+340,5,oil,2.0,tablespoon
+340,6,ginger,1.0,teaspoon
+341,0,cucumber,1.0,piece
+341,1,tomato,2.0,piece
+341,2,feta cheese,0.5,cup
+341,3,olive,0.5,cup
+341,4,olive oil,2.0,tablespoon
+341,5,oregano,1.0,teaspoon
+341,6,lemon juice,1.0,tablespoon
+342,0,flour,2.0,cup
+342,1,butter,8.0,tablespoon
+342,2,sugar,0.75,cup
+342,3,brown sugar,4.0,tablespoon
+342,4,egg,1.0,piece
+342,5,vanilla,1.0,teaspoon
+342,6,chocolate chips,1.0,cup
+343,0,lentil,1.0,cup
+343,1,carrot,2.0,piece
+343,2,onion,1.0,piece
+343,3,garlic,2.0,piece
+343,4,vegetable broth,4.0,cup
+343,5,cumin,1.0,teaspoon
+343,6,tomato,1.0,piece
+344,0,ground beef,1.0,pound
+344,1,taco seasoning,1.0,tablespoon
+344,2,onion,1.0,piece
+344,3,garlic,2.0,piece
+344,4,lettuce,1.0,cup
+344,5,tomato,1.0,piece
+344,6,cheddar cheese,1.0,cup
+344,7,tortilla,8.0,piece
+345,0,mixed vegetables,2.0,cup
+345,1,onion,1.0,piece
+345,2,garlic,2.0,piece
+345,3,ginger,1.0,tablespoon
+345,4,curry powder,1.0,tablespoon
+345,5,coconut milk,1.0,cup
+345,6,vegetable broth,1.0,cup
+346,0,bread,2.0,piece
+346,1,cheddar cheese,0.5,cup
+346,2,butter,1.0,tablespoon
+346,3,tomato,1.0,piece
+346,4,onion,0.25,piece
+347,0,chicken breast,1.0,pound
+347,1,broccoli,1.0,cup
+347,2,bell pepper,1.0,piece
+347,3,soy sauce,2.0,tablespoon
+347,4,garlic,2.0,piece
+347,5,ginger,1.0,teaspoon
+347,6,oil,1.0,tablespoon
+348,0,flour,1.0,cup
+348,1,milk,1.0,cup
+348,2,egg,1.0,piece
+348,3,baking powder,1.0,teaspoon
+348,4,sugar,1.0,tablespoon
+348,5,butter,1.0,tablespoon
+349,0,spaghetti,1.0,pound
+349,1,ground beef,1.0,pound
+349,2,tomato sauce,1.0,cup
+349,3,onion,1.0,piece
+349,4,garlic,2.0,piece
+349,5,carrot,1.0,piece
+349,6,olive oil,1.0,tablespoon
+350,0,quinoa,1.0,cup
+350,1,cucumber,1.0,piece
+350,2,tomato,1.0,piece
+350,3,onion,0.25,piece
+350,4,lemon juice,2.0,tablespoon
+350,5,olive oil,1.0,tablespoon
+350,6,parsley,4.0,tablespoon
+351,0,flour,1.0,cup
+351,1,cocoa powder,0.5,cup
+351,2,sugar,1.0,cup
+351,3,butter,8.0,tablespoon
+351,4,egg,2.0,piece
+351,5,vanilla,1.0,teaspoon
+351,6,baking powder,0.5,teaspoon
+352,0,salmon,2.0,piece
+352,1,soy sauce,4.0,tablespoon
+352,2,honey,2.0,tablespoon
+352,3,garlic,2.0,piece
+352,4,ginger,1.0,teaspoon
+352,5,sesame oil,1.0,tablespoon
+352,6,green onion,2.0,piece
+353,0,tomato,2.0,piece
+353,1,mozzarella,1.0,cup
+353,2,basil,4.0,tablespoon
+353,3,olive oil,2.0,tablespoon
+353,4,balsamic vinegar,1.0,tablespoon
+353,5,garlic,1.0,piece
+354,0,shrimp,1.0,pound
+354,1,linguine,1.0,pound
+354,2,garlic,4.0,piece
+354,3,butter,8.0,tablespoon
+354,4,white wine,0.5,cup
+354,5,lemon juice,2.0,tablespoon
+354,6,parsley,4.0,tablespoon
+355,0,curry paste,2.0,tablespoon
+355,1,coconut milk,1.0,cup
+355,2,mixed vegetables,2.0,cup
+355,3,tofu,1.0,pound
+355,4,garlic,2.0,piece
+355,5,ginger,1.0,teaspoon
+355,6,soy sauce,1.0,tablespoon
+356,0,romaine lettuce,2.0,cup
+356,1,croutons,1.0,cup
+356,2,parmesan,0.5,cup
+356,3,caesar dressing,4.0,tablespoon
+356,4,lemon juice,1.0,tablespoon
+356,5,garlic,1.0,piece
+357,0,flour,1.5,cup
+357,1,blueberry,1.0,cup
+357,2,sugar,0.75,cup
+357,3,milk,0.5,cup
+357,4,egg,1.0,piece
+357,5,baking powder,1.0,teaspoon
+357,6,butter,4.0,tablespoon
+358,0,tuna,1.0,pound
+358,1,mayonnaise,4.0,tablespoon
+358,2,celery,1.0,piece
+358,3,onion,0.25,piece
+358,4,lemon juice,1.0,tablespoon
+358,5,salt,0.5,teaspoon
+359,0,lasagna noodles,9.0,piece
+359,1,ground beef,1.0,pound
+359,2,ricotta cheese,1.0,cup
+359,3,mozzarella,1.0,cup
+359,4,tomato sauce,2.0,cup
+359,5,onion,1.0,piece
+359,6,garlic,2.0,piece
+360,0,apple,6.0,piece
+360,1,sugar,0.75,cup
+360,2,cinnamon,1.0,teaspoon
+360,3,pie crust,2.0,piece
+360,4,butter,2.0,tablespoon
+360,5,flour,2.0,tablespoon
+361,0,chicken thigh,0.6,pound
+361,1,lemon juice,4.0,tablespoon
+361,2,olive oil,2.0,tablespoon
+361,3,garlic,2.0,piece
+361,4,oregano,1.0,teaspoon
+361,5,black pepper,0.5,teaspoon
+362,0,salmon,1.0,piece
+362,1,soy sauce,2.0,tablespoon
+362,2,honey,1.0,tablespoon
+362,3,rice,1.0,cup
+362,4,peas,0.5,cup
+362,5,green onion,1.0,piece
+363,0,banana,1.0,piece
+363,1,peanut butter,0.25,cup
+363,2,milk,1.0,cup
+363,3,oats,0.25,cup
+363,4,honey,1.0,tablespoon
+364,0,carrot,5.0,piece
+364,1,maple syrup,2.0,tablespoon
+364,2,olive oil,1.0,tablespoon
+364,3,butter,1.0,tablespoon
+364,4,thyme,1.0,teaspoon
+365,0,chicken,0.3,pound
+365,1,tortilla,1.0,piece
+365,2,romaine lettuce,1.0,cup
+365,3,parmesan,0.25,cup
+365,4,caesar dressing,2.0,tablespoon
+365,5,croutons,0.25,cup
+366,0,bell pepper,3.0,piece
+366,1,ground turkey,0.5,pound
+366,2,quinoa,1.0,cup
+366,3,tomato sauce,0.5,cup
+366,4,onion,1.0,piece
+366,5,mozzarella,0.5,cup
+367,0,pasta,0.1,pound
+367,1,mushroom,0.3,pound
+367,2,heavy cream,0.5,cup
+367,3,parmesan,0.5,cup
+367,4,garlic,2.0,piece
+367,5,butter,2.0,tablespoon
+368,0,shrimp,1.0,pound
+368,1,butter,3.0,tablespoon
+368,2,garlic,3.0,piece
+368,3,lemon juice,1.0,tablespoon
+368,4,parsley,2.0,tablespoon
+369,0,pear,2.0,piece
+369,1,honey,2.0,tablespoon
+369,2,cinnamon,1.0,teaspoon
+369,3,walnut,0.5,cup
+369,4,butter,1.0,tablespoon
+370,0,shrimp,0.5,pound
+370,1,pasta,0.1,pound
+370,2,lemon juice,2.0,tablespoon
+370,3,olive oil,2.0,tablespoon
+370,4,parsley,2.0,tablespoon
+370,5,garlic,2.0,piece
+371,0,broccoli,2.0,cup
+371,1,carrot,2.0,piece
+371,2,bell pepper,1.0,piece
+371,3,soy sauce,3.0,tablespoon
+371,4,ginger,1.0,tablespoon
+371,5,garlic,2.0,piece
+371,6,sesame oil,1.0,tablespoon
+372,0,tomato,3.0,piece
+372,1,mozzarella,2.0,cup
+372,2,basil,8.0,tablespoon
+372,3,olive oil,2.0,tablespoon
+372,4,balsamic vinegar,1.0,tablespoon
+373,0,chicken breast,1.0,pound
+373,1,curry paste,2.0,tablespoon
+373,2,coconut milk,2.0,cup
+373,3,bamboo shoots,0.5,cup
+373,4,basil,4.0,tablespoon
+373,5,fish sauce,1.0,tablespoon
+374,0,spaghetti,1.0,pound
+374,1,bacon,8.0,piece
+374,2,egg,3.0,piece
+374,3,parmesan,0.75,cup
+374,4,black pepper,1.0,teaspoon
+375,0,banana,3.0,piece
+375,1,flour,1.5,cup
+375,2,sugar,0.75,cup
+375,3,butter,5.0,tablespoon
+375,4,egg,1.0,piece
+375,5,baking soda,1.0,teaspoon
+376,0,quinoa,1.0,cup
+376,1,cucumber,1.0,piece
+376,2,cherry tomato,1.0,cup
+376,3,lemon juice,2.0,tablespoon
+376,4,olive oil,2.0,tablespoon
+376,5,parsley,4.0,tablespoon
+377,0,tomato,6.0,piece
+377,1,cucumber,1.0,piece
+377,2,bell pepper,1.0,piece
+377,3,onion,0.5,piece
+377,4,garlic,1.0,piece
+377,5,olive oil,2.0,tablespoon
+377,6,vinegar,1.0,tablespoon
+378,0,eggplant,2.0,piece
+378,1,marinara sauce,2.0,cup
+378,2,mozzarella,1.5,cup
+378,3,parmesan,0.5,cup
+378,4,breadcrumbs,1.0,cup
+378,5,egg,2.0,piece
+379,0,beef sirloin,1.0,pound
+379,1,mushroom,0.5,pound
+379,2,onion,1.0,piece
+379,3,sour cream,1.0,cup
+379,4,beef broth,1.0,cup
+379,5,butter,2.0,tablespoon
+379,6,flour,1.0,tablespoon
+380,0,chickpea,1.0,cup
+380,1,parsley,8.0,tablespoon
+380,2,garlic,2.0,piece
+380,3,cumin,1.0,teaspoon
+380,4,pita bread,4.0,piece
+380,5,tahini,4.0,tablespoon
+380,6,lettuce,1.0,cup
+381,0,shrimp,1.0,pound
+381,1,butter,4.0,tablespoon
+381,2,garlic,4.0,piece
+381,3,lemon juice,2.0,tablespoon
+381,4,white wine,0.25,cup
+381,5,parsley,1.0,tablespoon
+382,0,lettuce,4.0,cup
+382,1,chicken breast,0.5,pound
+382,2,bacon,3.0,piece
+382,3,avocado,1.0,piece
+382,4,egg,2.0,piece
+382,5,blue cheese,0.25,cup
+382,6,tomato,1.0,piece
+383,0,zucchini,2.0,piece
+383,1,eggplant,1.0,piece
+383,2,bell pepper,1.0,piece
+383,3,tomato,3.0,piece
+383,4,onion,1.0,piece
+383,5,garlic,2.0,piece
+383,6,thyme,1.0,teaspoon
+384,0,apple,6.0,piece
+384,1,pie crust,2.0,piece
+384,2,sugar,0.75,cup
+384,3,cinnamon,1.0,teaspoon
+384,4,butter,2.0,tablespoon
+384,5,flour,1.0,tablespoon
+385,0,egg,4.0,piece
+385,1,tomato,4.0,piece
+385,2,onion,1.0,piece
+385,3,bell pepper,1.0,piece
+385,4,garlic,2.0,piece
+385,5,cumin,1.0,teaspoon
+385,6,paprika,1.0,teaspoon
+386,0,avocado,3.0,piece
+386,1,onion,0.25,piece
+386,2,tomato,1.0,piece
+386,3,lime juice,1.0,tablespoon
+386,4,cilantro,0.25,cup
+386,5,jalapeno,1.0,piece
+387,0,chickpea,1.5,cup
+387,1,tahini,4.0,tablespoon
+387,2,lemon juice,4.0,tablespoon
+387,3,garlic,1.0,piece
+387,4,olive oil,2.0,tablespoon
+387,5,cumin,0.5,teaspoon
+388,0,flour,1.5,cup
+388,1,milk,1.25,cup
+388,2,egg,1.0,piece
+388,3,baking powder,3.5,teaspoon
+388,4,sugar,1.0,tablespoon
+388,5,butter,3.0,tablespoon
+389,0,baguette,1.0,piece
+389,1,tomato,5.0,piece
+389,2,basil,4.0,tablespoon
+389,3,garlic,2.0,piece
+389,4,olive oil,3.0,tablespoon
+389,5,balsamic vinegar,1.0,tablespoon
+390,0,ground beef,1.0,pound
+390,1,tortilla,4.0,piece
+390,2,rice,1.0,cup
+390,3,black beans,1.0,cup
+390,4,cheddar cheese,0.5,cup
+390,5,salsa,0.5,cup
+391,0,spinach,1.0,cup
+391,1,artichoke heart,1.0,cup
+391,2,cream cheese,1.0,cup
+391,3,sour cream,0.5,cup
+391,4,mozzarella,1.0,cup
+391,5,parmesan,0.5,cup
+392,0,pumpkin puree,2.0,cup
+392,1,onion,1.0,piece
+392,2,vegetable broth,3.0,cup
+392,3,coconut milk,1.0,cup
+392,4,garlic,2.0,piece
+392,5,maple syrup,1.0,tablespoon
+392,6,cinnamon,0.5,teaspoon
+393,0,ground lamb,1.5,pound
+393,1,potato,4.0,piece
+393,2,onion,1.0,piece
+393,3,carrot,2.0,piece
+393,4,peas,1.0,cup
+393,5,butter,2.0,tablespoon
+393,6,beef broth,1.0,cup
+394,0,chia seeds,4.0,tablespoon
+394,1,almond milk,1.0,cup
+394,2,maple syrup,1.0,tablespoon
+394,3,vanilla,0.5,teaspoon
+394,4,mixed berries,0.5,cup
+395,0,potato,6.0,piece
+395,1,mayonnaise,8.0,tablespoon
+395,2,celery,2.0,piece
+395,3,onion,0.5,piece
+395,4,mustard,1.0,tablespoon
+395,5,egg,2.0,piece
+396,0,ground beef,1.0,pound
+396,1,breadcrumbs,0.5,cup
+396,2,parmesan,0.25,cup
+396,3,egg,1.0,piece
+396,4,marinara sauce,2.0,cup
+396,5,parsley,2.0,tablespoon
+397,0,butter,8.0,tablespoon
+397,1,sugar,1.0,cup
+397,2,cocoa powder,0.75,cup
+397,3,flour,0.5,cup
+397,4,egg,2.0,piece
+397,5,vanilla,1.0,teaspoon
+398,0,kidney beans,1.0,cup
+398,1,pasta,0.2,pound
+398,2,tomato,2.0,piece
+398,3,carrot,2.0,piece
+398,4,celery,2.0,piece
+398,5,spinach,1.0,cup
+398,6,vegetable broth,6.0,cup
+399,0,eggplant,2.0,piece
+399,1,ground beef,1.0,pound
+399,2,tomato,2.0,piece
+399,3,milk,2.0,cup
+399,4,flour,2.0,tablespoon
+399,5,butter,2.0,tablespoon
