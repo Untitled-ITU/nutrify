@@ -5,7 +5,7 @@ import { RecipeExplorer } from "@/components/recipes/RecipeExplorer";
 import { Recipe } from "@/components/recipes/types";
 import { API_BASE_URL } from "@/lib/config";
 import { authFetch } from "../providers/AuthProvider";
-import { ActionIcon, Menu, Select, TextInput, useMantineTheme } from "@mantine/core";
+import { ActionIcon, Button, Menu, Select, TextInput, useMantineTheme } from "@mantine/core";
 import { IconArrowsSort, IconBookmark, IconCheck, IconHeart, IconPlus, IconSearch, IconX } from "@tabler/icons-react";
 import { handleAddFavorite } from "@/lib/tableActions";
 import { AddToCollectionMenu } from "@/components/recipes/AddToCollectionMenu";
@@ -25,7 +25,7 @@ export default function DiscoverPage() {
     const [filters, setFilters] = useState<RecipeFilters>({});
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    
+
     const theme = useMantineTheme();
 
     const fetchRecipes = useCallback(async () => {
@@ -79,24 +79,24 @@ export default function DiscoverPage() {
                 recipes={recipes}
                 onFiltersChangeAction={setFilters}
                 renderActions={(r) => (
-                    <Menu shadow="md" width={200} position="bottom-end">
-                        <Menu.Target>
-                            <ActionIcon style={{ backgroundColor: theme.other.accentColor }}>
-                                <IconPlus size={28} />
-                            </ActionIcon>
-                        </Menu.Target>
-
-                        <Menu.Dropdown>
-                            <Menu.Item
-                                leftSection={<IconHeart size={16} />}
-                                onClick={() => handleAddFavorite(r)}
-                            >
-                                Add to favorites
-                            </Menu.Item>
-
-                            <AddToCollectionMenu recipe={r} />
-                        </Menu.Dropdown>
-                    </Menu>
+                    <>
+                        <ActionIcon
+                            style={{ backgroundColor: theme.other.primaryDark }}
+                            onClick={() => handleAddFavorite(r)}
+                        >
+                            <IconHeart size={18} />
+                        </ActionIcon>
+                        <Menu shadow="md" width={220}>
+                            <Menu.Target>
+                                <ActionIcon
+                                    style={{ backgroundColor: theme.other.primaryDark }}
+                                >
+                                    <IconBookmark size={18} />
+                                </ActionIcon>
+                            </Menu.Target>
+                            <AddToCollectionMenu variant="dropdown" recipe={r} />
+                        </Menu>
+                    </>
                 )}
             />
 

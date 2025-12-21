@@ -30,6 +30,7 @@ export function RecipeTable({
     sortDir,
     onSortChange,
 }: Props) {
+    const router = useRouter();
     const theme = useMantineTheme();
     const [page, setPage] = useState(1);
 
@@ -117,7 +118,7 @@ export function RecipeTable({
                             <div className="flex justify-end gap-3">
                                 <ActionIcon
                                     style={{ backgroundColor: theme.other.accentColor }}
-                                    onClick={() => onOpen?.(r)}
+                                    onClick={() => router.push(`/recipes/details/${r.id}`)}
                                 >
                                     <IconExternalLink size={28} />
                                 </ActionIcon>
@@ -143,6 +144,7 @@ import {
     IconChevronDown,
     IconSelector,
 } from "@tabler/icons-react";
+import { useRouter } from "next/navigation";
 
 function SortableHeader({
     label,

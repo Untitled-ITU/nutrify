@@ -69,14 +69,15 @@ export default function Navbar() {
                                                     </Menu.Item>
                                                 </Menu.Dropdown>
                                             </Menu>
-                                            <Button variant="subtle" size="xl" fz="h3" color={theme.white} radius={0} component={Link} href="/user/profile" >Profile</Button>
+                                            <Button variant="subtle" size="xl" fz="h3" color={theme.white} radius={0} component={Link} href="/meal-plan" >Meal Plan</Button>
+                                            <Button variant="subtle" size="xl" fz="h3" color={theme.white} radius={0} component={Link} href="/profile" >Profile</Button>
                                             <Button
                                                 variant="subtle"
                                                 size="xl"
                                                 fz="h3"
                                                 color={theme.white}
                                                 radius={0}
-                                                onClick={() => logout()}    // 👈 LOGOUT ACTION
+                                                onClick={() => logout()}
                                             >
                                                 Logout
                                             </Button>
