@@ -8,6 +8,7 @@ import { authFetch } from "@/app/providers/AuthProvider";
 import { ActionIcon, Menu, Select, TextInput, useMantineTheme } from "@mantine/core";
 import { IconArrowsSort, IconBookmark, IconCheck, IconHeart, IconHeartBroken, IconPlus, IconSearch, IconX } from "@tabler/icons-react";
 import { handleAddFavorite, handleRemoveFavorite } from "@/lib/tableActions";
+import { AddToCollectionMenu } from "@/components/recipes/AddToCollectionMenu";
 
 type RecipesResponse = {
     favorites: Recipe[];
@@ -92,7 +93,7 @@ export default function FavoritesPage() {
                 renderActions={(r) => (
                     <Menu shadow="md" width={200} position="bottom-end">
                         <Menu.Target>
-                            <ActionIcon style={{ backgroundColor: theme.other.primaryDark }}>
+                            <ActionIcon style={{ backgroundColor: theme.other.accentColor }}>
                                 <IconPlus size={28} />
                             </ActionIcon>
                         </Menu.Target>
@@ -104,11 +105,8 @@ export default function FavoritesPage() {
                             >
                                 Remove from favorites
                             </Menu.Item>
-                            <Menu.Item
-                                leftSection={<IconBookmark size={16} />}
-                            >
-                                Add to collection
-                            </Menu.Item>
+                            
+                            <AddToCollectionMenu recipe={r} />
                         </Menu.Dropdown>
                     </Menu>
                 )}

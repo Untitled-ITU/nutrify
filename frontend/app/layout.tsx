@@ -34,7 +34,8 @@ const theme = createTheme({
     fontFamily: "var(--font-quicksand)",
     other: {
         primaryDark: "#896C6C",
-        contentBackground: "#F3E7E5"
+        contentBackground: "#F3E7E5",
+        accentColor: "#896C6C",
     }
 })
 

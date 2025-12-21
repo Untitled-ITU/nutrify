@@ -18,6 +18,8 @@ export type IngredientFilter = {
 export type FiltersState = {
     vegetarian: boolean;
     ingredients: IngredientFilter[];
+    cuisines: string[];
+    categories: string[];
 };
 
 export type Collection = {
