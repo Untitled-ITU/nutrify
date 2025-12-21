@@ -2,6 +2,21 @@
   margin-top: -60px; /* optional tweak */
 }
 
+/* toast */
+.toast {
+  position: fixed;
+  top: 18px;
+  right: 18px;
+  z-index: 9999;
+  background: rgba(137, 108, 108, 0.95);
+  color: white;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 10px 14px;
+  border-radius: 12px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
+}
+
 .topRow {
   display: flex;
   justify-content: space-between;
@@ -35,9 +50,67 @@
   cursor: pointer;
 }
 
+/* ✅ week navigation bar */
+.weekBar {
+  margin-top: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.weekRange {
+  font-size: 13px;
+  font-weight: 800;
+  color: rgba(0, 0, 0, 0.78);
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: rgba(221, 177, 168, 0.55);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.navBtn {
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(0,0,0,0.10);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #3b2f2f;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.10);
+  transition: transform 140ms ease, background 140ms ease;
+}
+
+.navBtn:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.62);
+}
+
+.navBtnDisabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.todayBtn {
+  height: 38px;
+  border: 1px solid rgba(0,0,0,0.10);
+  border-radius: 12px;
+  padding: 0 14px;
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+  font-weight: 800;
+  color: #3b2f2f;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.10);
+}
+
 /* ✅ the “window cut” */
 .calendarViewport {
-  margin-top: 22px;
+  margin-top: 12px;
   position: relative;
   border-radius: 26px;
   overflow: hidden; /* keeps rounded mask */
@@ -91,6 +164,33 @@
   transform: translateY(0);
 }
 
+.expandLabel {
+  position: absolute;
+  top: 14px;
+  right: 54px;
+  z-index: 49;
+
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0,0,0,0.10);
+
+  color: rgba(0,0,0,0.7);
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 999px;
+
+  opacity: 0;
+  transform: translateY(-2px);
+  transition: opacity 140ms ease, transform 140ms ease;
+  pointer-events: none;
+}
+
+.calendarViewport:hover .expandLabel,
+.calendarViewport:focus-within .expandLabel {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* ✅ header strip */
 .calendarHeader {
   flex: 0 0 auto;
@@ -116,22 +216,34 @@
   align-items: center;
 }
 
-.stickyCorner {
-  /* empty cell above time column */
-}
+.stickyCorner { }
 
 .stickyDay {
   font-weight: 800;
   color: #111;
   font-size: 13px;
   padding-left: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
 
-/* ✅ body scroller */
+.stickyDayName {
+  font-weight: 900;
+  font-size: 13px;
+}
+
+.stickyDayDate {
+  font-size: 12px;
+  font-weight: 800;
+  opacity: 0.70;
+}
+
+/* ✅ inner scroller (vertical + horizontal) */
 .board {
   flex: 1 1 auto;
   overflow: auto;
-  padding: 0 14px 14px;
+  padding: 0 14px 14px; /* top padding removed (header handles it) */
   overscroll-behavior: contain;
 }
 
@@ -224,7 +336,7 @@
 .mealLeft {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 6px;
   min-width: 0;
 }
 
@@ -241,15 +353,15 @@
 }
 
 .mealTime {
-  opacity: 1;
+  opacity: 1.0;
   font-size: 11px;
   background: rgba(137, 108, 108, 0.92);
   color: white;
   padding: 2px 6px;
   border-radius: 8px;
+  width: fit-content;
 }
 
-/* hover actions */
 .mealActions {
   position: absolute;
   right: 6px;
@@ -272,7 +384,7 @@
   color: #6f5b5b;
 }
 
-/* ✅ stack group for same-time meals */
+/* ✅ stacking (same time) */
 .stackGroup {
   position: absolute;
   left: 0;
@@ -283,7 +395,7 @@
 .stackCount {
   position: absolute;
   top: -10px;
-  right: 8px; /* align with mealCard padding */
+  right: 8px;
   z-index: 200;
 
   font-size: 11px;
@@ -296,18 +408,11 @@
   pointer-events: none;
 }
 
-
 /* modals */
 .modalBody {
   display: flex;
   flex-direction: column;
   gap: 12px;
-}
-
-.hint {
-  margin-top: 10px;
-  font-size: 12px;
-  color: #777;
 }
 
 /* drag overlay */
@@ -317,11 +422,10 @@
   padding: 10px 10px 8px;
   background: #f3e9e7;
   box-shadow: 0 10px 28px rgba(0, 0, 0, 0.18);
-  opacity: 0.9;
+  opacity: 0.82;
   position: relative;
 }
 
-/* drop indicator */
 .dropLine {
   position: absolute;
   left: 8px;
@@ -330,36 +434,4 @@
   background: rgba(137, 108, 108, 0.95);
   z-index: 6;
   border-radius: 2px;
-}
-
-/* ✅ quick error toast */
-@keyframes toastIn {
-  from {
-    opacity: 0;
-    transform: translateX(-50%) translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-  }
-}
-
-.toast {
-  position: fixed;
-  left: 50%;
-  bottom: 18px;
-  transform: translateX(-50%);
-  z-index: 9999;
-
-  background: rgba(60, 24, 24, 0.92);
-  color: #fff;
-  font-weight: 800;
-  font-size: 13px;
-
-  padding: 10px 14px;
-  border-radius: 999px;
-  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.25);
-  pointer-events: none;
-
-  animation: toastIn 140ms ease;
 }
