@@ -1,6 +1,7 @@
 from dotenv import load_dotenv
 
 import os
+from datetime import timedelta
 
 
 base_dir = os.path.dirname(os.path.abspath(__file__))
@@ -38,6 +39,7 @@ class Config:
 
     SECRET_KEY = os.environ["SECRET_KEY"]
     JWT_SECRET_KEY = os.environ["JWT_SECRET_KEY"]
+    JWT_ACCESS_TOKEN_EXPIRES = timedelta(hours=1)
 
     MAIL_SERVER = os.environ["MAIL_SERVER"]
     MAIL_PORT = int(os.environ["MAIL_PORT"])

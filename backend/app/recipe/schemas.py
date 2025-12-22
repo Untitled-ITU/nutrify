@@ -131,7 +131,7 @@ class AddRecipeToCollectionBody(BaseModel):
 
 
 class BulkAddRecipesBody(BaseModel):
-    recipe_ids: list[int] = Field(min_items=1)
+    recipe_ids: list[int] = Field(min_length=1)
 
 
 class BulkAddResponse(BaseModel):
@@ -182,6 +182,7 @@ class RecipeCollectionsResponse(BaseModel):
 class RecipeListQuery(BaseModel):
     q: Optional[str] = None
     ingredients: Optional[str] = None
+    exclude_ingredients: Optional[str] = None
     category: Optional[str] = None
     cuisine: Optional[str] = None
     is_vegan: Optional[bool] = None
@@ -192,7 +193,7 @@ class RecipeListQuery(BaseModel):
 
 
 class IngredientSearchQuery(BaseModel):
-    q: Optional[str] = None
+    q: str = Field(min_length=2)
     limit: Optional[int] = 10
 
 

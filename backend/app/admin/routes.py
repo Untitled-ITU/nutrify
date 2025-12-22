@@ -4,12 +4,8 @@ from ...extensions import db
 from ..auth.models import User
 from ..decorators import admin_required
 from .schemas import (
-    UserIdPath,
-    ResetPasswordBody,
-    UsersListResponse,
-    UserSummary,
-    ChangeRoleBody,
-    MessageResponse
+    UserIdPath, ResetPasswordBody, UsersListResponse,
+    ChangeRoleBody, MessageResponse
 )
 
 
@@ -21,8 +17,7 @@ admin_bp = APIBlueprint('admin_bp', __name__, url_prefix='/api/admin', abp_secur
     responses={"200": MessageResponse, "404": MessageResponse})
 @admin_required
 def reset_user_password(path: UserIdPath, body: ResetPasswordBody):
-    user_id = path.user_id
-    user_to_reset = User.query.get(user_id)
+    user_to_reset = db.session.get(User, path.user_id)
 
     if not user_to_reset:
         return {"msg": "User not found"}, 404
@@ -55,8 +50,7 @@ def get_all_users():
     responses={"200": MessageResponse, "404": MessageResponse})
 @admin_required
 def change_user_role(path: UserIdPath, body: ChangeRoleBody):
-    user_id = path.user_id
-    user = User.query.get(user_id)
+    user = db.session.get(User, path.user_id)
     if not user:
         return {"msg": "User not found"}, 404
 
@@ -73,8 +67,7 @@ def change_user_role(path: UserIdPath, body: ChangeRoleBody):
     responses={"200": MessageResponse, "403": MessageResponse, "404": MessageResponse})
 @admin_required
 def delete_user(path: UserIdPath):
-    user_id = path.user_id
-    user = User.query.get(user_id)
+    user = db.session.get(User, path.user_id)
     if not user:
         return {"msg": "User not found"}, 404
 

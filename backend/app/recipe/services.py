@@ -9,9 +9,9 @@ from ..models import (
 
 
 def get_recipe_list(
-    search_query=None, ingredients=None, category=None, cuisine=None,
-    is_vegan=None, is_vegetarian=None, meal_type=None, sort_by='created_at',
-    sort_order='desc', user_id=None
+    search_query=None, ingredients=None, exclude_ingredients=None,
+    category=None, cuisine=None, is_vegan=None, is_vegetarian=None,
+    meal_type=None, sort_by='created_at', sort_order='desc', user_id=None
 ):
     query = Recipe.query
 
@@ -32,8 +32,19 @@ def get_recipe_list(
                     Ingredient, RecipeIngredient.ingredient_id == Ingredient.id
                 ).filter(
                     func.lower(Ingredient.name).contains(ing)
-                ).subquery()
+                )
                 query = query.filter(Recipe.id.in_(subquery))
+
+    if exclude_ingredients:
+        exclude_list = [i.strip().lower() for i in exclude_ingredients if i.strip()]
+        if exclude_list:
+            for ing in exclude_list:
+                exclude_subquery = db.session.query(RecipeIngredient.recipe_id).join(
+                    Ingredient, RecipeIngredient.ingredient_id == Ingredient.id
+                ).filter(
+                    func.lower(Ingredient.name).contains(ing)
+                )
+                query = query.filter(~Recipe.id.in_(exclude_subquery))
 
     if category:
         query = query.filter(func.lower(Recipe.category) == category.lower())
@@ -65,9 +76,9 @@ def get_recipe_list(
 
 
 def get_recipe_detail(recipe_id, user_id=None):
-    recipe = Recipe.query.get(recipe_id)
+    recipe = db.session.get(Recipe, recipe_id)
     if not recipe:
-        return None
+        return
 
     ingredients = []
     for ri in recipe.ingredients:
@@ -185,7 +196,7 @@ def get_recipe_ratings_summary(recipe_id):
 
 
 def add_to_favorites(user_id, recipe_id):
-    recipe = Recipe.query.get(recipe_id)
+    recipe = db.session.get(Recipe, recipe_id)
     if not recipe:
         return {'msg': 'Recipe not found'}, 404
 
@@ -266,7 +277,7 @@ def get_available_filters():
 
 def get_user_collections(user_id, include_recipes=False):
     collections = RecipeCollection.query.filter_by(user_id=user_id).order_by(
-        RecipeCollection.updated_at.desc()
+        RecipeCollection.created_at.desc()
     ).all()
 
     return {
@@ -281,7 +292,7 @@ def get_collection_detail(collection_id, user_id):
     ).first()
 
     if not collection:
-        return None
+        return
 
     return collection.to_dict(include_recipes=True)
 
@@ -360,7 +371,7 @@ def add_recipe_to_collection(collection_id, recipe_id, user_id):
     if not collection:
         return {'msg': 'Collection not found'}, 404
 
-    recipe = Recipe.query.get(recipe_id)
+    recipe = db.session.get(Recipe, recipe_id)
     if not recipe:
         return {'msg': 'Recipe not found'}, 404
 
@@ -396,7 +407,7 @@ def bulk_add_recipes_to_collection(collection_id, recipe_ids, user_id):
     errors = []
 
     for recipe_id in recipe_ids:
-        recipe = Recipe.query.get(recipe_id)
+        recipe = db.session.get(Recipe, recipe_id)
         if not recipe:
             errors.append(f'Recipe {recipe_id} not found')
             continue

@@ -5,12 +5,12 @@ from sqlalchemy import func
 from ...extensions import db
 from ..auth.models import User
 from ..decorators import chef_required
-from ..models import Recipe, Ingredient, RecipeIngredient, Rating
+from ..models import Recipe, Ingredient, RecipeIngredient, Rating, ChefProfile
 from ..utils.unit_converter import format_quantity_with_conversions
 from .schemas import (
-    RecipeIdPath,
-    ChefRecipesResponse, CreateRecipeBody, RecipeResponse,
-    RecipeDetail, UpdateRecipeBody, MessageResponse, ChefStatsResponse
+    RecipeIdPath, ChefRecipesResponse, CreateRecipeBody, RecipeResponse,
+    RecipeDetail, UpdateRecipeBody, MessageResponse, ChefStatsResponse,
+    ChefProfileResponse, UpdateChefProfileBody
 )
 
 
@@ -82,7 +82,7 @@ def create_recipe(body: CreateRecipeBody):
     for ing_data in body.ingredients:
         ingredient = None
         if ing_data.ingredient_id:
-            ingredient = Ingredient.query.get(ing_data.ingredient_id)
+            ingredient = db.session.get(Ingredient, ing_data.ingredient_id)
         elif ing_data.name:
             ingredient = Ingredient.query.filter(
                 Ingredient.name.ilike(ing_data.name.strip())
@@ -117,7 +117,7 @@ def get_recipe_for_edit(path: RecipeIdPath):
     if not user:
         return {'msg': 'User not found'}, 404
 
-    recipe = Recipe.query.get(recipe_id)
+    recipe = db.session.get(Recipe, recipe_id)
     if not recipe:
         return {'msg': 'Recipe not found'}, 404
 
@@ -161,7 +161,7 @@ def update_recipe(path: RecipeIdPath, body: UpdateRecipeBody):
     if not user:
         return {'msg': 'User not found'}, 404
 
-    recipe = Recipe.query.get(recipe_id)
+    recipe = db.session.get(Recipe, recipe_id)
     if not recipe:
         return {'msg': 'Recipe not found'}, 404
 
@@ -195,7 +195,7 @@ def update_recipe(path: RecipeIdPath, body: UpdateRecipeBody):
 
             ingredient = None
             if ingredient_id:
-                ingredient = Ingredient.query.get(ingredient_id)
+                ingredient = db.session.get(Ingredient, ingredient_id)
             elif ingredient_name:
                 ingredient = Ingredient.query.filter(
                     Ingredient.name.ilike(ingredient_name.strip())
@@ -226,7 +226,7 @@ def delete_recipe(path: RecipeIdPath):
     if not user:
         return {'msg': 'User not found'}, 404
 
-    recipe = Recipe.query.get(recipe_id)
+    recipe = db.session.get(Recipe, recipe_id)
     if not recipe:
         return {'msg': 'Recipe not found'}, 404
 
@@ -273,3 +273,59 @@ def get_chef_stats():
             cat: count for cat, count in categories if cat
         }
     }, 200
+
+
+@chef_bp.get('/profile', responses={"200": ChefProfileResponse})
+@chef_required
+def get_chef_profile():
+    current_email = get_jwt_identity()
+    user = User.query.filter_by(email=current_email).first()
+
+    if not user:
+        return {'msg': 'User not found'}, 404
+
+    profile = ChefProfile.query.filter_by(user_id=user.id).first()
+
+    if not profile:
+        return {
+            'bio': None,
+            'website': None,
+            'location': None,
+            'avatar_url': None
+        }, 200
+
+    return {
+        'bio': profile.bio,
+        'website': profile.website,
+        'location': profile.location,
+        'avatar_url': profile.avatar_url
+    }, 200
+
+
+@chef_bp.put('/profile', responses={"200": MessageResponse})
+@chef_required
+def update_chef_profile(body: UpdateChefProfileBody):
+    current_email = get_jwt_identity()
+    user = User.query.filter_by(email=current_email).first()
+
+    if not user:
+        return {'msg': 'User not found'}, 404
+
+    profile = ChefProfile.query.filter_by(user_id=user.id).first()
+
+    if not profile:
+        profile = ChefProfile(user_id=user.id)
+        db.session.add(profile)
+
+    if body.bio is not None:
+        profile.bio = body.bio
+    if body.website is not None:
+        profile.website = body.website
+    if body.location is not None:
+        profile.location = body.location
+    if body.avatar_url is not None:
+        profile.avatar_url = body.avatar_url
+
+    db.session.commit()
+
+    return {'msg': 'Profile updated successfully'}, 200
