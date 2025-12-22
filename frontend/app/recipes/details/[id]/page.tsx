@@ -6,10 +6,11 @@ import { mapRecipeDetailsToRecipe, Recipe, RecipeDetails } from "@/components/re
 import { API_BASE_URL } from "@/lib/config";
 import { handleAddFavorite, handleRemoveFavorite, removeFavorite } from "@/lib/tableActions";
 import { ActionIcon, Button, Divider, Group, Menu, useMantineTheme } from "@mantine/core";
-import { IconHeart, IconHttpDelete, IconPlus, IconX } from "@tabler/icons-react";
+import { IconEdit, IconHeart, IconHttpDelete, IconPlus, IconX } from "@tabler/icons-react";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Modal, Text } from "@mantine/core";
+import { RecipeRating } from "@/components/ratings/RecipeRating";
 
 const EMPTY_RECIPE: RecipeDetails = {
     author: {
@@ -115,34 +116,39 @@ export default function RecipeDetailsPage() {
                     <h1 className="text-4xl font-bold mb-8">
                         {recipe?.title}
                     </h1>
-                    <div className="mb-6">
-                        <div className="font-semibold">Created By</div>
-                        {recipe.author ? (
-                            <div className="text-gray-600">
-                                {recipe.author.username}
-                            </div>
-                        ) : "admin"}
-                    </div>
                     <div className="flex flex-wrap items-start gap-10">
-                        <div>
-                            <div className="font-semibold">Cuisine</div>
-                            <div className="text-gray-600 capitalize">
-                                {recipe?.cuisine}
+                        <div className="flex flex-col">
+                            <div className="mb-6">
+                                <div className="font-semibold">Created By</div>
+                                {recipe.author ? (
+                                    <div className="text-gray-600">
+                                        {recipe.author.username}
+                                    </div>
+                                ) : "admin"}
                             </div>
-                        </div>
+                            <div className="flex flex-row gap-10 mb-8">
+                                <div>
+                                    <div className="font-semibold">Cuisine</div>
+                                    <div className="text-gray-600 capitalize">
+                                        {recipe?.cuisine}
+                                    </div>
+                                </div>
 
-                        <div>
-                            <div className="font-semibold">Category</div>
-                            <div className="text-gray-600 capitalize">
-                                {recipe?.category}
-                            </div>
-                        </div>
+                                <div>
+                                    <div className="font-semibold">Category</div>
+                                    <div className="text-gray-600 capitalize">
+                                        {recipe?.category}
+                                    </div>
+                                </div>
 
-                        <div>
-                            <div className="font-semibold">Added On</div>
-                            <div className="text-gray-600">
-                                {recipe && (new Date(recipe.created_at).toLocaleDateString())}
+                                <div>
+                                    <div className="font-semibold">Added On</div>
+                                    <div className="text-gray-600">
+                                        {recipe && (new Date(recipe.created_at).toLocaleDateString())}
+                                    </div>
+                                </div>
                             </div>
+                            <RecipeRating recipeId={recipe.id} />
                         </div>
 
                         <div className="flex flex-col items-end justify-end gap-3 ml-auto">
@@ -158,13 +164,24 @@ export default function RecipeDetailsPage() {
                             </Button>
                             <AddToCollectionMenu variant="button" recipe={mapRecipeDetailsToRecipe(recipe)} />
                             {recipe.author && user?.id === recipe.author.id && (
-                                <Button
-                                    style={{ backgroundColor: theme.other.accentColor }}
-                                    leftSection={<IconX size={18} />}
-                                    onClick={() => setDeleteOpen(true)}
-                                >
-                                    Delete recipe
-                                </Button>
+                                <>
+                                    <Button
+                                        style={{ backgroundColor: theme.other.accentColor }}
+                                        leftSection={<IconX size={18} />}
+                                        onClick={() => setDeleteOpen(true)}
+                                    >
+                                        Delete recipe
+                                    </Button>
+                                    <Button
+                                        component="a"
+                                        href={`/recipes/edit/${recipe.id}`}
+                                        variant="outline"
+                                        leftSection={<IconEdit size={18} />}
+                                        style={{ borderColor: theme.other.accentColor, color: theme.other.accentColor }}
+                                    >
+                                        Edit recipe
+                                    </Button>
+                                </>
                             )}
                         </div>
                     </div>
@@ -217,7 +234,7 @@ export default function RecipeDetailsPage() {
                                 <h3 className="flex-1 font-semibold mb-2">
                                     Step {index + 1}
                                 </h3>
-                                <p className="flex-10 text-gray-600 leading-relaxed">
+                                <p className="flex-9 text-gray-600 leading-relaxed">
                                     {step}
                                 </p>
                             </div>
