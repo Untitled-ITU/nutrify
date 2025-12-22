@@ -108,8 +108,8 @@ export default function NewRecipePage() {
     }
 
     return (
-        <Stack className="w-full" px="md" py="xl">
-            <Title order={2}>Create New Recipe</Title>
+        <Stack className="w-full px-4">
+            <h1 className="text-4xl font-bold mb-8">Create New Recipe</h1>
 
             <Grid gutter="xl">
                 <Grid.Col span={{ base: 12, md: 8 }}>
