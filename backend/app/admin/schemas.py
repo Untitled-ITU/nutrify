@@ -6,7 +6,7 @@ class UserIdPath(BaseModel):
     user_id: int
 
 
-class ResetPasswordBody(BaseModel):
+class AdminResetPasswordBody(BaseModel):
     new_password: str = Field(min_length=6)
 
 

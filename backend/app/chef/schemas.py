@@ -43,7 +43,7 @@ class RecipeResponse(BaseModel):
     recipe_id: int
 
 
-class RecipeSummary(BaseModel):
+class ChefRecipeSummary(BaseModel):
     id: int
     title: str
     description: Optional[str]
@@ -56,10 +56,10 @@ class RecipeSummary(BaseModel):
 
 
 class ChefRecipesResponse(BaseModel):
-    recipes: list[RecipeSummary]
+    recipes: list[ChefRecipeSummary]
 
 
-class RecipeDetail(BaseModel):
+class ChefRecipeDetail(BaseModel):
     id: int
     title: str
     description: Optional[str]
@@ -108,4 +108,3 @@ class UpdateChefProfileBody(BaseModel):
     website: Optional[str] = None
     location: Optional[str] = None
     avatar_url: Optional[str] = None
-

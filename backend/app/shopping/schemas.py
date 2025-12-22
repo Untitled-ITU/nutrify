@@ -10,7 +10,7 @@ class ItemIdPath(BaseModel):
     item_id: int
 
 
-class IngredientInfo(BaseModel):
+class ShoppingIngredientInfo(BaseModel):
     id: int
     name: str
 
@@ -22,7 +22,7 @@ class AlternativeUnit(BaseModel):
 
 class ShoppingListItem(BaseModel):
     id: int
-    ingredient: Optional[IngredientInfo]
+    ingredient: Optional[ShoppingIngredientInfo]
     amount: float
     unit: str
     alternatives: list[AlternativeUnit] = []
@@ -98,7 +98,7 @@ class TransferResponse(BaseModel):
 
 class CompareIngredient(BaseModel):
     id: int
-    ingredient: Optional[IngredientInfo]
+    ingredient: Optional[ShoppingIngredientInfo]
     needed_amount: Optional[float]
     in_fridge: Optional[float]
     available_in_fridge: bool

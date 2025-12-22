@@ -9,7 +9,7 @@ from ..models import Recipe, Ingredient, RecipeIngredient, Rating, ChefProfile
 from ..utils.unit_converter import format_quantity_with_conversions
 from .schemas import (
     RecipeIdPath, ChefRecipesResponse, CreateRecipeBody, RecipeResponse,
-    RecipeDetail, UpdateRecipeBody, MessageResponse, ChefStatsResponse,
+    ChefRecipeDetail, UpdateRecipeBody, MessageResponse, ChefStatsResponse,
     ChefProfileResponse, UpdateChefProfileBody
 )
 
@@ -107,7 +107,7 @@ def create_recipe(body: CreateRecipeBody):
 
 
 @chef_bp.get('/recipes/<int:recipe_id>',
-    responses={"200": RecipeDetail, "403": MessageResponse, "404": MessageResponse})
+    responses={"200": ChefRecipeDetail, "403": MessageResponse, "404": MessageResponse})
 @chef_required
 def get_recipe_for_edit(path: RecipeIdPath):
     recipe_id = path.recipe_id
