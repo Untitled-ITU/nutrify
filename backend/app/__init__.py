@@ -13,7 +13,10 @@ from flask_openapi3 import OpenAPI, Info
 from flask_cors import CORS
 
 
-def create_app():
+def create_app(config=None):
+    if config is None:
+        config = Config
+
     info = Info(
         title="Nutrify API", version="1.0.0",
         description="Backend API for Nutrify application"
@@ -26,12 +29,12 @@ def create_app():
     }
     security_schemes = {"jwt": jwt_scheme}
 
-    enable_docs = Config.ENABLE_DOCS
+    enable_docs = getattr(config, "ENABLE_DOCS", False)
     app = OpenAPI(
-        __name__, info=info, template_folder='../templates',
-        security_schemes=security_schemes, doc_ui=enable_docs
+        __name__, info=info, doc_ui=enable_docs,
+        security_schemes=security_schemes,
     )
-    app.config.from_object(Config)
+    app.config.from_object(config)
 
     jwt.init_app(app)
     db.init_app(app)
