@@ -1,6 +1,11 @@
+BEGIN;
+
+-- Enable extensions
 CREATE EXTENSION IF NOT EXISTS pg_trgm;
 
--- 2. Users Table
+-- =========================
+-- 1) USERS
+-- =========================
 CREATE TABLE IF NOT EXISTS users (
     id BIGSERIAL PRIMARY KEY,
     username TEXT NOT NULL,
@@ -10,14 +15,18 @@ CREATE TABLE IF NOT EXISTS users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- 3. Ingredients Table
+-- =========================
+-- 2) INGREDIENT
+-- =========================
 CREATE TABLE IF NOT EXISTS ingredient (
     id BIGSERIAL PRIMARY KEY,
     name TEXT UNIQUE NOT NULL,
     default_unit TEXT
 );
 
--- 4. Recipes Table
+-- =========================
+-- 3) RECIPE
+-- =========================
 CREATE TABLE IF NOT EXISTS recipe (
     id BIGSERIAL PRIMARY KEY,
     author_id BIGINT REFERENCES users(id),
@@ -34,7 +43,9 @@ CREATE TABLE IF NOT EXISTS recipe (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- 5. Recipe-Ingredient Relation
+-- =========================
+-- 4) RECIPE_INGREDIENTS (M:N)
+-- =========================
 CREATE TABLE IF NOT EXISTS recipe_ingredients (
     recipe_id BIGINT REFERENCES recipe(id) ON DELETE CASCADE,
     ingredient_id BIGINT REFERENCES ingredient(id),
@@ -43,7 +54,9 @@ CREATE TABLE IF NOT EXISTS recipe_ingredients (
     PRIMARY KEY (recipe_id, ingredient_id)
 );
 
--- 6. Meal Plans
+-- =========================
+-- 5) MEAL_PLANS
+-- =========================
 CREATE TABLE IF NOT EXISTS meal_plans (
     id BIGSERIAL PRIMARY KEY,
     user_id BIGINT REFERENCES users(id) ON DELETE CASCADE NOT NULL,
@@ -53,7 +66,9 @@ CREATE TABLE IF NOT EXISTS meal_plans (
     UNIQUE(user_id, plan_date, meal_type)
 );
 
--- 7. Shopping List
+-- =========================
+-- 6) SHOPPING_LIST
+-- =========================
 CREATE TABLE IF NOT EXISTS shopping_list (
     id BIGSERIAL PRIMARY KEY,
     user_id BIGINT REFERENCES users(id) ON DELETE CASCADE NOT NULL,
@@ -65,7 +80,9 @@ CREATE TABLE IF NOT EXISTS shopping_list (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- 8. Favorites
+-- =========================
+-- 7) FAVORITES
+-- =========================
 CREATE TABLE IF NOT EXISTS favorites (
     id BIGSERIAL PRIMARY KEY,
     user_id BIGINT REFERENCES users(id) ON DELETE CASCADE NOT NULL,
@@ -74,7 +91,9 @@ CREATE TABLE IF NOT EXISTS favorites (
     UNIQUE(user_id, recipe_id)
 );
 
--- 9. Ratings
+-- =========================
+-- 8) RATINGS
+-- =========================
 CREATE TABLE IF NOT EXISTS ratings (
     id BIGSERIAL PRIMARY KEY,
     user_id BIGINT REFERENCES users(id) ON DELETE CASCADE NOT NULL,
@@ -86,7 +105,9 @@ CREATE TABLE IF NOT EXISTS ratings (
     UNIQUE(user_id, recipe_id)
 );
 
--- 10. Fridge Items
+-- =========================
+-- 9) FRIDGE_ITEMS
+-- =========================
 CREATE TABLE IF NOT EXISTS fridge_items (
     id BIGSERIAL PRIMARY KEY,
     user_id BIGINT REFERENCES users(id) ON DELETE CASCADE NOT NULL,
@@ -97,7 +118,9 @@ CREATE TABLE IF NOT EXISTS fridge_items (
     UNIQUE(user_id, ingredient_id)
 );
 
--- 11. Verification Codes
+-- =========================
+-- 10) VERIFICATION_CODES
+-- =========================
 CREATE TABLE IF NOT EXISTS verification_codes (
     id BIGSERIAL PRIMARY KEY,
     email TEXT NOT NULL,
@@ -110,3 +133,16 @@ CREATE TABLE IF NOT EXISTS verification_codes (
     pending_password_hash TEXT,
     pending_role TEXT
 );
+
+-- =========================
+-- 11) CHEF_PROFILES
+-- =========================
+CREATE TABLE IF NOT EXISTS chef_profiles (
+    id BIGSERIAL PRIMARY KEY,
+    user_id BIGINT REFERENCES users(id) ON DELETE CASCADE NOT NULL UNIQUE,
+    bio TEXT,
+    website TEXT,
+    location TEXT,
+    avatar_url TEXT
+);
+

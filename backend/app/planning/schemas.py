@@ -89,7 +89,7 @@ class MealData(BaseModel):
 
 
 class BulkImportBody(BaseModel):
-    meals: list[MealData] = Field(min_items=1)
+    meals: list[MealData] = Field(min_length=1)
 
 
 class BulkImportResponse(BaseModel):

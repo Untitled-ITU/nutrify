@@ -1,25 +1,17 @@
 from flask_openapi3 import APIBlueprint, Tag
 from flask_jwt_extended import get_jwt_identity
 
+from ...extensions import db
 from ..auth.models import User
 from ..auth.schemas import UnauthorizedResponse
 from ..decorators import login_required
 from ..models import Ingredient, Recipe
 from .services import (
-    get_recipe_list,
-    get_recipe_detail,
-    add_to_favorites,
-    remove_from_favorites,
-    get_user_favorites,
-    get_available_filters,
-    get_user_collections,
-    get_collection_detail,
-    create_collection,
-    update_collection,
-    delete_collection,
-    add_recipe_to_collection,
-    bulk_add_recipes_to_collection,
-    remove_recipe_from_collection,
+    get_recipe_list, get_recipe_detail, add_to_favorites,
+    remove_from_favorites, get_user_favorites, get_available_filters,
+    get_user_collections, get_collection_detail, create_collection,
+    update_collection, delete_collection, add_recipe_to_collection,
+    bulk_add_recipes_to_collection, remove_recipe_from_collection,
     get_recipe_collections
 )
 from .schemas import (
@@ -50,6 +42,8 @@ def list_recipes(query: RecipeListQuery):
     search_query = query.q
     ingredients_str = query.ingredients
     ingredients = ingredients_str.split(',') if ingredients_str else None
+    exclude_str = query.exclude_ingredients
+    exclude_ingredients = exclude_str.split(',') if exclude_str else None
     category = query.category
     cuisine = query.cuisine
     is_vegan = query.is_vegan
@@ -61,6 +55,7 @@ def list_recipes(query: RecipeListQuery):
     result = get_recipe_list(
         search_query=search_query,
         ingredients=ingredients,
+        exclude_ingredients=exclude_ingredients,
         category=category,
         cuisine=cuisine,
         is_vegan=is_vegan,
@@ -99,11 +94,8 @@ def get_filters():
 @recipe_bp.get('/ingredients/search', responses={"200": IngredientSearchResponse})
 @login_required
 def search_ingredients(query: IngredientSearchQuery):
-    q = query.q or ''
+    q = query.q
     limit = query.limit or 10
-
-    if len(q) < 2:
-        return {'ingredients': []}, 200
 
     ingredients = Ingredient.query.filter(
         Ingredient.name.ilike(f'%{q}%')
@@ -174,7 +166,7 @@ def list_collections(query: CollectionListQuery):
     return result, 200
 
 
-@recipe_bp.get('/collections/<collection_id>',
+@recipe_bp.get('/collections/<int:collection_id>',
     responses={"200": CollectionDetail, "404": MessageResponse})
 @login_required
 def get_collection(path: CollectionIdPath):
@@ -296,7 +288,7 @@ def get_recipe_collections_endpoint(path: RecipeIdPath):
     if not user:
         return {'msg': 'User not found'}, 404
 
-    recipe = Recipe.query.get(recipe_id)
+    recipe = db.session.get(Recipe, recipe_id)
     if not recipe:
         return {'msg': 'Recipe not found'}, 404
 

@@ -8,8 +8,7 @@ from ..decorators import login_required
 from ..models import FridgeItem, Ingredient
 from ..utils.unit_converter import format_quantity_with_conversions
 from .schemas import (
-    ItemIdPath,
-    FridgeListResponse, AddFridgeItemBody, FridgeItemResponse,
+    ItemIdPath, FridgeListResponse, AddFridgeItemBody, FridgeItemResponse,
     UpdateFridgeItemBody, MessageResponse, BatchAddBody, BatchAddResponse,
     FridgeStatsResponse, FridgeSearchQuery
 )
@@ -72,7 +71,7 @@ def add_fridge_item(body: AddFridgeItemBody):
 
     ingredient = None
     if body.ingredient_id:
-        ingredient = Ingredient.query.get(body.ingredient_id)
+        ingredient = db.session.get(Ingredient, body.ingredient_id)
     elif body.ingredient_name:
         ingredient = Ingredient.query.filter(
             Ingredient.name.ilike(body.ingredient_name.strip())
@@ -185,7 +184,8 @@ def delete_fridge_item(path: ItemIdPath):
     return {'msg': 'Item removed from fridge'}, 200
 
 
-@fridge_bp.get('/search', responses={"200": FridgeListResponse, "404": MessageResponse})
+@fridge_bp.get('/search',
+    responses={"200": FridgeListResponse, "400": MessageResponse, "404": MessageResponse})
 @login_required
 def search_fridge(query: FridgeSearchQuery):
     current_email = get_jwt_identity()
@@ -195,8 +195,6 @@ def search_fridge(query: FridgeSearchQuery):
         return {'msg': 'User not found'}, 404
 
     q = query.q
-    if len(q) < 2:
-        return {'items': [], 'total': 0}, 200
 
     items = FridgeItem.query.join(Ingredient).filter(
         FridgeItem.user_id == user.id,
@@ -243,7 +241,7 @@ def batch_add_items(body: BatchAddBody):
     for item_data in body.items:
         ingredient = None
         if item_data.ingredient_id:
-            ingredient = Ingredient.query.get(item_data.ingredient_id)
+            ingredient = db.session.get(Ingredient, item_data.ingredient_id)
         elif item_data.ingredient_name:
             ingredient = Ingredient.query.filter(
                 Ingredient.name.ilike(item_data.ingredient_name.strip())

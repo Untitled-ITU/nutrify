@@ -26,7 +26,7 @@ rating_bp = APIBlueprint(
 @login_required
 def get_recipe_ratings(path: RecipeIdPath):
     recipe_id = path.recipe_id
-    recipe = Recipe.query.get(recipe_id)
+    recipe = db.session.get(Recipe, recipe_id)
     if not recipe:
         return {'msg': 'Recipe not found'}, 404
 
@@ -67,7 +67,7 @@ def add_rating(path: RecipeIdPath, body: AddRatingBody):
     if not user:
         return {'msg': 'User not found'}, 404
 
-    recipe = Recipe.query.get(recipe_id)
+    recipe = db.session.get(Recipe, recipe_id)
     if not recipe:
         return {'msg': 'Recipe not found'}, 404
 
@@ -105,7 +105,7 @@ def update_rating(path: RatingIdPath, body: UpdateRatingBody):
     if not user:
         return {'msg': 'User not found'}, 404
 
-    rating = Rating.query.get(rating_id)
+    rating = db.session.get(Rating, rating_id)
     if not rating:
         return {'msg': 'Rating not found'}, 404
 
@@ -136,7 +136,7 @@ def delete_rating(path: RatingIdPath):
     if not user:
         return {'msg': 'User not found'}, 404
 
-    rating = Rating.query.get(rating_id)
+    rating = db.session.get(Rating, rating_id)
     if not rating:
         return {'msg': 'Rating not found'}, 404
 

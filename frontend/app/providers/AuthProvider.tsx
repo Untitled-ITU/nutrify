@@ -49,3 +49,28 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 export function useAuth() {
     return useContext(AuthContext);
 }
+
+export async function authFetch(
+    input: RequestInfo | URL,
+    init: RequestInit = {}
+) {
+    const token = localStorage.getItem("access_token");
+
+    const headers = new Headers(init.headers);
+
+    if (token) {
+        headers.set("Authorization", `Bearer ${token}`);
+    }
+
+    const res = await fetch(input, {
+        ...init,
+        headers,
+    });
+
+    if (res.status === 401) {
+        // localStorage.removeItem("access_token");
+        window.location.href = "/auth/login";
+    }
+
+    return res;
+}

@@ -11,8 +11,7 @@ from ..decorators import login_required
 from ..models import MealPlan, Recipe, FridgeItem
 from ..utils.unit_converter import get_unit_group, convert_unit, get_primary_unit
 from .schemas import (
-    MealIdPath,
-    WeeklyPlanResponse, AddMealBody, MealResponse, UpdateMealBody,
+    MealIdPath, WeeklyPlanResponse, AddMealBody, MealResponse, UpdateMealBody,
     MessageResponse, NeededIngredientsResponse, BulkImportBody,
     BulkImportResponse, PlanningStatsResponse, ClearWeekResponse,
     WeeklyPlanQuery, MissingIngredientsQuery, ClearWeekQuery
@@ -27,7 +26,8 @@ planning_bp = APIBlueprint(
 )
 
 
-@planning_bp.get('/weekly', responses={"200": WeeklyPlanResponse, "404": MessageResponse})
+@planning_bp.get('/weekly',
+    responses={"200": WeeklyPlanResponse, "400": MessageResponse, "404": MessageResponse})
 @login_required
 def get_weekly_plan(query: WeeklyPlanQuery):
     current_email = get_jwt_identity()
@@ -39,7 +39,10 @@ def get_weekly_plan(query: WeeklyPlanQuery):
     start_date_str = query.start_date
 
     if start_date_str:
-        start_date = datetime.fromisoformat(start_date_str.replace('Z', '+00:00')).date()
+        try:
+            start_date = datetime.fromisoformat(start_date_str.replace('Z', '+00:00')).date()
+        except ValueError:
+            return {'msg': 'Invalid start_date format. Use ISO format.'}, 400
     else:
         today = datetime.now().date()
         start_date = today - timedelta(days=today.weekday())
@@ -112,7 +115,7 @@ def add_meal(body: AddMealBody):
         return {'msg': 'Invalid plan_date format. Use ISO format.'}, 400
 
     if body.recipe_id:
-        recipe = Recipe.query.get(body.recipe_id)
+        recipe = db.session.get(Recipe, body.recipe_id)
         if not recipe:
             return {'msg': 'Recipe not found'}, 404
 
@@ -162,7 +165,7 @@ def update_meal(path: MealIdPath, body: UpdateMealBody):
 
     if body.recipe_id is not None:
         if body.recipe_id:
-            recipe = Recipe.query.get(body.recipe_id)
+            recipe = db.session.get(Recipe, body.recipe_id)
             if not recipe:
                 return {'msg': 'Recipe not found'}, 404
         meal_plan.recipe_id = body.recipe_id
@@ -205,7 +208,7 @@ def delete_meal(path: MealIdPath):
 
 
 @planning_bp.get('/missing-ingredients',
-    responses={"200": NeededIngredientsResponse, "404": MessageResponse})
+    responses={"200": NeededIngredientsResponse, "400": MessageResponse, "404": MessageResponse})
 @login_required
 def get_missing_ingredients(query: MissingIngredientsQuery):
     current_email = get_jwt_identity()
@@ -217,7 +220,10 @@ def get_missing_ingredients(query: MissingIngredientsQuery):
     start_date_str = query.start_date
 
     if start_date_str:
-        start_date = datetime.fromisoformat(start_date_str.replace('Z', '+00:00')).date()
+        try:
+            start_date = datetime.fromisoformat(start_date_str.replace('Z', '+00:00')).date()
+        except ValueError:
+            return {'msg': 'Invalid start_date format. Use ISO format.'}, 400
     else:
         today = datetime.now().date()
         start_date = today - timedelta(days=today.weekday())
@@ -351,7 +357,7 @@ def bulk_import_meals(body: BulkImportBody):
             continue
 
         if meal_data.recipe_id:
-            recipe = Recipe.query.get(meal_data.recipe_id)
+            recipe = db.session.get(Recipe, meal_data.recipe_id)
             if not recipe:
                 errors.append(f'Recipe not found: {meal_data.recipe_id}')
                 continue
@@ -385,7 +391,8 @@ def bulk_import_meals(body: BulkImportBody):
     }, 200
 
 
-@planning_bp.delete('/clear-week', responses={"200": ClearWeekResponse, "404": MessageResponse})
+@planning_bp.delete('/clear-week',
+    responses={"200": ClearWeekResponse, "400": MessageResponse, "404": MessageResponse})
 @login_required
 def clear_week(query: ClearWeekQuery):
     current_email = get_jwt_identity()
@@ -397,7 +404,10 @@ def clear_week(query: ClearWeekQuery):
     start_date_str = query.start_date
 
     if start_date_str:
-        start_date = datetime.fromisoformat(start_date_str.replace('Z', '+00:00')).date()
+        try:
+            start_date = datetime.fromisoformat(start_date_str.replace('Z', '+00:00')).date()
+        except ValueError:
+            return {'msg': 'Invalid start_date format. Use ISO format.'}, 400
     else:
         today = datetime.now().date()
         start_date = today - timedelta(days=today.weekday())
