@@ -9,7 +9,7 @@ import Link from "next/link";
 export default function Navbar() {
     const [opened, { toggle }] = useDisclosure();
     const theme = useMantineTheme();
-    const { user, logout } = useAuth();  // 👈 AUTH HERE
+    const { user, logout } = useAuth();
 
     console.log(user);
 

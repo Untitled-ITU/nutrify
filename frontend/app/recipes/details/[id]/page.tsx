@@ -1,16 +1,21 @@
 "use client"
 
-import { authFetch } from "@/app/providers/AuthProvider";
+import { authFetch, useAuth } from "@/app/providers/AuthProvider";
 import { AddToCollectionMenu } from "@/components/recipes/AddToCollectionMenu";
 import { mapRecipeDetailsToRecipe, Recipe, RecipeDetails } from "@/components/recipes/types";
 import { API_BASE_URL } from "@/lib/config";
 import { handleAddFavorite, handleRemoveFavorite, removeFavorite } from "@/lib/tableActions";
-import { ActionIcon, Button, Divider, Menu, useMantineTheme } from "@mantine/core";
-import { IconHeart, IconPlus, IconX } from "@tabler/icons-react";
+import { ActionIcon, Button, Divider, Group, Menu, useMantineTheme } from "@mantine/core";
+import { IconHeart, IconHttpDelete, IconPlus, IconX } from "@tabler/icons-react";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { Modal, Text } from "@mantine/core";
 
 const EMPTY_RECIPE: RecipeDetails = {
+    author: {
+        id: 0,
+        username: "",
+    },
     id: 0,
     title: "",
     description: "",
@@ -22,6 +27,7 @@ const EMPTY_RECIPE: RecipeDetails = {
     ingredients: [],
     is_vegan: false,
     is_vegetarian: false,
+    is_favorite: false,
 };
 
 export default function RecipeDetailsPage() {
@@ -31,9 +37,13 @@ export default function RecipeDetailsPage() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const theme = useMantineTheme();
+    const { user } = useAuth();  // 👈 AUTH HERE
 
-    const [isFavorite, setIsFavorite] = useState(false);
     const [favoriteLoading, setFavoriteLoading] = useState(false);
+
+    const [deleteOpen, setDeleteOpen] = useState(false);
+    const [deleteLoading, setDeleteLoading] = useState(false);
+
 
     useEffect(() => {
         if (!recipeId) return;
@@ -55,40 +65,17 @@ export default function RecipeDetailsPage() {
         fetchRecipe();
     }, [recipeId]);
 
-    useEffect(() => {
-        if (!recipeId) return;
-
-        const checkFavorite = async () => {
-            try {
-                const res = await authFetch(`${API_BASE_URL}/api/recipes/favorites`);
-                if (!res.ok) throw new Error();
-
-                const favorites: { favorites: Recipe[] } = await res.json();
-
-                setIsFavorite(
-                    favorites.favorites.some((f) => Number(f.id) === Number(recipeId))
-                );
-                console.log(favorites.favorites);
-                console.log(isFavorite, recipeId);
-            } catch {
-                // silently fail
-            }
-        };
-
-        checkFavorite();
-    }, [recipeId]);
-
     const toggleFavorite = async () => {
         setFavoriteLoading(true);
 
         try {
-            if (isFavorite) {
+            if (recipe.is_favorite) {
                 await handleRemoveFavorite(mapRecipeDetailsToRecipe(recipe));
             } else {
                 await handleAddFavorite(mapRecipeDetailsToRecipe(recipe));
             }
 
-            setIsFavorite((prev) => !prev);
+            recipe.is_favorite = !recipe.is_favorite;
         } catch {
             // optional notification
         } finally {
@@ -100,6 +87,25 @@ export default function RecipeDetailsPage() {
         .split(". ")
         .map(s => s.trim() + (s.slice(-1) == "." ? "" : "."));
 
+    async function confirmDeleteRecipe() {
+        if (!recipe.id) return;
+
+        setDeleteLoading(true);
+
+        try {
+            const res = await authFetch(`${API_BASE_URL}/api/chef/recipes/${recipe.id}`, {
+                method: "DELETE",
+            });
+            if (!res.ok) throw new Error("Failed to fetch collection");
+
+            window.location.href = "/discover";
+        } catch (err) {
+            setError((err as Error).message);
+            setDeleteLoading(false);
+            alert("Failed to delete recipe");
+        }
+    }
+
     return (
         <div className="w-full mx-auto px-4 py-10 space-y-12">
             {/* Top section */}
@@ -109,6 +115,14 @@ export default function RecipeDetailsPage() {
                     <h1 className="text-4xl font-bold mb-8">
                         {recipe?.title}
                     </h1>
+                    <div className="mb-6">
+                        <div className="font-semibold">Created By</div>
+                        {recipe.author ? (
+                            <div className="text-gray-600">
+                                {recipe.author.username}
+                            </div>
+                        ) : "admin"}
+                    </div>
                     <div className="flex flex-wrap items-start gap-10">
                         <div>
                             <div className="font-semibold">Cuisine</div>
@@ -133,16 +147,25 @@ export default function RecipeDetailsPage() {
 
                         <div className="flex flex-col items-end justify-end gap-3 ml-auto">
                             <Button
-                                leftSection={isFavorite ? <IconX size={18} /> : <IconHeart size={18} />}
+                                leftSection={recipe.is_favorite ? <IconX size={18} /> : <IconHeart size={18} />}
                                 loading={favoriteLoading}
                                 style={{
                                     backgroundColor: theme.other.accentColor,
                                 }}
                                 onClick={toggleFavorite}
                             >
-                                {isFavorite ? "Remove from favorites" : "Add to favorites"}
+                                {recipe.is_favorite ? "Remove from favorites" : "Add to favorites"}
                             </Button>
                             <AddToCollectionMenu variant="button" recipe={mapRecipeDetailsToRecipe(recipe)} />
+                            {recipe.author && user?.id === recipe.author.id && (
+                                <Button
+                                    style={{ backgroundColor: theme.other.accentColor }}
+                                    leftSection={<IconX size={18} />}
+                                    onClick={() => setDeleteOpen(true)}
+                                >
+                                    Delete recipe
+                                </Button>
+                            )}
                         </div>
                     </div>
                     <h4 className="text-xl font-bold mt-8 mb-4">Description</h4>
@@ -202,6 +225,36 @@ export default function RecipeDetailsPage() {
                     ))}
                 </section>
             </div>
+
+            <Modal
+                opened={deleteOpen}
+                onClose={() => setDeleteOpen(false)}
+                title="Delete recipe"
+                centered
+            >
+                <Text size="sm" c="dimmed">
+                    Are you sure you want to delete this recipe?
+                    This action cannot be undone.
+                </Text>
+
+                <Group justify="flex-end" mt="md">
+                    <Button
+                        variant="default"
+                        onClick={() => setDeleteOpen(false)}
+                        disabled={deleteLoading}
+                    >
+                        Cancel
+                    </Button>
+
+                    <Button
+                        style={{ backgroundColor: theme.other.primaryDark }}
+                        loading={deleteLoading}
+                        onClick={confirmDeleteRecipe}
+                    >
+                        Delete
+                    </Button>
+                </Group>
+            </Modal>
         </div>
     );
 }

@@ -19,6 +19,10 @@ export type Ingredient = {
 };
 
 export type RecipeDetails = {
+    author: {
+        id: number;
+        username: string;
+    };
     id: number;
     title: string;
     description: string;
@@ -34,6 +38,7 @@ export type RecipeDetails = {
 
     is_vegan: boolean;
     is_vegetarian: boolean;
+    is_favorite: boolean;
 };
 
 export type IngredientFilter = {
@@ -49,14 +54,14 @@ export type FiltersState = {
 };
 
 export type Collection = {
-  id: number;
-  name: string;
-  description?: string;
-  is_public: boolean;
-  recipe_count: number;
-  created_at: string;
-  updated_at: string;
-  recipes: Recipe[];
+    id: number;
+    name: string;
+    description?: string;
+    is_public: boolean;
+    recipe_count: number;
+    created_at: string;
+    updated_at: string;
+    recipes: Recipe[];
 };
 
 export function mapRecipeDetailsToRecipe(
