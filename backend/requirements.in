@@ -6,3 +6,4 @@ flask-sqlalchemy
 flask-openapi3[swagger,redoc]
 pydantic
 python-dotenv
+pytest
