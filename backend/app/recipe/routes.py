@@ -2,6 +2,7 @@ from flask_openapi3 import APIBlueprint, Tag
 from flask_jwt_extended import get_jwt_identity
 
 from ..auth.models import User
+from ..auth.schemas import UnauthorizedResponse
 from ..decorators import login_required
 from ..models import Ingredient, Recipe
 from .services import (
@@ -35,7 +36,8 @@ from .schemas import (
 recipe_tag = Tag(name="Recipes", description="Recipe browsing and management")
 recipe_bp = APIBlueprint(
     'recipes', __name__, url_prefix='/api/recipes',
-    abp_tags=[recipe_tag], abp_security=[{"jwt": []}]
+    abp_tags=[recipe_tag], abp_security=[{"jwt": []}],
+    abp_responses={"401": UnauthorizedResponse}
 )
 
 

@@ -12,7 +12,8 @@ from .schemas import (
     LoginBody, LoginResponse, RegisterBody, RegisterResponse,
     VerifyRegistrationBody, MessageResponse, ProfileResponse,
     UpdateProfileBody, ChangePasswordBody, ForgotPasswordBody,
-    ForgotPasswordResponse, ResetPasswordBody
+    ForgotPasswordResponse, ResetPasswordBody, UnauthorizedResponse,
+    InvalidCredentialsResponse
 )
 
 
@@ -20,7 +21,7 @@ auth_tag = Tag(name="Authentication", description="User authentication and regis
 auth_bp = APIBlueprint('auth', __name__, url_prefix='/api/auth', abp_tags=[auth_tag])
 
 
-@auth_bp.post('/login', responses={"200": LoginResponse, "401": MessageResponse})
+@auth_bp.post('/login', responses={"200": LoginResponse, "401": InvalidCredentialsResponse})
 def login(body: LoginBody):
     user = User.query.filter_by(email=body.email).first()
 
@@ -97,7 +98,8 @@ def verify_registration(body: VerifyRegistrationBody):
 
 
 @auth_bp.get('/profile',
-    responses={"200": ProfileResponse, "404": MessageResponse}, security=[{"jwt": []}])
+    responses={"200": ProfileResponse, "401": UnauthorizedResponse, "404": MessageResponse},
+    security=[{"jwt": []}])
 @login_required
 def get_profile():
     current_user_email = get_jwt_identity()
@@ -115,7 +117,8 @@ def get_profile():
 
 
 @auth_bp.put('/profile',
-    responses={"200": MessageResponse, "404": MessageResponse}, security=[{"jwt": []}])
+    responses={"200": MessageResponse, "401": UnauthorizedResponse, "404": MessageResponse},
+    security=[{"jwt": []}])
 @login_required
 def update_profile(body: UpdateProfileBody):
     current_user_email = get_jwt_identity()
@@ -135,7 +138,10 @@ def update_profile(body: UpdateProfileBody):
 
 
 @auth_bp.post('/change-password',
-    responses={"200": MessageResponse, "400": MessageResponse, "401": MessageResponse, "404": MessageResponse},
+    responses={
+        "200": MessageResponse, "400": MessageResponse,
+        "401": UnauthorizedResponse, "403": InvalidCredentialsResponse, "404": MessageResponse
+    },
     security=[{"jwt": []}])
 @login_required
 def change_password(body: ChangePasswordBody):
@@ -149,7 +155,7 @@ def change_password(body: ChangePasswordBody):
         return {"msg": "New password must be different from current password"}, 400
 
     if not user.check_password(body.current_password):
-        return {"msg": "Incorrect current password"}, 401
+        return {"msg": "Incorrect current password"}, 403
 
     user.set_password(body.new_password)
     db.session.commit()

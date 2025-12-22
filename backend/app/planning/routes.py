@@ -6,6 +6,7 @@ from sqlalchemy import func
 
 from ...extensions import db
 from ..auth.models import User
+from ..auth.schemas import UnauthorizedResponse
 from ..decorators import login_required
 from ..models import MealPlan, Recipe, FridgeItem
 from ..utils.unit_converter import get_unit_group, convert_unit, get_primary_unit
@@ -21,7 +22,8 @@ from .schemas import (
 planning_tag = Tag(name="Meal Planning", description="Weekly meal planning and management")
 planning_bp = APIBlueprint(
     'planning', __name__, url_prefix='/api/planning',
-    abp_tags=[planning_tag], abp_security=[{"jwt": []}]
+    abp_tags=[planning_tag], abp_security=[{"jwt": []}],
+    abp_responses={"401": UnauthorizedResponse}
 )
 
 

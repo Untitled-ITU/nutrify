@@ -2,6 +2,7 @@ from flask_openapi3 import APIBlueprint, Tag
 
 from ...extensions import db
 from ..auth.models import User
+from ..auth.schemas import UnauthorizedResponse
 from ..decorators import admin_required
 from .schemas import (
     UserIdPath,
@@ -14,7 +15,11 @@ from .schemas import (
 
 
 admin_tag = Tag(name="Admin", description="Admin-only user management endpoints")
-admin_bp = APIBlueprint('admin_bp', __name__, url_prefix='/api/admin', abp_security=[{"jwt": []}])
+admin_bp = APIBlueprint(
+    'admin_bp', __name__, url_prefix='/api/admin',
+    abp_security=[{"jwt": []}],
+    abp_responses={"401": UnauthorizedResponse}
+)
 
 
 @admin_bp.put('/users/<int:user_id>/reset-password', tags=[admin_tag],

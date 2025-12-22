@@ -184,7 +184,7 @@ class TestChangePassword:
                 "new_password": "newpassword123"
             }
         )
-        assert response.status_code == 401
+        assert response.status_code == 403
         data = response.get_json()
         assert data["msg"] == "Incorrect current password"
 
