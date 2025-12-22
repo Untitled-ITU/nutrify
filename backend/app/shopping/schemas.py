@@ -109,3 +109,7 @@ class CompareResponse(BaseModel):
     comparison: list[CompareIngredient]
     total_items: int
     items_in_fridge: int
+
+
+class ClearListQuery(BaseModel):
+    purchased_only: Optional[bool] = False
