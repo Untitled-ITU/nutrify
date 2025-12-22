@@ -2,7 +2,7 @@
 import { useAuth } from "@/app/providers/AuthProvider";
 import { AppShell, Burger, Button, Center, Group, useMantineTheme } from "@mantine/core";
 import { Menu } from "@mantine/core";
-import { IconHeart, IconBook, IconArrowDown, IconChevronDown } from "@tabler/icons-react";
+import { IconHeart, IconBook, IconArrowDown, IconChevronDown, IconPlus } from "@tabler/icons-react";
 import { useDisclosure } from "@mantine/hooks";
 import Link from "next/link";
 
@@ -67,6 +67,13 @@ export default function Navbar() {
                                                     >
                                                         Collections
                                                     </Menu.Item>
+                                                    {user?.role == "chef" && (
+                                                        <Menu.Item
+                                                            leftSection={<IconPlus size={18} />} component={Link} href="/recipes/add"
+                                                        >
+                                                            Add Recipe
+                                                        </Menu.Item>
+                                                    )}
                                                 </Menu.Dropdown>
                                             </Menu>
                                             <Button variant="subtle" size="xl" fz="h3" color={theme.white} radius={0} component={Link} href="/meal-plan" >Meal Plan</Button>
