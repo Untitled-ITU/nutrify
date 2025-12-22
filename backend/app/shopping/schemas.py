@@ -81,7 +81,7 @@ class MessageResponse(BaseModel):
 
 
 class BulkDeleteBody(BaseModel):
-    item_ids: list[int] = Field(min_items=1)
+    item_ids: list[int] = Field(min_length=1)
 
 
 class BulkDeleteResponse(BaseModel):
