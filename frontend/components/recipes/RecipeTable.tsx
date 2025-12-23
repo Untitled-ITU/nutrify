@@ -39,7 +39,7 @@ export function RecipeTable({
 
     return (
         <div
-            className="w-full p-4 rounded-xl min-h-96 flex flex-col"
+            className="shadow-xl w-full p-4 rounded-xl min-h-96 flex flex-col"
             style={{ backgroundColor: theme.other.contentBackground }}
         >
             {/* Pagination */}

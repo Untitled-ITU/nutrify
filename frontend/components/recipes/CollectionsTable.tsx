@@ -111,7 +111,7 @@ export function CollectionsTable({ collections, onCollectionsUpdated }: Props) {
   };
 
   return (
-    <div className="w-full p-4 rounded-xl min-h-96 flex flex-col" style={{ backgroundColor: theme.other.contentBackground }}>
+    <div className="shadow-xl w-full p-4 rounded-xl min-h-96 flex flex-col" style={{ backgroundColor: theme.other.contentBackground }}>
       {/* Create Collection Button */}
       <div className="flex justify-end mb-4">
         <Button leftSection={<IconPlus />} style={{ backgroundColor: theme.other.accentColor }} onClick={() => openEditModal()}>
