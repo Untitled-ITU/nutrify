@@ -1,7 +1,10 @@
-from flask_admin import Admin
+from flask import redirect, url_for, request
+from flask_admin import Admin, AdminIndexView, expose
 from flask_admin.contrib.sqla import ModelView
 from wtforms import PasswordField
 from werkzeug.security import generate_password_hash
+from flask_jwt_extended import decode_token, create_access_token
+from jwt.exceptions import ExpiredSignatureError, InvalidTokenError
 
 from ..extensions import db
 from .auth.models import User, VerificationCode
@@ -12,7 +15,105 @@ from .models import (
 )
 
 
-class UserModelView(ModelView):
+def get_admin_user_from_cookie():
+    token = request.cookies.get('admin_token')
+    if not token:
+        return
+
+    try:
+        decoded = decode_token(token)
+        email = decoded.get('sub')
+
+        if email:
+            user = User.query.filter_by(email=email).first()
+            if user and user.role == 'admin':
+                return user
+    except (ExpiredSignatureError, InvalidTokenError, Exception):
+        pass
+
+
+class SecureModelView(ModelView):
+    def is_accessible(self):
+        return get_admin_user_from_cookie() is not None
+
+    def inaccessible_callback(self, name, **kwargs):
+        return redirect(url_for('admin.login'))
+
+
+class SecureAdminIndexView(AdminIndexView):
+    @expose('/')
+    def index(self):
+        if not get_admin_user_from_cookie():
+            return redirect(url_for('admin.login'))
+        return super().index()
+
+    @expose('/login', methods=['GET', 'POST'])
+    def login(self):
+        if request.method == 'POST':
+            email = request.form.get('email')
+            password = request.form.get('password')
+
+            user = User.query.filter_by(email=email).first()
+
+            if user and user.check_password(password) and user.role == 'admin':
+                access_token = create_access_token(identity=email)
+                response = redirect(url_for('admin.index'))
+                response.set_cookie(
+                    'admin_token', access_token, httponly=True,
+                    secure=False, samesite='Lax'
+                )
+                return response
+
+        return '''
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Login - Nutrify</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .login-card {
+            max-width: 400px;
+            margin: 100px auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card login-card shadow-lg">
+            <div class="card-header bg-dark text-white text-center">
+                <h4>Nutrify Admin Panel</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" name="email" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        <input type="password" name="password" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+'''
+
+    @expose('/logout')
+    def logout(self):
+        response = redirect(url_for('admin.login'))
+        response.delete_cookie('admin_token')
+        return response
+
+
+class UserModelView(SecureModelView):
     column_list = ['id', 'username', 'email', 'role', 'created_at']
     column_searchable_list = ['username', 'email']
     column_filters = ['role', 'created_at']
@@ -30,14 +131,14 @@ class UserModelView(ModelView):
             model.password_hash = generate_password_hash(form.password.data)
 
 
-class VerificationCodeModelView(ModelView):
+class VerificationCodeModelView(SecureModelView):
     column_list = ['id', 'email', 'code', 'purpose', 'expires_at', 'used', 'created_at']
     column_searchable_list = ['email', 'code']
     column_filters = ['purpose', 'used', 'expires_at']
     can_create = False
 
 
-class RecipeModelView(ModelView):
+class RecipeModelView(SecureModelView):
     column_list = [
         'id', 'title', 'category', 'cuisine', 'meal_type',
         'is_vegan', 'is_vegetarian', 'num_ingredients', 'author', 'created_at'
@@ -66,48 +167,48 @@ class RecipeModelView(ModelView):
     }
 
 
-class IngredientModelView(ModelView):
+class IngredientModelView(SecureModelView):
     column_list = ['id', 'name', 'default_unit']
     column_searchable_list = ['name']
     column_sortable_list = ['id', 'name', 'default_unit']
     form_excluded_columns = ['recipe_ingredients', 'shopping_lists', 'fridge_items']
 
 
-class RecipeIngredientModelView(ModelView):
+class RecipeIngredientModelView(SecureModelView):
     column_list = ['recipe', 'ingredient', 'quantity', 'unit']
     column_filters = ['unit']
 
 
-class MealPlanModelView(ModelView):
+class MealPlanModelView(SecureModelView):
     column_list = ['id', 'user', 'recipe', 'plan_date', 'meal_type']
     column_filters = ['meal_type', 'plan_date']
     column_sortable_list = ['id', 'plan_date', 'meal_type']
 
 
-class ShoppingListModelView(ModelView):
+class ShoppingListModelView(SecureModelView):
     column_list = ['id', 'user', 'ingredient', 'amount', 'unit', 'is_purchased', 'created_at']
     column_filters = ['is_purchased', 'source_type']
     column_sortable_list = ['id', 'amount', 'is_purchased', 'created_at']
 
 
-class FavoriteModelView(ModelView):
+class FavoriteModelView(SecureModelView):
     column_list = ['id', 'user', 'recipe', 'created_at']
     column_sortable_list = ['id', 'created_at']
 
 
-class FridgeItemModelView(ModelView):
+class FridgeItemModelView(SecureModelView):
     column_list = ['id', 'user', 'ingredient', 'quantity', 'unit', 'added_at']
     column_filters = ['unit']
     column_sortable_list = ['id', 'quantity', 'added_at']
 
 
-class RatingModelView(ModelView):
+class RatingModelView(SecureModelView):
     column_list = ['id', 'user', 'recipe', 'score', 'comment', 'created_at']
     column_filters = ['score']
     column_sortable_list = ['id', 'score', 'created_at']
 
 
-class RecipeCollectionModelView(ModelView):
+class RecipeCollectionModelView(SecureModelView):
     column_list = ['id', 'user', 'name', 'is_public', 'created_at', 'updated_at']
     column_searchable_list = ['name', 'description']
     column_filters = ['is_public']
@@ -115,23 +216,35 @@ class RecipeCollectionModelView(ModelView):
     form_excluded_columns = ['items']
 
 
-class CollectionItemModelView(ModelView):
+class CollectionItemModelView(SecureModelView):
     column_list = ['collection', 'recipe', 'added_at']
     column_sortable_list = ['added_at']
 
 
-class ChefProfileModelView(ModelView):
+class ChefProfileModelView(SecureModelView):
     column_list = ['id', 'user', 'bio', 'website', 'location']
     column_searchable_list = ['bio', 'website', 'location']
     column_sortable_list = ['id']
 
 
 def init_admin(app):
+    admin_url = app.config["ADMIN_URL"].strip()
+
+    if not admin_url:
+        app.logger.info('ADMIN_URL not set - Admin panel is DISABLED')
+        return
+
+    if not admin_url.startswith('/'):
+        admin_url = '/' + admin_url
+
+    app.logger.info(f'Admin panel enabled at: {admin_url}')
+
     admin = Admin(
         app,
         name='Nutrify Admin',
-        url='/admin',
-        endpoint='admin'
+        url=admin_url,
+        endpoint='admin',
+        index_view=SecureAdminIndexView()
     )
 
     admin.add_view(UserModelView(User, db.session, name='Users', category='Auth'))
