@@ -6,8 +6,8 @@ import { Recipe } from "@/components/recipes/types";
 import { API_BASE_URL } from "@/lib/config";
 import { authFetch } from "../providers/AuthProvider";
 import { ActionIcon, Button, Menu, Select, TextInput, useMantineTheme } from "@mantine/core";
-import { IconArrowsSort, IconBookmark, IconCheck, IconHeart, IconPlus, IconSearch, IconX } from "@tabler/icons-react";
-import { handleAddFavorite } from "@/lib/tableActions";
+import { IconArrowsSort, IconBookmark, IconCheck, IconHeart, IconHeartFilled, IconPlus, IconSearch, IconX } from "@tabler/icons-react";
+import { handleAddFavorite, handleRemoveFavorite } from "@/lib/tableActions";
 import { AddToCollectionMenu } from "@/components/recipes/AddToCollectionMenu";
 
 type RecipesResponse = {
@@ -62,6 +62,27 @@ export default function DiscoverPage() {
         }
     }, [filters]);
 
+    const toggleFavorite = async (recipe: Recipe) => {
+        try {
+            if (recipe.is_favorite) {
+                await handleRemoveFavorite(recipe);
+            } else {
+                await handleAddFavorite(recipe);
+            }
+
+            // Optimistic UI update
+            setRecipes(prev =>
+                prev.map(r =>
+                    r.id === recipe.id
+                        ? { ...r, is_favorite: !r.is_favorite }
+                        : r
+                )
+            );
+        } catch {
+            // optional notification
+        }
+    };
+
     /**
      * 🔥 Refetch when filters change
      */
@@ -82,9 +103,13 @@ export default function DiscoverPage() {
                     <>
                         <ActionIcon
                             style={{ backgroundColor: theme.other.primaryDark }}
-                            onClick={() => handleAddFavorite(r)}
+                            onClick={() => toggleFavorite(r)}
                         >
-                            <IconHeart size={18} />
+                            {r.is_favorite ? (
+                                <IconHeartFilled size={18} />
+                            ) : (
+                                <IconHeart size={18} />
+                            )}
                         </ActionIcon>
                         <Menu shadow="md" width={220}>
                             <Menu.Target>

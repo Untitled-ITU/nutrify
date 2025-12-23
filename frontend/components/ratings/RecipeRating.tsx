@@ -10,6 +10,7 @@ import {
     Textarea,
     Rating,
     Loader,
+    useMantineTheme,
 } from "@mantine/core";
 import { authFetch } from "@/app/providers/AuthProvider";
 import { API_BASE_URL } from "@/lib/config";
@@ -41,6 +42,7 @@ type Props = {
 };
 
 export function RecipeRating({ recipeId }: Props) {
+    const theme = useMantineTheme();
     const [data, setData] = useState<RatingsResponse | null>(null);
     const [userRating, setUserRating] = useState<UserRating | null>(null);
 
@@ -123,7 +125,8 @@ export function RecipeRating({ recipeId }: Props) {
                     {data.total_ratings})
                 </Text>
 
-                <Button size="xs" variant="light" onClick={() => setOpen(true)}>
+                <Button 
+                size="xs" variant="light" onClick={() => setOpen(true)}>
                     {userRating ? "Edit your rating" : "Rate this recipe"}
                 </Button>
             </Group>
@@ -172,7 +175,9 @@ export function RecipeRating({ recipeId }: Props) {
                             Cancel
                         </Button>
 
-                        <Button loading={loading} onClick={submit}>
+                        <Button 
+                        style={{ backgroundColor: theme.other.primaryDark }}
+                        loading={loading} onClick={submit}>
                             Save
                         </Button>
                     </Group>

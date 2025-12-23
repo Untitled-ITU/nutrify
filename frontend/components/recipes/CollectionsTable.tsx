@@ -127,7 +127,7 @@ export function CollectionsTable({ collections, onCollectionsUpdated }: Props) {
       )}
 
       {/* Header */}
-      <div className="bg-[#F6EDEA] rounded-xl px-6 py-4 text-xl font-bold mb-3">
+      <div className="shadow-md bg-[#F6EDEA] rounded-xl px-6 py-4 text-xl font-bold mb-3">
         <div className="grid grid-cols-[4fr_2fr_1fr]">
           <span>Collection Name</span>
           <span>Recipes</span>
@@ -138,7 +138,7 @@ export function CollectionsTable({ collections, onCollectionsUpdated }: Props) {
       {/* Rows */}
       <div className="space-y-3 flex-1">
         {paginatedCollections.map((c) => (
-          <div key={c.id} className="bg-[#E7C6BC] rounded-xl px-6 py-4">
+          <div key={c.id} className="shadow-md bg-[#E7C6BC] rounded-xl px-6 py-4 transition hover:shadow-md hover:-translate-y-1px hover:bg-[#EFD2C9]">
             <div className="grid grid-cols-[4fr_2fr_1fr] items-center">
               <span className="font-medium">{c.name}</span>
               <span>{c.recipe_count ?? "-"}</span>

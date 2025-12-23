@@ -55,7 +55,7 @@ export function RecipeTable({
             )}
 
             {/* Header */}
-            <div className="bg-[#F6EDEA] rounded-xl px-6 py-4 text-lg font-bold mb-3">
+            <div className="shadow-md bg-[#F6EDEA] rounded-xl px-6 py-4 text-lg font-bold mb-3">
                 <div className="gap-4 grid grid-cols-[2fr_3fr_1fr_1fr_1fr_1fr] divide-x divide-black/10">
                     <SortableHeader
                         label="Recipe Name"
@@ -100,7 +100,7 @@ export function RecipeTable({
                 {paginatedRecipes.map((r) => (
                     <div
                         key={r.id}
-                        className="bg-[#E7C6BC] rounded-xl px-6 py-4 transition hover:shadow-md hover:-translate-y-1px hover:bg-[#EFD2C9] "
+                        className="shadow-md bg-[#E7C6BC] rounded-xl px-6 py-4 transition hover:shadow-md hover:-translate-y-1px hover:bg-[#EFD2C9] "
                     >
                         <div className="gap-4 grid grid-cols-[2fr_3fr_1fr_1fr_1fr_1fr] items-start">
                             <span className="font-bold">{r.title}</span>
