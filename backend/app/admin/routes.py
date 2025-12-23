@@ -4,7 +4,7 @@ from ...extensions import db
 from ..auth.models import User
 from ..decorators import admin_required
 from .schemas import (
-    UserIdPath, ResetPasswordBody, UsersListResponse,
+    UserIdPath, AdminResetPasswordBody, UsersListResponse,
     ChangeRoleBody, MessageResponse
 )
 
@@ -16,7 +16,7 @@ admin_bp = APIBlueprint('admin_bp', __name__, url_prefix='/api/admin', abp_secur
 @admin_bp.put('/users/<int:user_id>/reset-password', tags=[admin_tag],
     responses={"200": MessageResponse, "404": MessageResponse})
 @admin_required
-def reset_user_password(path: UserIdPath, body: ResetPasswordBody):
+def reset_user_password(path: UserIdPath, body: AdminResetPasswordBody):
     user_to_reset = db.session.get(User, path.user_id)
 
     if not user_to_reset:

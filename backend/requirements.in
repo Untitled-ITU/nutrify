@@ -5,4 +5,6 @@ flask-mail
 flask-sqlalchemy
 flask-openapi3[swagger,redoc]
 pydantic
+flask-admin
+flask-babel
 python-dotenv
