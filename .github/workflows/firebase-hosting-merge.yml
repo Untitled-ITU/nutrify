@@ -53,3 +53,5 @@ jobs:
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_PREPROD }}
           projectId: ${{ secrets.FIREBASE_PROJECT_ID_PREPROD }}
           channelId: live
+        env:
+          FIREBASE_CLI_EXPERIMENTS: webframeworks
