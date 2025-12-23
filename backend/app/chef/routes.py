@@ -10,7 +10,7 @@ from ..models import Recipe, Ingredient, RecipeIngredient, Rating, ChefProfile
 from ..utils.unit_converter import format_quantity_with_conversions
 from .schemas import (
     RecipeIdPath, ChefRecipesResponse, CreateRecipeBody, RecipeResponse,
-    RecipeDetail, UpdateRecipeBody, MessageResponse, ChefStatsResponse,
+    ChefRecipeDetail, UpdateRecipeBody, MessageResponse, ChefStatsResponse,
     ChefProfileResponse, UpdateChefProfileBody
 )
 
@@ -109,7 +109,7 @@ def create_recipe(body: CreateRecipeBody):
 
 
 @chef_bp.get('/recipes/<int:recipe_id>',
-    responses={"200": RecipeDetail, "403": MessageResponse, "404": MessageResponse})
+    responses={"200": ChefRecipeDetail, "403": MessageResponse, "404": MessageResponse})
 @chef_required
 def get_recipe_for_edit(path: RecipeIdPath):
     recipe_id = path.recipe_id
@@ -191,24 +191,20 @@ def update_recipe(path: RecipeIdPath, body: UpdateRecipeBody):
         RecipeIngredient.query.filter_by(recipe_id=recipe.id).delete()
 
         for ing_data in body.ingredients:
-            ingredient_id = ing_data.get('ingredient_id')
-            ingredient_name = ing_data.get('name')
-            quantity = ing_data.get('quantity')
-
             ingredient = None
-            if ingredient_id:
-                ingredient = db.session.get(Ingredient, ingredient_id)
-            elif ingredient_name:
+            if ing_data.ingredient_id:
+                ingredient = db.session.get(Ingredient, ing_data.ingredient_id)
+            elif ing_data.name:
                 ingredient = Ingredient.query.filter(
-                    Ingredient.name.ilike(ingredient_name.strip())
+                    Ingredient.name.ilike(ing_data.name.strip())
                 ).first()
 
             if ingredient:
                 recipe_ingredient = RecipeIngredient(
                     recipe_id=recipe.id,
                     ingredient_id=ingredient.id,
-                    quantity=float(quantity) if quantity else None,
-                    unit=ing_data.get('unit')
+                    quantity=float(ing_data.quantity) if ing_data.quantity else None,
+                    unit=ing_data.unit
                 )
                 db.session.add(recipe_ingredient)
 

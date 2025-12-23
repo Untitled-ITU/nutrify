@@ -6,7 +6,7 @@ class ItemIdPath(BaseModel):
     item_id: int
 
 
-class IngredientInfo(BaseModel):
+class FridgeIngredientInfo(BaseModel):
     id: int
     name: str
     default_unit: Optional[str]
@@ -19,7 +19,7 @@ class AlternativeUnit(BaseModel):
 
 class FridgeItemDetail(BaseModel):
     id: int
-    ingredient: IngredientInfo
+    ingredient: FridgeIngredientInfo
     quantity: float
     unit: str
     alternatives: list[AlternativeUnit] = []

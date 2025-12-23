@@ -35,7 +35,7 @@ export default function LoginPage() {
 
         const token = data.access_token;
         console.log(token);
-        login(token);
+        await login(token);
 
         // redirect to dashboard or home
         redirect("/", RedirectType.replace);

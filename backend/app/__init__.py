@@ -1,5 +1,5 @@
 from ..config import Config
-from ..extensions import jwt, db, mail
+from ..extensions import jwt, db, mail, babel
 from .auth.routes import auth_bp
 from .admin.routes import admin_bp
 from .recipe.routes import recipe_bp
@@ -8,6 +8,7 @@ from .planning.routes import planning_bp
 from .shopping.routes import shopping_bp
 from .chef.routes import chef_bp
 from .rating.routes import rating_bp
+from .admin_views import init_admin
 
 from flask_openapi3 import OpenAPI, Info
 from flask_cors import CORS
@@ -39,6 +40,7 @@ def create_app(config=None):
     jwt.init_app(app)
     db.init_app(app)
     mail.init_app(app)
+    babel.init_app(app)
 
     CORS(app, resources={"/api/*": {"origins": "*"}})
 
@@ -50,5 +52,7 @@ def create_app(config=None):
     app.register_api(shopping_bp)
     app.register_api(fridge_bp)
     app.register_api(chef_bp)
+
+    init_admin(app)
 
     return app

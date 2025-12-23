@@ -91,24 +91,24 @@ export default function FavoritesPage() {
                 onFiltersChangeAction={setFilters}
                 disableIngredientFilter={true}
                 renderActions={(r) => (
-                    <Menu shadow="md" width={200} position="bottom-end">
-                        <Menu.Target>
-                            <ActionIcon style={{ backgroundColor: theme.other.accentColor }}>
-                                <IconPlus size={28} />
-                            </ActionIcon>
-                        </Menu.Target>
-
-                        <Menu.Dropdown>
-                            <Menu.Item
-                                leftSection={<IconHeartBroken size={16} />}
+                    <>
+                        <ActionIcon
+                            style={{ backgroundColor: theme.other.primaryDark }}
                                 onClick={() => onRemove(r)}
-                            >
-                                Remove from favorites
-                            </Menu.Item>
-                            
-                            <AddToCollectionMenu recipe={r} />
-                        </Menu.Dropdown>
-                    </Menu>
+                        >
+                            <IconX size={18} />
+                        </ActionIcon>
+                        <Menu shadow="md" width={220}>
+                            <Menu.Target>
+                                <ActionIcon
+                                    style={{ backgroundColor: theme.other.primaryDark }}
+                                >
+                                    <IconBookmark size={18} />
+                                </ActionIcon>
+                            </Menu.Target>
+                            <AddToCollectionMenu variant="dropdown" recipe={r} />
+                        </Menu>
+                    </>
                 )}
             />
 

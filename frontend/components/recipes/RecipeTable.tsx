@@ -1,11 +1,7 @@
 import { useState, useMemo } from "react";
-import { notifications } from "@mantine/notifications";
-import { IconCheck, IconX } from "@tabler/icons-react";
 import { ActionIcon, Pagination, useMantineTheme } from "@mantine/core";
 import { IconExternalLink } from "@tabler/icons-react";
 import { Recipe } from "./types";
-import { authFetch } from "@/app/providers/AuthProvider";
-import { API_BASE_URL } from "@/lib/config";
 
 export type SortKey = "title" | "category" | "cuisine" | "rating";
 export type SortDir = "asc" | "desc";
@@ -30,6 +26,7 @@ export function RecipeTable({
     sortDir,
     onSortChange,
 }: Props) {
+    const router = useRouter();
     const theme = useMantineTheme();
     const [page, setPage] = useState(1);
 
@@ -103,21 +100,23 @@ export function RecipeTable({
                 {paginatedRecipes.map((r) => (
                     <div
                         key={r.id}
-                        className="bg-[#E7C6BC] rounded-xl px-6 py-4"
+                        className="bg-[#E7C6BC] rounded-xl px-6 py-4 transition hover:shadow-md hover:-translate-y-1px hover:bg-[#EFD2C9] "
                     >
                         <div className="gap-4 grid grid-cols-[2fr_3fr_1fr_1fr_1fr_1fr] items-start">
                             <span className="font-bold">{r.title}</span>
-                            <span>{r.description}</span>
+                            <TruncatedText text={r.description} maxChars={120} />
                             <span className="capitalize">{r.category}</span>
                             <span className="capitalize">{r.cuisine}</span>
-                            <span className="font-bold">
-                                {r.average_rating || "-"}
+                            <span
+                                className="inline-flex items-center justify-center px-3 py-1 rounded-full text-sm font-bold bg-[#F6EDEA] text-[#6A3E37] "
+                            >
+                                {r.average_rating || "—"}
                             </span>
 
                             <div className="flex justify-end gap-3">
                                 <ActionIcon
                                     style={{ backgroundColor: theme.other.accentColor }}
-                                    onClick={() => onOpen?.(r)}
+                                    onClick={() => router.push(`/recipes/details/${r.id}`)}
                                 >
                                     <IconExternalLink size={28} />
                                 </ActionIcon>
@@ -143,6 +142,8 @@ import {
     IconChevronDown,
     IconSelector,
 } from "@tabler/icons-react";
+import { useRouter } from "next/navigation";
+import { TruncatedText } from "../TruncatedText";
 
 function SortableHeader({
     label,
