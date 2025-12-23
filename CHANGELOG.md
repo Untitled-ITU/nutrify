@@ -8,6 +8,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+
+- Login and signup pages with basic
+- Basic discover page
+- Reusable UI components
+- Base layout, landing page, and consistent padding
+- Cloud Run deployment optimizations
+- Recipe search, details, and favorites functionality
+- Chef recipe management
+- Unit conversion utility functions
+- Fridge and Shopping List modules
+- Meal Plan page and implementation
+- Rate, review, and delete endpoints for recipes
+- API schema validations
+- OpenAPI integration with Swagger UI
+- Python script for data loading
+- Test infrastructure using pytest
+
+### Changed
+
+- Restructured database tables
+- Refactored config loading and app structure
+- Updated package versions and requirements
+
+---
+
+## [0.2.0] - 2025-12-21
+
+### Added
 - PostgreSQL integration and database schema updates
 - SQLAlchemy models and DB initialization updates for PostgreSQL compatibility
 - Authentication features: email verification, password-reset and verification model with mail settings

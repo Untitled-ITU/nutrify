@@ -8,3 +8,4 @@ pydantic
 flask-admin
 flask-babel
 python-dotenv
+pytest

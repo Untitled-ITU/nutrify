@@ -3,6 +3,7 @@ from flask_jwt_extended import get_jwt_identity
 
 from ...extensions import db
 from ..auth.models import User
+from ..auth.schemas import UnauthorizedResponse
 from ..decorators import login_required
 from ..models import FridgeItem, Ingredient
 from ..utils.unit_converter import format_quantity_with_conversions
@@ -16,7 +17,8 @@ from .schemas import (
 fridge_tag = Tag(name="Fridge", description="Fridge inventory management")
 fridge_bp = APIBlueprint(
     'fridge', __name__, url_prefix='/api/fridge',
-    abp_tags=[fridge_tag], abp_security=[{"jwt": []}]
+    abp_tags=[fridge_tag], abp_security=[{"jwt": []}],
+    abp_responses={"401": UnauthorizedResponse}
 )
 
 

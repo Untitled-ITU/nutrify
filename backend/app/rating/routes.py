@@ -3,6 +3,7 @@ from flask_jwt_extended import get_jwt_identity
 
 from ...extensions import db
 from ..auth.models import User
+from ..auth.schemas import UnauthorizedResponse
 from ..decorators import login_required
 from ..models import Recipe, Rating
 from .schemas import (
@@ -15,7 +16,8 @@ from .schemas import (
 rating_tag = Tag(name="Ratings", description="Recipe rating and review management")
 rating_bp = APIBlueprint(
     'ratings', __name__, url_prefix='/api',
-    abp_tags=[rating_tag], abp_security=[{"jwt": []}]
+    abp_tags=[rating_tag], abp_security=[{"jwt": []}],
+    abp_responses={"401": UnauthorizedResponse}
 )
 
 

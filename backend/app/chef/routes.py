@@ -4,6 +4,7 @@ from sqlalchemy import func
 
 from ...extensions import db
 from ..auth.models import User
+from ..auth.schemas import UnauthorizedResponse
 from ..decorators import chef_required
 from ..models import Recipe, Ingredient, RecipeIngredient, Rating, ChefProfile
 from ..utils.unit_converter import format_quantity_with_conversions
@@ -17,7 +18,8 @@ from .schemas import (
 chef_tag = Tag(name="Chef", description="Chef recipe management")
 chef_bp = APIBlueprint(
     'chef', __name__, url_prefix='/api/chef',
-    abp_tags=[chef_tag], abp_security=[{"jwt": []}]
+    abp_tags=[chef_tag], abp_security=[{"jwt": []}],
+    abp_responses={"401": UnauthorizedResponse}
 )
 
 

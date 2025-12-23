@@ -5,6 +5,7 @@ from flask_jwt_extended import get_jwt_identity
 
 from ...extensions import db
 from ..auth.models import User
+from ..auth.schemas import UnauthorizedResponse
 from ..decorators import login_required
 from ..models import ShoppingList, Ingredient, Recipe, MealPlan, FridgeItem
 from ..utils.unit_converter import format_quantity_with_conversions, get_unit_group, convert_unit
@@ -20,7 +21,8 @@ from .schemas import (
 shopping_tag = Tag(name="Shopping List", description="Shopping list management")
 shopping_bp = APIBlueprint(
     'shopping', __name__, url_prefix='/api/shopping-list',
-    abp_tags=[shopping_tag], abp_security=[{"jwt": []}]
+    abp_tags=[shopping_tag], abp_security=[{"jwt": []}],
+    abp_responses={"401": UnauthorizedResponse}
 )
 
 
