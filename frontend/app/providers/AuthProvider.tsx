@@ -1,8 +1,13 @@
 "use client";
 
+import { API_BASE_URL } from "@/lib/config";
 import { createContext, useContext, useState, useEffect } from "react";
 
 type User = {
+    id: number;
+    email: string;
+    username: string;
+    role: string;
     token: string;
 } | null;
 
@@ -14,24 +19,43 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType>({
     user: null,
-    login: () => { },
+    login: async () => { },
     logout: () => { },
 });
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
     const [user, setUser] = useState<User>(null);
 
+    async function loadProfile(token: string) {
+        try {
+            const res = await authFetch(API_BASE_URL + "/api/auth/profile");
+
+            if (!res.ok) throw new Error("Unauthorized");
+
+            const profile = await res.json();
+
+            setUser({
+                ...profile,
+                token,
+            });
+        } catch {
+            localStorage.removeItem("access_token");
+            setUser(null);
+        }
+    }
+
     // Restore login state from localStorage (runs once)
     useEffect(() => {
         const token = localStorage.getItem("access_token");
-        if (token) {
-            setUser({ token });
-        }
+        if (!token)
+            return;
+
+        loadProfile(token);
     }, []);
 
-    function login(token: string) {
+    async function login(token: string) {
         localStorage.setItem("access_token", token);
-        setUser({ token }); // 👈 TRIGGERS RE-RENDER
+        await loadProfile(token);
     }
 
     function logout() {
