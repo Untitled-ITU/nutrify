@@ -11,6 +11,7 @@ export default function SignupPage() {
     const router = useRouter();
 
     const [email, setEmail] = useState("");
+    const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [isChef, setIsChef] = useState(false);
@@ -33,7 +34,7 @@ export default function SignupPage() {
             body: JSON.stringify({
                 email,
                 password,
-                username: email.split("@")[0], // or add a username input
+                username,
                 role,
             }),
         });
@@ -63,6 +64,15 @@ export default function SignupPage() {
                         label="E-Mail"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
+                        styles={{ label: { fontSize: 24 } }}
+                    />
+                    
+                    <TextInput
+                        size="lg"
+                        radius="lg"
+                        label="Username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
                         styles={{ label: { fontSize: 24 } }}
                     />
 
