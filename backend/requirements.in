@@ -9,3 +9,4 @@ flask-admin
 flask-babel
 python-dotenv
 pytest
+pg8000>=1.31.5
