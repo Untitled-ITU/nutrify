@@ -8,6 +8,7 @@ from ..auth.schemas import UnauthorizedResponse
 from ..decorators import chef_required
 from ..models import Recipe, Ingredient, RecipeIngredient, Rating, ChefProfile
 from ..utils.unit_converter import format_quantity_with_conversions
+from ..utils.storage import build_image_url
 from .schemas import (
     RecipeIdPath, ChefRecipesResponse, CreateRecipeBody, RecipeResponse,
     ChefRecipeDetail, UpdateRecipeBody, MessageResponse, ChefStatsResponse,
@@ -49,6 +50,7 @@ def get_chef_recipes():
             'id': recipe.id,
             'title': recipe.title,
             'description': recipe.description,
+            'image_url': build_image_url(recipe.image_name),
             'category': recipe.category,
             'cuisine': recipe.cuisine,
             'num_ingredients': recipe.num_ingredients,
@@ -73,6 +75,7 @@ def create_recipe(body: CreateRecipeBody):
         author_id=user.id,
         title=body.title,
         description=body.description,
+        image_name=body.image_name,
         category=body.category,
         cuisine=body.cuisine,
         meal_type=body.meal_type,
@@ -141,6 +144,7 @@ def get_recipe_for_edit(path: RecipeIdPath):
         'id': recipe.id,
         'title': recipe.title,
         'description': recipe.description,
+        'image_url': build_image_url(recipe.image_name),
         'category': recipe.category,
         'cuisine': recipe.cuisine,
         'meal_type': recipe.meal_type,
@@ -186,6 +190,8 @@ def update_recipe(path: RecipeIdPath, body: UpdateRecipeBody):
         recipe.is_vegetarian = body.is_vegetarian
     if body.directions is not None:
         recipe.directions = body.directions
+    if body.image_name is not None:
+        recipe.image_name = body.image_name
 
     if body.ingredients is not None:
         RecipeIngredient.query.filter_by(recipe_id=recipe.id).delete()
@@ -296,7 +302,7 @@ def get_chef_profile():
         'bio': profile.bio,
         'website': profile.website,
         'location': profile.location,
-        'avatar_url': profile.avatar_url
+        'avatar_url': build_image_url(profile.avatar_name)
     }, 200
 
 
@@ -321,8 +327,8 @@ def update_chef_profile(body: UpdateChefProfileBody):
         profile.website = body.website
     if body.location is not None:
         profile.location = body.location
-    if body.avatar_url is not None:
-        profile.avatar_url = body.avatar_url
+    if body.avatar_name is not None:
+        profile.avatar_name = body.avatar_name
 
     db.session.commit()
 

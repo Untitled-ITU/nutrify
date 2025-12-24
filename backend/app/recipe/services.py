@@ -2,6 +2,7 @@ from sqlalchemy import func, or_
 
 from ...extensions import db
 from ..utils.unit_converter import format_quantity_with_conversions
+from ..utils.storage import build_image_url
 from ..models import (
     Recipe, Favorite, Rating, RecipeIngredient,
     Ingredient, RecipeCollection, CollectionItem
@@ -131,6 +132,7 @@ def get_recipe_detail(recipe_id, user_id=None):
         'meal_type': recipe.meal_type,
         'is_vegan': recipe.is_vegan,
         'is_vegetarian': recipe.is_vegetarian,
+        'image_url': build_image_url(recipe.image_name),
         'directions': recipe.directions,
         'ingredients': ingredients,
         'author': author_data,
@@ -172,6 +174,7 @@ def serialize_recipe_summary(recipe, user_id=None):
         'meal_type': recipe.meal_type,
         'is_vegan': recipe.is_vegan,
         'is_vegetarian': recipe.is_vegetarian,
+        'image_url': build_image_url(recipe.image_name),
         'num_ingredients': recipe.num_ingredients,
         'average_rating': round(avg_rating, 1) if avg_rating else None,
         'is_favorite': is_favorite,

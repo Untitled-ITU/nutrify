@@ -49,23 +49,17 @@ class TestUserModel:
         with pytest.raises(IntegrityError):
             db_session.commit()
 
-    def test_user_check_password_wrong(self, db_session):
+    def test_user_password_hashing(self, db_session):
         user = User(email="pwtest@example.com", username="pwuser", role="consumer")
-        user.set_password("correctpassword")
+        user.set_password("password1")
+        hash1 = user.password_hash
         db_session.add(user)
         db_session.commit()
 
         assert user.check_password("wrongpassword") is False
 
-    def test_user_set_password_changes_hash(self, db_session):
-        user = User(email="hashtest@example.com", username="hashuser", role="consumer")
-        user.set_password("password1")
-        hash1 = user.password_hash
-
         user.set_password("password2")
-        hash2 = user.password_hash
-
-        assert hash1 != hash2
+        assert user.password_hash != hash1
 
     def test_user_default_role(self, db_session):
         user = User(email="role@example.com", username="roleuser")

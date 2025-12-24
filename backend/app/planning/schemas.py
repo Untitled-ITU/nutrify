@@ -9,6 +9,7 @@ class MealIdPath(BaseModel):
 class RecipeInfo(BaseModel):
     id: int
     title: str
+    image_url: Optional[str]
 
 
 class MealInfo(BaseModel):
