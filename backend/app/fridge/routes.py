@@ -22,7 +22,7 @@ fridge_bp = APIBlueprint(
 )
 
 
-@fridge_bp.get('', responses={"200": FridgeListResponse, "404": MessageResponse})
+@fridge_bp.get('/items', responses={"200": FridgeListResponse, "404": MessageResponse})
 @login_required
 def get_fridge_items():
     current_email = get_jwt_identity()
@@ -59,7 +59,7 @@ def get_fridge_items():
     }, 200
 
 
-@fridge_bp.post('',
+@fridge_bp.post('/items',
     responses={"201": FridgeItemResponse, "404": MessageResponse, "409": MessageResponse})
 @login_required
 def add_fridge_item(body: AddFridgeItemBody):
