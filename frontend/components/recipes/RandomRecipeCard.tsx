@@ -1,7 +1,7 @@
 "use client";
 
 import { MOCK_RECIPES } from "@/lib/mockRecipes";
-import { Card, Badge, Group, Text, Stack, Divider } from "@mantine/core";
+import { Card, Badge, Group, Text, Stack, Divider, rgba } from "@mantine/core";
 import { useEffect, useState } from "react";
 
 export function RandomRecipeCard() {
@@ -36,15 +36,36 @@ export function RandomRecipeCard() {
             radius="lg"
             shadow="md"
             padding="lg"
-            className="w-full h-full flex flex-col justify-between"
+            className="w-full h-full flex flex-col"
         >
-            {/* Header */}
-            <Stack gap={24}>
-                <Text fw={700} size="xl" fz="h2">
-                    {recipe.title}
-                </Text>
+            {/* Image header */}
+            <Card.Section className="relative h-[80%]">
+                <div
+                    className="absolute inset-0"
+                    style={{
+                        backgroundImage: `
+          linear-gradient(
+            to bottom,
+            rgba(0,0,0,0.15),
+            rgba(0,0,0,0.15)
+          ),
+          url(${recipe.image_url})
+        `,
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                    }}
+                />
 
-                <Group gap="xs">
+                <div className="relative z-10 p-4 h-full flex flex-col justify-end">
+                    <h2 className="text-6xl text-white font-extrabold drop-shadow-[0_4px_4px_rgba(0,0,0,1)]" >
+                        {recipe.title}
+                    </h2>
+                </div>
+            </Card.Section>
+
+            {/* Content */}
+            <Stack gap="sm" mt="md" className="flex-1">
+                <Group gap="xs" mt={4}>
                     <Badge color="orange" variant="light">
                         {recipe.cuisine}
                     </Badge>
@@ -55,42 +76,9 @@ export function RandomRecipeCard() {
                         {recipe.meal_type}
                     </Badge>
                 </Group>
-            </Stack>
-
-            <Divider />
-
-            {/* Description */}
-            <Text c="dimmed" lineClamp={3}>
-                {recipe.description}
-            </Text>
-
-            {/* Ingredients */}
-            <Text mt="sm" fw={600}>
-                Ingredients ({recipe.ingredients.length})
-            </Text>
-            <Text size="sm" c="dimmed">
-                {recipe.ingredients
-                    .slice(0, 4)
-                    .map((i: any) => i.name)
-                    .join(", ")}
-                {recipe.ingredients.length > 4 && "…"}
-            </Text>
-
-            {/* Directions (split into steps) */}
-            <Stack gap={6} mt="sm">
-                <Text fw={600}>Directions</Text>
-
-                {steps?.slice(0, 3).map((step, i) => (
-                    <Text key={i} size="sm" c="dimmed">
-                        <strong>Step {i + 1}:</strong> {step}.
-                    </Text>
-                ))}
-
-                {steps && (steps.length > 3 && (
-                    <Text size="xs" c="gray">
-                        + {steps.length - 3} more steps
-                    </Text>)
-                )}
+                <Text size="sm" c="dimmed" lineClamp={3}>
+                    {recipe.description}
+                </Text>
             </Stack>
 
             {/* Footer */}

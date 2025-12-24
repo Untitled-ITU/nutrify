@@ -56,7 +56,7 @@ export function RecipeTable({
 
             {/* Header */}
             <div className="shadow-md bg-[#F6EDEA] rounded-xl px-6 py-4 text-lg font-bold mb-3">
-                <div className="gap-4 grid grid-cols-[2fr_3fr_1fr_1fr_1fr_1fr] divide-x divide-black/10">
+                <div className="gap-4 grid grid-cols-[2.5fr_2.5fr_1fr_1fr_1fr_1fr] divide-x divide-black/10">
                     <SortableHeader
                         label="Recipe Name"
                         column="title"
@@ -100,17 +100,47 @@ export function RecipeTable({
                 {paginatedRecipes.map((r) => (
                     <div
                         key={r.id}
-                        className="shadow-md bg-[#E7C6BC] rounded-xl px-6 py-4 transition hover:shadow-md hover:-translate-y-1px hover:bg-[#EFD2C9] "
+                        className="min-h-32 shadow-md bg-[#E7C6BC] rounded-xl px-6 py-4
+                    bg-no-repeat
+                    bg-left
+                    bg-contain
+                        "
+                        style={{
+                            backgroundImage: `
+                                      linear-gradient(
+                                        to left,
+                                        rgba(231,198,188,1) 0%,
+                                        rgba(231,198,188,0.65) 20%,
+                                        rgba(231,198,188,0.55) 50%,
+                                        rgba(231,198,188,0.45) 60%,
+                                        rgba(231,198,188,0.25) 70%,
+                                        rgba(231,198,188,0) 100%
+                                      ),
+                                      url(${r.image_url})
+                                    `,
+                            backgroundSize: "30% auto",
+                        }}
                     >
-                        <div className="gap-4 grid grid-cols-[2fr_3fr_1fr_1fr_1fr_1fr] items-start">
-                            <span className="font-bold">{r.title}</span>
+                        <div
+                            className="
+                          pointer-events-none
+                          absolute inset-0
+                          bg-cover
+                          bg-right
+                          opacity-40
+                          mask-image-[linear-gradient(to_right,black_0%,black_50%,transparent_100%)]
+                          [-webkit-mask-image:linear-gradient(to_right,black_0%,black_50%,transparent_100%)]
+                        "
+                        />
+                        <div className="gap-4 grid grid-cols-[2.5fr_2.5fr_1fr_1fr_1fr_1fr] items-start">
+                            <span className="text-left text-3xl text-white font-bold drop-shadow-[0_4px_4px_rgba(0,0,0,1)]">{r.title}</span>
                             <TruncatedText text={r.description} maxChars={120} />
                             <span className="capitalize">{r.category}</span>
                             <span className="capitalize">{r.cuisine}</span>
                             <span
                                 className="inline-flex items-center justify-center px-3 py-1 rounded-full text-sm font-bold bg-[#F6EDEA] text-[#6A3E37] "
                             >
-                                {r.average_rating || "—"}
+                                <StarRating rating={r.average_rating} />
                             </span>
 
                             <div className="flex justify-end gap-3">
@@ -181,3 +211,36 @@ function SortableHeader({
         </button>
     );
 }
+
+
+const StarRating = ({ rating = 0 }: { rating?: number }) => {
+    return (
+        <div className="flex gap-1">
+            {Array.from({ length: 5 }).map((_, i) => {
+                const value = i + 1;
+                const filled = rating >= value;
+                const half = rating >= value - 0.5 && rating < value;
+
+                return (
+                    <svg
+                        key={i}
+                        viewBox="0 0 24 24"
+                        className="w-4 h-4"
+                    >
+                        <defs>
+                            <linearGradient id={`half-${i}`}>
+                                <stop offset="50%" stopColor="#E3A008" />
+                                <stop offset="50%" stopColor="#E5E7EB" />
+                            </linearGradient>
+                        </defs>
+
+                        <path
+                            fill={half ? `url(#half-${i})` : filled ? "#E3A008" : "#E5E7EB"}
+                            d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                        />
+                    </svg>
+                );
+            })}
+        </div>
+    );
+};

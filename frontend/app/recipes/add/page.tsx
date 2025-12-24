@@ -33,6 +33,10 @@ export default function NewRecipePage() {
     async function handleSubmit() {
         setLoading(true);
         try {
+            // 
+            //  image input -> google'a upload w -> url'i alıp backende atıcam
+            //
+            //
             const res = await authFetch(API_BASE_URL + "/api/chef/recipes", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
