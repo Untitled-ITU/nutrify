@@ -56,7 +56,7 @@ export default function Home() {
                                     discover new recipes to get inspired.
                                 </p>
 
-                                <a href="/auth/signup" className="mt-4 font-bold flex flex-row w-[60%] gap-8 items-center justify-start border rounded-md p-2 text-white"
+                                <a href="/auth/signup?role=chef" className="mt-4 font-bold flex flex-row w-[60%] gap-8 items-center justify-start border rounded-md p-2 text-white"
                                     style={{ backgroundColor: theme.other.accentColor }}
                                 >
                                     <IconChefHat size={36} /> Sign up as a Chef to start creating!

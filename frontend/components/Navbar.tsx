@@ -28,7 +28,7 @@ export default function Navbar() {
                                 variant="unstyled"
                                 component={Link}
                                 href="/"
-                                leftSection={<img className="w-12" src="foodIcon.png" />}
+                                leftSection={<img className="w-12" src="/foodIcon.png" />}
                                 className="text-white font-bold p-0 hover:bg-transparent"
                                 styles={{
                                     root: {

@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Divider, Switch, TextInput, useMantineTheme } from "@mantine/core";
 import Link from "next/link";
-import { redirect, useRouter } from "next/navigation";
+import { redirect, useRouter, useSearchParams } from "next/navigation";
 import { API_BASE_URL } from "@/lib/config";
 
 export default function SignupPage() {
@@ -15,6 +15,18 @@ export default function SignupPage() {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [isChef, setIsChef] = useState(false);
+    const searchParams = useSearchParams();
+
+    const roleParam = searchParams.get("role");
+
+
+    useEffect(() => {
+        if (roleParam === "chef") {
+            setIsChef(true);
+        } else if (roleParam === "consumer") {
+            setIsChef(false);
+        }
+    }, [roleParam]);
 
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
@@ -66,7 +78,7 @@ export default function SignupPage() {
                         onChange={(e) => setEmail(e.target.value)}
                         styles={{ label: { fontSize: 24 } }}
                     />
-                    
+
                     <TextInput
                         size="lg"
                         radius="lg"
@@ -100,15 +112,27 @@ export default function SignupPage() {
                         <div className="text-2xl font-medium mb-3">User Type</div>
 
                         <div className="flex flex-row w-full items-center justify-center gap-8">
-                            <div className="w-24 text-right">Consumer</div>
+                            <div className="font-medium text-xl w-24 text-right">Consumer</div>
 
                             <Switch
                                 size="xl"
                                 checked={isChef}
                                 onChange={(e) => setIsChef(e.currentTarget.checked)}
+                                styles={(theme) => ({
+                                    track: {
+                                        backgroundColor: isChef
+                                            ? theme.colors.orange[6]   // ON (Chef)
+                                            : theme.colors.blue[6],    // OFF (Consumer)
+                                        borderColor: "transparent",
+                                    },
+                                    thumb: {
+                                        backgroundColor: theme.white,
+                                        border: "none",
+                                    },
+                                })}
                             />
 
-                            <div className="w-24 text-left">Chef</div>
+                            <div className="font-medium text-xl w-24 text-left">Chef</div>
                         </div>
                     </div>
 
