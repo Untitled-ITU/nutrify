@@ -1,7 +1,8 @@
 from flask import redirect, url_for, request
 from flask_admin import Admin, AdminIndexView, expose
 from flask_admin.contrib.sqla import ModelView
-from wtforms import PasswordField
+from wtforms import PasswordField, SelectField
+from wtforms.validators import ValidationError
 from werkzeug.security import generate_password_hash
 from flask_jwt_extended import decode_token, create_access_token
 from jwt.exceptions import ExpiredSignatureError, InvalidTokenError
@@ -123,12 +124,28 @@ class UserModelView(SecureModelView):
         'favorites', 'fridge_items', 'ratings', 'recipe_collections', 'chef_profile'
     ]
     form_extra_fields = {
-        'password': PasswordField('New Password')
+        'password': PasswordField('New Password'),
+        'role': SelectField('Role', choices=[
+            ('consumer', 'Consumer'),
+            ('chef', 'Chef'),
+            ('admin', 'Admin')
+        ])
     }
 
     def on_model_change(self, form, model, is_created):
+        if is_created:
+            if not form.password.data:
+                raise ValidationError('Password is required for new users')
+            if len(form.password.data) < 6:
+                raise ValidationError('Password must be at least 6 characters')
+
         if form.password.data:
+            if len(form.password.data) < 6:
+                raise ValidationError('Password must be at least 6 characters')
             model.password_hash = generate_password_hash(form.password.data)
+
+        if model.role not in ['consumer', 'chef', 'admin']:
+            raise ValidationError('Role must be one of: consumer, chef, admin')
 
 
 class VerificationCodeModelView(SecureModelView):
@@ -146,7 +163,7 @@ class RecipeModelView(SecureModelView):
     column_searchable_list = ['title', 'description']
     column_filters = ['category', 'cuisine', 'meal_type', 'is_vegan', 'is_vegetarian']
     column_sortable_list = ['id', 'title', 'category', 'cuisine', 'created_at']
-    form_excluded_columns = ['meal_plans', 'favorites', 'ratings', 'collection_items']
+    form_excluded_columns = ['meal_plans', 'favorites', 'ratings', 'collection_items', 'ingredients']
     can_view_details = True
     column_details_list = [
         'id', 'title', 'description', 'category', 'cuisine', 'meal_type',
@@ -228,7 +245,7 @@ class ChefProfileModelView(SecureModelView):
 
 
 def init_admin(app):
-    admin_url = app.config["ADMIN_URL"].strip()
+    admin_url = app.config['ADMIN_URL'].strip()
 
     if not admin_url:
         app.logger.info('ADMIN_URL not set - Admin panel is DISABLED')

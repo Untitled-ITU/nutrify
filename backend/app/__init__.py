@@ -1,4 +1,3 @@
-from ..config import Config
 from ..extensions import jwt, db, mail, babel
 from .auth.routes import auth_bp
 from .admin.routes import admin_bp
@@ -16,6 +15,8 @@ from flask_cors import CORS
 
 def create_app(config=None):
     if config is None:
+        from ..config import Config
+
         config = Config
 
     info = Info(
@@ -53,6 +54,7 @@ def create_app(config=None):
     app.register_api(fridge_bp)
     app.register_api(chef_bp)
 
-    init_admin(app)
+    if not app.config.get('TESTING', False):
+        init_admin(app)
 
     return app

@@ -1,9 +1,16 @@
 import os
 import pytest
 from flask_jwt_extended import create_access_token
+from dotenv import load_dotenv
 from backend.app import create_app
 from backend.extensions import db as _db
 from backend.app.auth.models import User
+
+
+base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+dotenv_path = os.path.join(base_dir, '.env')
+
+load_dotenv(dotenv_path=dotenv_path)
 
 
 class TestConfig:
