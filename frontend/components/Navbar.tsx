@@ -5,6 +5,7 @@ import { Menu } from "@mantine/core";
 import { IconHeart, IconBook, IconArrowDown, IconChevronDown, IconPlus } from "@tabler/icons-react";
 import { useDisclosure } from "@mantine/hooks";
 import Link from "next/link";
+import brandImage from "@/public/foodIcon.png"
 
 export default function Navbar() {
     const [opened, { toggle }] = useDisclosure();
@@ -27,6 +28,7 @@ export default function Navbar() {
                                 variant="unstyled"
                                 component={Link}
                                 href="/"
+                                leftSection={<img className="w-12" src="/foodIcon.png" />}
                                 className="text-white font-bold p-0 hover:bg-transparent"
                                 styles={{
                                     root: {
