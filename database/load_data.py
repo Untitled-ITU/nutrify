@@ -46,7 +46,7 @@ def load_data():
 
     db.session.commit()
 
-    for recipe_data in recipes_data:
+    for i, recipe_data in enumerate(recipes_data, start=1):
         recipe = Recipe(
             title=recipe_data['title'],
             description=recipe_data['description'],
@@ -56,7 +56,8 @@ def load_data():
             is_vegan=recipe_data['is_vegan'],
             is_vegetarian=recipe_data['is_vegetarian'],
             directions=recipe_data['directions'],
-            num_ingredients=len(recipe_data['ingredients'])
+            num_ingredients=len(recipe_data['ingredients']),
+            image_name=f"recipe_{i:03d}.png"
         )
         db.session.add(recipe)
         db.session.flush()

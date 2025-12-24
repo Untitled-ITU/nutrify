@@ -29,6 +29,7 @@ class IngredientDetail(BaseModel):
 class CreateRecipeBody(BaseModel):
     title: str = Field(min_length=1, max_length=200)
     description: Optional[str] = None
+    image_name: Optional[str] = None
     category: Optional[str] = None
     cuisine: Optional[str] = None
     meal_type: Optional[str] = None
@@ -47,6 +48,7 @@ class ChefRecipeSummary(BaseModel):
     id: int
     title: str
     description: Optional[str]
+    image_url: Optional[str]
     category: Optional[str]
     cuisine: Optional[str]
     num_ingredients: Optional[int]
@@ -63,6 +65,7 @@ class ChefRecipeDetail(BaseModel):
     id: int
     title: str
     description: Optional[str]
+    image_url: Optional[str]
     category: Optional[str]
     cuisine: Optional[str]
     meal_type: Optional[str]
@@ -76,6 +79,7 @@ class ChefRecipeDetail(BaseModel):
 class UpdateRecipeBody(BaseModel):
     title: Optional[str] = Field(None, min_length=1, max_length=200)
     description: Optional[str] = None
+    image_name: Optional[str] = None
     category: Optional[str] = None
     cuisine: Optional[str] = None
     meal_type: Optional[str] = None
@@ -107,4 +111,4 @@ class UpdateChefProfileBody(BaseModel):
     bio: Optional[str] = None
     website: Optional[str] = None
     location: Optional[str] = None
-    avatar_url: Optional[str] = None
+    avatar_name: Optional[str] = None  # Sadece dosya adı, tam URL değil

@@ -10,6 +10,7 @@ from ..auth.schemas import UnauthorizedResponse
 from ..decorators import login_required
 from ..models import MealPlan, Recipe, FridgeItem
 from ..utils.unit_converter import get_unit_group, convert_unit, get_primary_unit
+from ..utils.storage import build_image_url
 from .schemas import (
     MealIdPath, WeeklyPlanResponse, AddMealBody, MealResponse, UpdateMealBody,
     MessageResponse, NeededIngredientsResponse, BulkImportBody,
@@ -65,7 +66,8 @@ def get_weekly_plan(query: WeeklyPlanQuery):
         if mp.recipe:
             recipe_data = {
                 'id': mp.recipe.id,
-                'title': mp.recipe.title
+                'title': mp.recipe.title,
+                'image_url': build_image_url(mp.recipe.image_name)
             }
 
         plans_by_date[date_str][mp.meal_type] = {

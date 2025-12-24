@@ -47,6 +47,7 @@ class RecipeSummary(BaseModel):
     meal_type: Optional[str]
     is_vegan: bool
     is_vegetarian: bool
+    image_url: Optional[str]
     num_ingredients: Optional[int]
     average_rating: Optional[float]
     is_favorite: bool
@@ -81,6 +82,7 @@ class RecipeDetail(BaseModel):
     meal_type: Optional[str]
     is_vegan: bool
     is_vegetarian: bool
+    image_url: Optional[str]
     directions: Optional[str]
     ingredients: list[RecipeIngredientDetail]
     author: Optional[AuthorInfo]

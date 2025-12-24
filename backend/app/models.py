@@ -1,6 +1,7 @@
 from sqlalchemy import func
 
 from ..extensions import db
+from .utils.storage import build_image_url
 
 from datetime import datetime
 
@@ -29,7 +30,7 @@ class Recipe(db.Model):
     is_vegan = db.Column(db.Boolean, default=False)
     is_vegetarian = db.Column(db.Boolean, default=False)
     num_ingredients = db.Column(db.Integer)
-    image_url = db.Column(db.Text)
+    image_name = db.Column(db.Text)
     directions = db.Column(db.Text)
     created_at = db.Column(db.DateTime, default=datetime.now)
 
@@ -44,12 +45,12 @@ class RecipeIngredient(db.Model):
     __tablename__ = 'recipe_ingredients'
 
     recipe_id = db.Column(db.BigInteger, db.ForeignKey('recipe.id', ondelete='CASCADE'), primary_key=True)
-    ingredient_id = db.Column(db.BigInteger, db.ForeignKey('ingredient.id'), primary_key=True)
+    ingredient_id = db.Column(db.BigInteger, db.ForeignKey('ingredient.id', ondelete='CASCADE'), primary_key=True)
     quantity = db.Column(db.Float)
     unit = db.Column(db.Text)
 
     recipe = db.relationship('Recipe', back_populates='ingredients')
-    ingredient = db.relationship('Ingredient', backref='recipe_ingredients')
+    ingredient = db.relationship('Ingredient', backref=db.backref('recipe_ingredients', cascade='all, delete-orphan', passive_deletes=True))
 
     def __repr__(self):
         return f'<RecipeIngredient recipe_id={self.recipe_id} ingredient_id={self.ingredient_id}>'
@@ -208,7 +209,7 @@ class CollectionItem(db.Model):
     added_at = db.Column(db.DateTime, default=datetime.now)
 
     collection = db.relationship('RecipeCollection', back_populates='items')
-    recipe = db.relationship('Recipe', backref='collection_items')
+    recipe = db.relationship('Recipe', backref=db.backref('collection_items', cascade='all, delete-orphan', passive_deletes=True))
 
     def __repr__(self):
         return f'<CollectionItem collection_id={self.collection_id} recipe_id={self.recipe_id}>'
@@ -222,7 +223,7 @@ class CollectionItem(db.Model):
             'recipe_id': self.recipe_id,
             'recipe_title': self.recipe.title,
             'recipe_description': self.recipe.description,
-            'recipe_image_url': self.recipe.image_url,
+            'recipe_image_url': build_image_url(self.recipe.image_name),
             'recipe_cuisine': self.recipe.cuisine,
             'recipe_category': self.recipe.category,
             'average_rating': round(avg_rating, 1) if avg_rating else None,
@@ -238,7 +239,7 @@ class ChefProfile(db.Model):
     bio = db.Column(db.Text)
     website = db.Column(db.Text)
     location = db.Column(db.Text)
-    avatar_url = db.Column(db.Text)
+    avatar_name = db.Column(db.Text)
 
     user = db.relationship('User', backref=db.backref('chef_profile', uselist=False))
 

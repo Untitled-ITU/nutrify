@@ -16,6 +16,9 @@ firebase-debug.*.log*
 **/venv/
 **/.venv/
 
+.coverage
+.hypothesis/
+
 .env
 serviceAccountKey.json
 *.secret.json
