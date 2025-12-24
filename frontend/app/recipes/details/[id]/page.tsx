@@ -5,7 +5,7 @@ import { AddToCollectionMenu } from "@/components/recipes/AddToCollectionMenu";
 import { mapRecipeDetailsToRecipe, Recipe, RecipeDetails } from "@/components/recipes/types";
 import { API_BASE_URL } from "@/lib/config";
 import { handleAddFavorite, handleRemoveFavorite, removeFavorite } from "@/lib/tableActions";
-import { ActionIcon, Button, Divider, Group, Menu, useMantineTheme } from "@mantine/core";
+import { ActionIcon, Badge, Button, Divider, Group, Menu, useMantineTheme } from "@mantine/core";
 import { IconEdit, IconHeart, IconHttpDelete, IconPlus, IconX } from "@tabler/icons-react";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -56,6 +56,7 @@ export default function RecipeDetailsPage() {
                 if (!res.ok) throw new Error("Failed to fetch collection");
                 const data: RecipeDetails = await res.json();
                 setRecipe(data);
+
             } catch (err) {
                 setError((err as Error).message);
             } finally {
@@ -230,11 +231,11 @@ export default function RecipeDetailsPage() {
                     */}
 
                             {/* Step text */}
-                            <div className="flex flex-row w-full">
-                                <h3 className="flex-1 font-semibold mb-2">
-                                    Step {index + 1}
-                                </h3>
-                                <p className="flex-9 text-gray-600 leading-relaxed">
+                            <div className="flex flex-row w-full items-center">
+                                <Badge className="me-4" size="xl" circle>
+                                    {index + 1}
+                                </Badge>
+                                <p className="align-baseline flex-9 text-gray-600 leading-relaxed">
                                     {step}
                                 </p>
                             </div>

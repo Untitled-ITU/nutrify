@@ -8,6 +8,7 @@ export type Recipe = {
     created_at: string;
     average_rating: number;
     rating_count: number;
+    is_favorite?: boolean;
 };
 
 export type Ingredient = {

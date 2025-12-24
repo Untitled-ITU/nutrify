@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { ActionIcon, Menu, Select, TextInput, useMantineTheme } from "@mantine/core";
-import { IconArrowsSort, IconBookmark, IconCheck, IconHeart, IconPlus, IconSearch, IconX } from "@tabler/icons-react";
+import { IconArrowsSort, IconBookmark, IconCategory, IconCheck, IconHeart, IconPlus, IconSearch, IconWorld, IconX } from "@tabler/icons-react";
 
 import ingredientsJson from "@/ingredients.json";
 import { Recipe, FiltersState } from "./types";
@@ -174,22 +174,26 @@ export function RecipeExplorer({
     return (
         <>
             {/* Search + Sort */}
-            <div className="mb-8 space-y-6">
-                <div className="flex justify-between gap-4">
+            <div className="mb-8 space-y-6 rounded-2xl border border-gray-200 bg-white p-6 shadow-md">
+                {/* Search & controls */}
+                <div className="flex flex-wrap items-end justify-between gap-4">
                     <TextInput
-                        placeholder="Search recipes..."
+                        label="Search"
+                        labelProps={{ style: { fontSize: 16, marginBottom: 8 } }}
+                        placeholder="Recipe name..."
                         leftSection={<IconSearch size={16} />}
                         value={search}
-                        onChange={(e) =>
-                            setSearch(e.currentTarget.value)
-                        }
+                        onChange={(e) => setSearch(e.currentTarget.value)}
                         className="flex-1 max-w-lg"
                     />
 
-                    <div className="flex gap-3 justify-end">
+                    <div className="flex flex-wrap gap-3 justify-end">
                         <Select
-                            placeholder="Cuisine"
+                            label="Cuisine"
+                            labelProps={{ style: { fontSize: 16, marginBottom: 8 } }}
+                            placeholder="Select"
                             searchable
+                            leftSection={<IconWorld size={16} />}
                             value={null}
                             data={ALL_CUISINES
                                 .filter((c) => !filters.cuisines.includes(c))
@@ -207,8 +211,11 @@ export function RecipeExplorer({
                         />
 
                         <Select
-                            placeholder="Category"
+                            label="Category"
+                            labelProps={{ style: { fontSize: 16, marginBottom: 8 } }}
+                            placeholder="Select"
                             searchable
+                            leftSection={<IconCategory size={16} />}
                             value={null}
                             data={ALL_CATEGORIES
                                 .filter((c) => !filters.categories.includes(c))
@@ -224,11 +231,14 @@ export function RecipeExplorer({
                                 }))
                             }
                         />
-                        {!disableIngredientFilter && (
 
+                        {!disableIngredientFilter && (
                             <Select
-                                placeholder="Include ingredient"
+                                label="Included Ingredient"
+                                labelProps={{ style: { fontSize: 16, marginBottom: 8 } }}
+                                placeholder="Select"
                                 searchable
+                                leftSection={<IconPlus size={16} />}
                                 value={includeValue}
                                 data={ALL_INGREDIENTS
                                     .filter((i) => !usedIngredients.includes(i))
@@ -236,37 +246,37 @@ export function RecipeExplorer({
                                         value: i,
                                         label: formatIngredientLabel(i),
                                     }))}
-                                onChange={(v) =>
-                                    v && addIngredientFilter("include", v)
-                                }
+                                onChange={(v) => v && addIngredientFilter("include", v)}
                             />
-                        )
-                        }
+                        )}
                     </div>
                 </div>
 
+                {/* Divider */}
+                <div className="h-px bg-gray-200" />
 
                 {/* Active filters */}
                 <div className="flex flex-wrap gap-2">
                     {filters.ingredients.map((f, i) => (
                         <FilterChip
                             key={`${f.type}-${f.value}-${i}`}
+                            icon={f.type === "include" ? <IconPlus size={14} /> : <IconX size={14} />}
                             label={`${f.type === "include" ? "Include" : "Exclude"} "${formatIngredientLabel(
                                 f.value
                             )}"`}
                             onRemove={() =>
                                 setFilters((prev) => ({
                                     ...prev,
-                                    ingredients: prev.ingredients.filter(
-                                        (_, idx) => idx !== i
-                                    ),
+                                    ingredients: prev.ingredients.filter((_, idx) => idx !== i),
                                 }))
                             }
                         />
                     ))}
+
                     {filters.cuisines.map((c, i) => (
                         <FilterChip
                             key={`cuisine-${c}-${i}`}
+                            icon={<IconWorld size={14} />}
                             label={`Cuisine "${formatIngredientLabel(c)}"`}
                             onRemove={() =>
                                 setFilters((prev) => ({
@@ -280,6 +290,7 @@ export function RecipeExplorer({
                     {filters.categories.map((c, i) => (
                         <FilterChip
                             key={`category-${c}-${i}`}
+                            icon={<IconCategory size={14} />}
                             label={`Category "${formatIngredientLabel(c)}"`}
                             onRemove={() =>
                                 setFilters((prev) => ({
