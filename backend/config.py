@@ -50,4 +50,5 @@ class Config:
     MAIL_DEFAULT_SENDER = os.environ.get("MAIL_DEFAULT_SENDER", os.environ["MAIL_USERNAME"])
 
     ENABLE_DOCS = os.environ["ENABLE_DOCS"].lower() in ['true', '1']
-    ADMIN_URL = os.environ.get("ADMIN_URL", "")
+    ADMIN_URL = os.environ["ADMIN_URL"]
+    FIREBASE_STORAGE_BASE_URL = os.environ["FIREBASE_STORAGE_BASE_URL"]
