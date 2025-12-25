@@ -1,17 +1,19 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState, useCallback } from "react";
-import { useRouter } from "next/navigation"; // Added for navigation
-import { Button, Modal, Select, Loader, Stack, Text, ActionIcon, Group, useMantineTheme } from "@mantine/core";
+import { useRouter } from "next/navigation";
+import { Button, Modal, Select, Loader, Stack, Text, Group, useMantineTheme } from "@mantine/core";
 import {
     Pencil,
-    X,
     ChevronLeft,
     ChevronRight,
     Trash2,
     Plus,
     ExternalLink,
-    Trash, // Added icon
+    Trash,
+    ShoppingCart,
+    CheckCircle,
+    ArrowDownToLine
 } from "lucide-react";
 
 import {
@@ -26,11 +28,9 @@ import {
 } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";
 
-// Auth Imports
 import { API_BASE_URL } from "@/lib/config";
 import { authFetch, useAuth } from "@/app/providers/AuthProvider";
 
-/** ---------- Types & Constants ---------- */
 const MEAL_TYPES = ["breakfast", "lunch", "snack", "dinner"] as const;
 const ROW_HEIGHT = 130;
 
@@ -44,9 +44,23 @@ type Meal = {
     mealType: typeof MEAL_TYPES[number];
 };
 
+type CompareItem = {
+    id: number;
+    in_fridge: number | null;
+};
+
+type ShoppingListItem = {
+    id: number;
+    name: string;
+    amount: number;
+    unit: string;
+    in_fridge: number;
+    buy_amount: number;
+    is_purchased: boolean;
+};
+
 const DAY_NAMES = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"] as const;
 
-/** ---------- Helpers ---------- */
 function startOfWeekMonday(d: Date) {
     const x = new Date(d);
     x.setHours(0, 0, 0, 0);
@@ -62,13 +76,12 @@ function toISODateLocal(d: Date) {
 
 const fmtMonthDay = new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric" });
 
-/** --- Visual Card Component --- */
 function MealCardContent({ meal, isOverlay, onEdit, onDelete, onView }: {
     meal: Meal;
     isOverlay?: boolean;
     onEdit?: (meal: Meal) => void;
     onDelete?: (id: string) => void;
-    onView?: (recipeId: number) => void; // Added onView prop
+    onView?: (recipeId: number) => void;
 }) {
     return (
         <div
@@ -83,7 +96,6 @@ function MealCardContent({ meal, isOverlay, onEdit, onDelete, onView }: {
                 </span>
                 {!isOverlay && (
                     <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                        {/* New View Details Button */}
                         <button
                             onClick={(e) => { e.stopPropagation(); onView?.(meal.recipeId); }}
                             className="p-1 hover:bg-black/5 rounded text-blue-500"
@@ -108,7 +120,6 @@ function MealCardContent({ meal, isOverlay, onEdit, onDelete, onView }: {
     );
 }
 
-/** --- Draggable Wrapper --- */
 function DraggableMeal({ meal, onEdit, onDelete, onView }: {
     meal: Meal; onEdit: (meal: Meal) => void; onDelete: (id: string) => void; onView: (id: number) => void;
 }) {
@@ -140,7 +151,6 @@ function DraggableMeal({ meal, onEdit, onDelete, onView }: {
     );
 }
 
-/** --- Droppable Column --- */
 function DateColumn({ dateId, meals, setDayRef, onEdit, onDelete, onView, previewType, totalHeight }: {
     dateId: string; meals: Meal[]; setDayRef: (id: string, el: HTMLDivElement | null) => void; onEdit: (meal: Meal) => void; onDelete: (id: string) => void; onView: (id: number) => void; previewType: string | null; totalHeight: number;
 }) {
@@ -169,13 +179,16 @@ function DateColumn({ dateId, meals, setDayRef, onEdit, onDelete, onView, previe
 export default function MealPlanPage() {
     const theme = useMantineTheme();
     const { user } = useAuth();
-    const router = useRouter(); // Initialize router
+    const router = useRouter();
     const [mounted, setMounted] = useState(false);
     const [loading, setLoading] = useState(true);
     const [weekStart, setWeekStart] = useState<Date>(startOfWeekMonday(new Date()));
     const [meals, setMeals] = useState<Meal[]>([]);
     const [recipes, setRecipes] = useState<Recipe[]>([]);
     const [toast, setToast] = useState<string | null>(null);
+
+    const [shoppingList, setShoppingList] = useState<ShoppingListItem[]>([]);
+    const [isGeneratingList, setIsGeneratingList] = useState(false);
 
     const [addOpen, setAddOpen] = useState(false);
     const [editMeal, setEditMeal] = useState<Meal | null>(null);
@@ -234,11 +247,83 @@ export default function MealPlanPage() {
         } catch (err) { showToast("Error loading schedule"); } finally { setLoading(false); }
     }, [weekStart, user]);
 
+    const fetchShoppingData = useCallback(async () => {
+        try {
+            setIsGeneratingList(true);
+            const [listRes, compareRes] = await Promise.all([
+                authFetch(`${API_BASE_URL}/api/shopping-list`),
+                authFetch(`${API_BASE_URL}/api/shopping-list/compare-fridge`, { method: "POST" })
+            ]);
+
+            if (listRes.ok && compareRes.ok) {
+                const listData = await listRes.json();
+                const compareData = await compareRes.json();
+
+                const items = listData.items || [];
+                const comparisons = (compareData.comparison || []) as CompareItem[];
+                const comparisonMap = new Map(comparisons.map(c => [c.id, c]));
+
+                const mergedList: ShoppingListItem[] = [];
+
+                items.forEach((item: any) => {
+                    if (!item.is_purchased) {
+                        const comp = comparisonMap.get(item.id);
+                        const inFridge = comp?.in_fridge || 0;
+                        const buyAmount = Math.max(0, item.amount - inFridge);
+
+                        if (buyAmount > 0) {
+                            mergedList.push({
+                                id: item.id,
+                                name: item.ingredient?.name || "Unknown Item",
+                                amount: item.amount,
+                                unit: item.unit || "pcs",
+                                in_fridge: inFridge,
+                                buy_amount: parseFloat(buyAmount.toFixed(2)),
+                                is_purchased: item.is_purchased
+                            });
+                        }
+                    }
+                });
+
+                setShoppingList(mergedList);
+            }
+        } catch (error) {
+            console.error("Failed to load shopping list data", error);
+        } finally {
+            setIsGeneratingList(false);
+        }
+    }, []);
+
     useEffect(() => {
         setMounted(true);
         fetchWeek();
         fetchRecipes();
-    }, [fetchWeek, fetchRecipes]);
+        fetchShoppingData();
+    }, [fetchWeek, fetchRecipes, fetchShoppingData]);
+
+    const generateAndFetchShoppingList = useCallback(async () => {
+        setIsGeneratingList(true);
+        try {
+            const genRes = await authFetch(`${API_BASE_URL}/api/shopping-list/from-meal-plan`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    start_date: toISODateLocal(weekDates[0]),
+                    end_date: toISODateLocal(weekDates[6])
+                })
+            });
+
+            if (!genRes.ok) throw new Error("Failed to generate list");
+
+            await fetchShoppingData();
+            showToast("Shopping list updated from plan!");
+
+        } catch (error) {
+            console.error("Shopping list error:", error);
+            showToast("Failed to sync shopping list");
+            setIsGeneratingList(false);
+        }
+    }, [weekDates, fetchShoppingData]);
 
     async function handleAddMeal() {
         if (!formRecipeId) return;
@@ -321,7 +406,7 @@ export default function MealPlanPage() {
                 {loading && <Loader size="xs" color="#896c6c" />}
             </div>
 
-            <div className="relative rounded-[2rem] bg-[#ddb1a8] border border-[#d2a69e] shadow-2xl overflow-hidden">
+            <div className="relative rounded-[2rem] bg-[#ddb1a8] border border-[#d2a69e] shadow-2xl overflow-hidden mb-12">
                 <div className="bg-[#ddb1a8]/60 backdrop-blur-xl h-20 border-b border-[#d2a69e] flex items-center">
                     <div className="grid grid-cols-[80px_repeat(7,1fr)] gap-0 w-full">
                         <div />
@@ -378,7 +463,7 @@ export default function MealPlanPage() {
                                     setDayRef={(id, el) => { dayRefs.current[id] = el; }}
                                     onEdit={(m) => { setEditMeal(m); setFormRecipeId(m.recipeId.toString()); setFormDate(m.date); setFormType(m.mealType); }}
                                     onDelete={(id) => setDeleteId(id)}
-                                    onView={(recipeId) => router.push(`/recipes/details/${recipeId}`)} // Navigation logic
+                                    onView={(recipeId) => router.push(`/recipes/details/${recipeId}`)}
                                     previewType={preview?.dateId === dateId ? preview.type : null}
                                     totalHeight={totalHeight}
                                 />
@@ -400,7 +485,66 @@ export default function MealPlanPage() {
                 </div>
             </div>
 
-            {/* Modals remain the same */}
+            <section style={{ marginBottom: '4rem', backgroundColor: '#fff', padding: '1.5rem', borderRadius: '24px', boxShadow: '0 4px 20px rgba(0,0,0,0.05)', border: '1px solid rgba(0,0,0,0.03)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                        <div style={{ backgroundColor: '#896c6c', padding: '10px', borderRadius: '12px', color: 'white' }}>
+                            <ShoppingCart size={22} />
+                        </div>
+                        <div>
+                            <h2 style={{ fontSize: '1.5rem', fontWeight: 900, color: '#2d2d2d', lineHeight: 1.1 }}>Shopping List</h2>
+                            <p style={{ fontSize: '0.9rem', color: '#888', margin: 0 }}>
+                                Based on your plan & fridge inventory
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <button 
+                        onClick={generateAndFetchShoppingList}
+                        disabled={isGeneratingList}
+                        className="flex items-center gap-2 bg-[#896c6c] hover:bg-[#735959] text-white px-4 py-2 rounded-lg transition-colors shadow-sm"
+                        style={{ fontSize: '0.9rem', fontWeight: 600 }}
+                    >
+                        {isGeneratingList ? (
+                            <Loader size={16} color="white" />
+                        ) : (
+                            <ArrowDownToLine size={16} />
+                        )}
+                        {isGeneratingList ? "Calculating..." : "Update List from Plan"}
+                    </button>
+                </div>
+
+                <div className="w-full h-px bg-gray-100 mb-6" />
+
+                {isGeneratingList ? (
+                    <div style={{ display: 'flex', justifyContent: 'center', padding: '3rem' }}>
+                        <Loader color="#896c6c" />
+                    </div>
+                ) : shoppingList.length === 0 ? (
+                    <div style={{ textAlign: 'center', padding: '3rem', color: '#999' }}>
+                         <CheckCircle size={56} style={{ display: 'block', margin: '0 auto 1rem auto', color: '#8dbf98', opacity: 0.8 }}/>
+                         <p className="font-bold text-lg text-gray-700">List is empty</p>
+                         <p className="text-sm">Click "Update List from Plan" to generate new items.</p>
+                    </div>
+                ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {shoppingList.map((item, idx) => (
+                            <div key={idx} className="flex flex-col p-4 bg-gray-50/50 hover:bg-white rounded-xl border border-transparent hover:border-[#896c6c]/20 hover:shadow-md transition-all">
+                                <div className="flex justify-between items-center mb-1">
+                                    <span className="font-bold text-gray-700 capitalize">{item.name}</span>
+                                    <span className="bg-[#e5beb5]/30 text-[#5D4037] px-3 py-1 rounded-lg text-sm font-black tracking-wide border border-[#e5beb5]/50 whitespace-nowrap">
+                                        + {item.buy_amount} {item.unit}
+                                    </span>
+                                </div>
+                                <div className="text-xs text-gray-400 font-medium">
+                                    Have: {item.in_fridge} {item.unit}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </section>
+
             <Modal opened={addOpen} onClose={() => setAddOpen(false)} title="Schedule Meal" centered radius="md" padding="xl">
                 <Stack>
                     <Select label="Choose Recipe" placeholder="Search recipes..." searchable data={recipeSelectData} value={formRecipeId} onChange={setFormRecipeId} />
