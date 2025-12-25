@@ -49,7 +49,7 @@ export default function LoginPage() {
                 </h2>
                 <Divider my="xl" color="dark" />
                 <div className="flex flex-col gap-8 w-full">
-                    <TextInput size="lg" radius="lg" label="E-Mail" type="email" placeholder="Input component" styles={
+                    <TextInput size="lg" radius="lg" label="E-Mail" type="email" placeholder="example@email.com" styles={
                         {
                             label: {
                                 fontSize: 24,
@@ -58,7 +58,7 @@ export default function LoginPage() {
                     }
                         onChange={(e) => setEmail(e.target.value)}
                     />
-                    <TextInput size="lg" radius="lg" label="Password" type="password" placeholder="Input component" styles={
+                    <TextInput size="lg" radius="lg" label="Password" type="password" placeholder="********" styles={
                         {
                             label: {
                                 fontSize: 24,

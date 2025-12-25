@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { Modal, Text } from "@mantine/core";
 import { RecipeRating } from "@/components/ratings/RecipeRating";
 import Link from "next/dist/client/link";
+import { AddToPlanButton } from "@/components/meal-plan/AddToPlanButton";
 
 const EMPTY_RECIPE: RecipeDetails = {
     author: {
@@ -176,6 +177,7 @@ export default function RecipeDetailsPage() {
                                 {recipe.is_favorite ? "Remove from favorites" : "Add to favorites"}
                             </Button>
                             <AddToCollectionMenu variant="button" recipe={mapRecipeDetailsToRecipe(recipe)} />
+                            <AddToPlanButton recipeId={recipe.id} recipeTitle={recipe.title} />
                             {recipe.author && user?.id === recipe.author.id && (
                                 <>
                                     <Button
@@ -246,10 +248,10 @@ export default function RecipeDetailsPage() {
 
                             {/* Step text */}
                             <div className="flex flex-row w-full items-center">
-                                <Badge className="me-4" size="xl" circle>
+                                <Badge color="green" className="me-4" size="xl" circle>
                                     {index + 1}
                                 </Badge>
-                                <p className="align-baseline flex-9 text-gray-600 leading-relaxed">
+                                <p color="green" className="align-baseline flex-9 text-gray-600 leading-relaxed">
                                     {step}
                                 </p>
                             </div>

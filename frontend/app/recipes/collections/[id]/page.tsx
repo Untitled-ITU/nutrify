@@ -9,6 +9,7 @@ import { authFetch } from "@/app/providers/AuthProvider";
 import { API_BASE_URL } from "@/lib/config";
 import { Button } from "@mantine/core";
 import { IconX } from "@tabler/icons-react";
+import { AddToPlanButton } from "@/components/meal-plan/AddToPlanButton";
 
 export default function CollectionDetailPage() {
     const params = useParams();
@@ -21,7 +22,7 @@ export default function CollectionDetailPage() {
     const [removeOpen, setRemoveOpen] = useState(false);
     const [selectedRecipeId, setSelectedRecipeId] = useState<number | null>(null);
     const [removeLoading, setRemoveLoading] = useState(false);
-    
+
     const theme = useMantineTheme();
 
     useEffect(() => {
@@ -95,6 +96,11 @@ export default function CollectionDetailPage() {
                     disableIngredientFilter={true}
                     renderActions={(r) => (
                         <>
+                            <AddToPlanButton
+                                recipeId={r.id}
+                                recipeTitle={r.title}
+                                variant="icon"
+                            />
                             <ActionIcon
                                 style={{ backgroundColor: theme.other.primaryDark }}
                                 onClick={() => {
