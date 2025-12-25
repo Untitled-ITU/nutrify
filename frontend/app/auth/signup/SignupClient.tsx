@@ -129,8 +129,8 @@ export default function SignupPage() {
                                 styles={(theme) => ({
                                     track: {
                                         backgroundColor: isChef
-                                            ? theme.colors.orange[6]   // ON (Chef)
-                                            : theme.colors.blue[6],    // OFF (Consumer)
+                                            ? theme.colors.blue[6]   // ON (Chef)
+                                            : theme.colors.green[6],    // OFF (Consumer)
                                         borderColor: "transparent",
                                     },
                                     thumb: {
