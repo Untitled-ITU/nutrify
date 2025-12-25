@@ -2,7 +2,7 @@ from flask_openapi3 import APIBlueprint, Tag
 from flask_jwt_extended import get_jwt_identity
 from sqlalchemy import func
 
-from extensions import db
+from backend.extensions import db
 from ..auth.models import User
 from ..auth.schemas import UnauthorizedResponse
 from ..models import Recipe, Ingredient, RecipeIngredient, Rating, ChefProfile

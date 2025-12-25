@@ -1,6 +1,6 @@
 from sqlalchemy import func
 
-from extensions import db
+from backend.extensions import db
 from .utils.storage import build_image_url
 
 from datetime import datetime

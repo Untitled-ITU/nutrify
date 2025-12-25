@@ -4,7 +4,7 @@ from flask_openapi3 import APIBlueprint, Tag
 from flask_jwt_extended import create_access_token, get_jwt_identity
 from werkzeug.security import generate_password_hash
 
-from extensions import db
+from backend.extensions import db
 from ..decorators import login_required
 from .email_service import send_verification_email, send_reset_code_email
 from .models import User, VerificationCode

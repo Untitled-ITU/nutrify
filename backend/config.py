@@ -12,7 +12,6 @@ load_dotenv(dotenv_path=dotenv_path)
 
 
 class Config:
-    # Cloud SQL connection configuration
     DB_USER = quote_plus(os.getenv("DB_USER", "postgres"))
     DB_PASSWORD = quote_plus(os.getenv("DB_PASSWORD", ""))
     DB_NAME = os.getenv("DB_NAME", "nutrify_db")

@@ -1,4 +1,4 @@
-from extensions import mail
+from backend.extensions import mail
 
 from flask_mail import Message
 from flask import current_app

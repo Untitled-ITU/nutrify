@@ -7,7 +7,7 @@ from werkzeug.security import generate_password_hash
 from flask_jwt_extended import decode_token, create_access_token
 from jwt.exceptions import ExpiredSignatureError, InvalidTokenError
 
-from extensions import db
+from backend.extensions import db
 from .auth.models import User, VerificationCode
 from .models import (
     Recipe, Ingredient, RecipeIngredient, MealPlan,
