@@ -1,10 +1,7 @@
 from sqlalchemy import func
-
 from backend.extensions import db
 from .utils.storage import build_image_url
-
 from datetime import datetime
-
 
 class Ingredient(db.Model):
     __tablename__ = 'ingredient'
@@ -123,6 +120,10 @@ class FridgeItem(db.Model):
     ingredient_id = db.Column(db.BigInteger, db.ForeignKey('ingredient.id'), nullable=False)
     quantity = db.Column(db.Float)
     unit = db.Column(db.Text)
+    
+    # --- MERGED: Description Field Kept ---
+    description = db.Column(db.String(255), nullable=True)
+    
     added_at = db.Column(db.DateTime, default=datetime.now)
 
     __table_args__ = (
