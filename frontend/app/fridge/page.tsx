@@ -6,7 +6,6 @@ import {
   Button, 
   Loader, 
   ActionIcon, 
-  useMantineTheme, 
   Modal, 
   TextInput, 
   NumberInput, 
@@ -22,12 +21,14 @@ import { API_BASE_URL } from "@/lib/config";
 
 interface FridgeItem {
   id: number;
-  ingredient_id: number;
-  name: string;
+  quantity: number;
   unit: string;
-  quantity?: number;
   description?: string;
-  ingredient?: { name: string }; 
+  ingredient: { 
+    id: number;
+    name: string;
+    default_unit?: string;
+  }; 
 }
 
 export default function FridgePage() {
@@ -116,8 +117,8 @@ export default function FridgePage() {
 
   const openEditModal = (item: FridgeItem) => {
       setEditingItem(item);
-      setNewItemName(getIngredientName(item));
-      setNewItemQuantity(item.quantity || 0);
+      setNewItemName(item.ingredient.name);
+      setNewItemQuantity(item.quantity);
       setNewItemUnit(item.unit);
       setNewItemDescription(item.description || "");
       open();
@@ -163,12 +164,8 @@ export default function FridgePage() {
     } catch (error) { console.error(error); }
   };
 
-  const getIngredientName = (item: FridgeItem) => {
-    return item.ingredient?.name || item.name || "Unknown Item";
-  };
-
   const filteredItems = items.filter(item => 
-    getIngredientName(item).toLowerCase().includes(searchTerm.toLowerCase())
+    item.ingredient.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -301,7 +298,7 @@ export default function FridgePage() {
 
           {!isLoading && filteredItems.map((item) => (
               <div key={item.id} className="bg-[#e5beb5] rounded-xl p-3 px-5 flex items-center justify-between text-[#171717] font-semibold text-lg hover:brightness-95 transition-all">
-                  <div className="flex-[2]">{getIngredientName(item)}</div>
+                  <div className="flex-[2]">{item.ingredient.name}</div>
                   <div className="flex-[2] text-sm text-[#555]">{item.description || '-'}</div>
                   <div className="flex-1 font-bold">{item.quantity} {item.unit}</div>
                   <div className="flex gap-2 w-[100px] justify-end">
