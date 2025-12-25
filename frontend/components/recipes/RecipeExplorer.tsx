@@ -211,6 +211,7 @@ export function RecipeExplorer({
                                     setFilters((prev) => ({ ...prev, vegetarian: !prev.vegetarian }))
                                 }
                                 aria-label="Vegetarian"
+                                className={filters.vegan ? "!cursor-not-allowed !opacity-50" : ""}
                             >
                                 <IconLeaf size={20} />
                             </ActionIcon>
