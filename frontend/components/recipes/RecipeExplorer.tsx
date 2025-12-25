@@ -200,12 +200,13 @@ export function RecipeExplorer({
 
                     {/* Diet Toggles - Quick binary filters */}
                     <div className="flex gap-1 pb-[1px] flex-shrink-0">
-                        <Tooltip label="Vegetarian" withArrow>
+                        <Tooltip label={filters.vegan ? "Vegetarian (Implied by Vegan)" : "Vegetarian"} withArrow>
                             <ActionIcon
                                 variant={filters.vegetarian ? "filled" : "light"}
                                 color="green"
                                 size="lg"
                                 radius="md"
+                                disabled={filters.vegan}
                                 onClick={() =>
                                     setFilters((prev) => ({ ...prev, vegetarian: !prev.vegetarian }))
                                 }
@@ -222,7 +223,14 @@ export function RecipeExplorer({
                                 size="lg"
                                 radius="md"
                                 onClick={() =>
-                                    setFilters((prev) => ({ ...prev, vegan: !prev.vegan }))
+                                    setFilters((prev) => {
+                                        const nextVegan = !prev.vegan;
+                                        return {
+                                            ...prev,
+                                            vegan: nextVegan,
+                                            vegetarian: nextVegan ? true : false
+                                        };
+                                    })
                                 }
                                 aria-label="Vegan"
                             >
