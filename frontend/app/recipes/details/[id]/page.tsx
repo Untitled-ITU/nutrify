@@ -5,7 +5,7 @@ import { AddToCollectionMenu } from "@/components/recipes/AddToCollectionMenu";
 import { mapRecipeDetailsToRecipe, Recipe, RecipeDetails } from "@/components/recipes/types";
 import { API_BASE_URL } from "@/lib/config";
 import { handleAddFavorite, handleRemoveFavorite, removeFavorite } from "@/lib/tableActions";
-import { ActionIcon, Badge, Button, Divider, Group, Menu, useMantineTheme } from "@mantine/core";
+import { ActionIcon, Badge, Button, Divider, Group, Image, Menu, useMantineTheme } from "@mantine/core";
 import { IconEdit, IconHeart, IconHttpDelete, IconPlus, IconX } from "@tabler/icons-react";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -30,6 +30,7 @@ const EMPTY_RECIPE: RecipeDetails = {
     is_vegan: false,
     is_vegetarian: false,
     is_favorite: false,
+    image_url: "",
 };
 
 export default function RecipeDetailsPage() {
@@ -39,7 +40,7 @@ export default function RecipeDetailsPage() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const theme = useMantineTheme();
-    const { user } = useAuth();  // 👈 AUTH HERE
+    const { user } = useAuth();
 
     const [favoriteLoading, setFavoriteLoading] = useState(false);
 
@@ -56,6 +57,7 @@ export default function RecipeDetailsPage() {
                 const res = await authFetch(`${API_BASE_URL}/api/recipes/${recipeId}`);
                 if (!res.ok) throw new Error("Failed to fetch collection");
                 const data: RecipeDetails = await res.json();
+                console.log(data);
                 setRecipe(data);
 
             } catch (err) {
@@ -203,7 +205,9 @@ export default function RecipeDetailsPage() {
                 </div>
 
                 {/* Right (image placeholder) */}
-                <div className="rounded-2xl overflow-hidden bg-gray-200 aspect-4/3" />
+                <div className="rounded-2xl shadow-xl/50 border-2 overflow-hidden bg-gray-200 aspect-4/3" style={{ borderColor: theme.other.accentColor }}>
+                    <img className="w-full h-full object-center object-cover" src={recipe.image_url ?? null} />
+                </ div>
             </div>
 
             {/* Meta info */}

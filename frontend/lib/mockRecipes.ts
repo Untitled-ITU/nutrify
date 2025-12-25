@@ -11,6 +11,7 @@ export const MOCK_RECIPES = [
         directions:
             "Heat olive oil in a large pot and saute diced onion, garlic and carrot until softened. Add rinsed lentils and chopped tomato, then cover with water or broth. Bring to a simmer and cook until lentils are tender. Adjust seasoning and serve hot with lemon.",
         author: null,
+        image_url: "https://firebasestorage.googleapis.com/v0/b/untitled-nutrify-preprod.firebasestorage.app/o/img%2Frecipe_245.png?alt=media",
         ingredients: [
             { id: 34, name: "carrot", quantity: 2, unit: "piece", alternatives: [] },
             { id: 77, name: "garlic", quantity: 2, unit: "piece", alternatives: [] },
@@ -55,6 +56,7 @@ export const MOCK_RECIPES = [
         directions:
             "Mix lemon juice, olive oil, garlic, basil, and black pepper in a bowl. Coat chicken and rest for 20 minutes. Heat a pan and cook chicken until golden. Serve warm.",
         author: null,
+        image_url: "https://firebasestorage.googleapis.com/v0/b/untitled-nutrify-preprod.firebasestorage.app/o/img%2Frecipe_136.png?alt=media",
         ingredients: [
             {
                 id: 16,
@@ -127,6 +129,7 @@ export const MOCK_RECIPES = [
         directions:
             "Cut chicken and vegetables into bite-sized pieces. Whisk sauce ingredients together. Stir-fry chicken until browned. Add vegetables and cook briefly. Pour in sauce and cook until thickened. Serve over rice.",
         author: null,
+        image_url: "https://firebasestorage.googleapis.com/v0/b/untitled-nutrify-preprod.firebasestorage.app/o/img%2Frecipe_036.png?alt=media",
         ingredients: [
             { id: 22, name: "bell pepper", quantity: 1, unit: "piece", alternatives: [] },
             {
@@ -227,6 +230,7 @@ export const MOCK_RECIPES = [
         meal_type: "dinner",
         created_at: "2025-12-18T21:26:58.656377",
         author: null,
+        image_url: "https://firebasestorage.googleapis.com/v0/b/untitled-nutrify-preprod.firebasestorage.app/o/img%2Frecipe_024.png?alt=media",
         ingredients: [
             {
                 id: 24,
@@ -296,6 +300,7 @@ export const MOCK_RECIPES = [
         meal_type: "dinner",
         created_at: "2025-12-18T21:26:58.744596",
         author: null,
+        image_url: "https://firebasestorage.googleapis.com/v0/b/untitled-nutrify-preprod.firebasestorage.app/o/img%2Frecipe_098.png?alt=media",
         ingredients: [
             {
                 id: 88,

@@ -9,6 +9,7 @@ export type Recipe = {
     average_rating: number;
     rating_count: number;
     is_favorite?: boolean;
+    image_url?: string;
 };
 
 export type Ingredient = {
@@ -40,6 +41,7 @@ export type RecipeDetails = {
     is_vegan: boolean;
     is_vegetarian: boolean;
     is_favorite: boolean;
+    image_url: string;
 };
 
 export type IngredientFilter = {
