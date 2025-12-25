@@ -36,7 +36,10 @@
       },
       {
         "source": "**",
-        "destination": "/index.html"
+        "run": {
+          "serviceId": "nutrify-frontend",
+          "region": "europe-west1"
+        }
       }
     ],
     "cleanUrls": true,
