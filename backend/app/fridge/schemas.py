@@ -3,83 +3,59 @@ from typing import Optional
 
 
 class ItemIdPath(BaseModel):
-    item_id: int
+    item_id: int = Field(..., description="The ID of the fridge item")
 
-
-class FridgeIngredientInfo(BaseModel):
-    id: int
-    name: str
-    default_unit: Optional[str]
-
-
-class AlternativeUnit(BaseModel):
-    quantity: float
-    unit: str
-
-
-class FridgeItemDetail(BaseModel):
-    id: int
-    ingredient: FridgeIngredientInfo
-    quantity: float
-    unit: str
-    alternatives: list[AlternativeUnit] = []
-    added_at: Optional[str]
-
-
-class FridgeListResponse(BaseModel):
-    items: list[FridgeItemDetail]
-    total: int
+class FridgeSearchQuery(BaseModel):
+    q: str = Field(..., description="Search query for filtering fridge items")
 
 
 class AddFridgeItemBody(BaseModel):
     ingredient_id: Optional[int] = None
     ingredient_name: Optional[str] = None
-    quantity: Optional[float] = None
+    quantity: float
     unit: Optional[str] = None
-
-
-class FridgeItemResponse(BaseModel):
-    msg: str
-    item: FridgeItemDetail
-
+    description: Optional[str] = None
 
 class UpdateFridgeItemBody(BaseModel):
     quantity: Optional[float] = None
     unit: Optional[str] = None
-
-
-class MessageResponse(BaseModel):
-    msg: str
-
-
-class BatchAddItem(BaseModel):
-    ingredient_id: Optional[int] = None
-    ingredient_name: Optional[str] = None
-    quantity: Optional[float] = None
-    unit: Optional[str] = None
-
+    description: Optional[str] = None
 
 class BatchAddBody(BaseModel):
-    items: list[BatchAddItem] = Field(min_length=1)
+    items: list[AddFridgeItemBody]
 
+
+class FridgeItemSchema(BaseModel):
+    id: int
+    name: str
+    default_unit: Optional[str] = None
+
+class FridgeItemResponseData(BaseModel):
+    id: int
+    ingredient: FridgeItemSchema
+    quantity: float
+    unit: str
+    description: Optional[str] = None
+    alternatives: Optional[dict] = None
+    added_at: Optional[str] = None
+
+class FridgeItemResponse(BaseModel):
+    msg: str
+    item: FridgeItemResponseData
+
+class FridgeListResponse(BaseModel):
+    items: list[FridgeItemResponseData]
+    total: int
 
 class BatchAddResponse(BaseModel):
     msg: str
     added: int
     updated: int
-    errors: list[str] = []
-
-
-class RecentItem(BaseModel):
-    id: int
-    ingredient_name: str
-    added_at: Optional[str]
-
+    errors: list[str]
 
 class FridgeStatsResponse(BaseModel):
     total_items: int
-    recently_added: list[RecentItem]
+    recently_added: list[dict]
 
-
-class FridgeSearchQuery(BaseModel):
-    q: str = Field(min_length=2)
+class MessageResponse(BaseModel):
+    msg: str
