@@ -92,6 +92,19 @@ class RecipeDetail(BaseModel):
     created_at: Optional[str]
 
 
+class RandomRecipeDetail(BaseModel):
+    id: int
+    title: str
+    description: Optional[str]
+    category: Optional[str]
+    cuisine: Optional[str]
+    meal_type: Optional[str]
+    is_vegan: bool
+    is_vegetarian: bool
+    image_url: Optional[str]
+    directions: Optional[str]
+
+
 class MessageResponse(BaseModel):
     msg: str
 

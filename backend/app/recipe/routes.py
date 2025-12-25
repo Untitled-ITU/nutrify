@@ -1,11 +1,13 @@
 from flask_openapi3 import APIBlueprint, Tag
 from flask_jwt_extended import get_jwt_identity
+from sqlalchemy import func
 
 from ...extensions import db
 from ..auth.models import User
 from ..auth.schemas import UnauthorizedResponse
 from ..decorators import login_required
 from ..models import Ingredient, Recipe
+from ..utils.storage import build_image_url
 from .services import (
     get_recipe_list, get_recipe_detail, add_to_favorites,
     remove_from_favorites, get_user_favorites, get_available_filters,
@@ -16,7 +18,7 @@ from .services import (
 )
 from .schemas import (
     RecipeIdPath, CollectionIdPath, CollectionRecipePath,
-    RecipeListResponse, RecipeDetail, MessageResponse,
+    RecipeListResponse, RecipeDetail, MessageResponse, RandomRecipeDetail,
     FavoriteAddBody, FavoriteAddResponse, FavoritesListResponse,
     IngredientSearchResponse, FilterOptions, CollectionCreateBody,
     CollectionUpdateBody, CollectionCreateResponse, AddRecipeToCollectionBody,
@@ -82,6 +84,29 @@ def get_recipe(path: RecipeIdPath):
         return {'msg': 'Recipe not found'}, 404
 
     return recipe, 200
+
+
+@recipe_bp.get('/random', responses={"200": RandomRecipeDetail, "404": MessageResponse})
+def get_random_recipe():
+    recipe = Recipe.query.filter(
+        Recipe.image_name.isnot(None)
+    ).order_by(func.random()).first()
+
+    if not recipe:
+        return {'msg': 'No recipes available'}, 404
+
+    return {
+        'id': recipe.id,
+        'title': recipe.title,
+        'description': recipe.description,
+        'category': recipe.category,
+        'cuisine': recipe.cuisine,
+        'meal_type': recipe.meal_type,
+        'is_vegan': recipe.is_vegan,
+        'is_vegetarian': recipe.is_vegetarian,
+        'image_url': build_image_url(recipe.image_name),
+        'directions': recipe.directions
+    }, 200
 
 
 @recipe_bp.get('/filters', responses={"200": FilterOptions})
