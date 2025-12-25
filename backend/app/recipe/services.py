@@ -1,6 +1,6 @@
 from sqlalchemy import func, or_
 
-from ...extensions import db
+from extensions import db
 from ..utils.unit_converter import format_quantity_with_conversions
 from ..utils.storage import build_image_url
 from ..models import (

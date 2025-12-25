@@ -1,6 +1,6 @@
 from flask_openapi3 import APIBlueprint, Tag
 
-from ...extensions import db
+from extensions import db
 from ..auth.models import User
 from ..auth.schemas import UnauthorizedResponse
 from ..decorators import admin_required

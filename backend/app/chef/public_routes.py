@@ -1,7 +1,7 @@
 from flask_openapi3 import APIBlueprint, Tag
 from sqlalchemy import func
 
-from ...extensions import db
+from extensions import db
 from ..auth.models import User
 from ..models import Recipe, Rating, ChefProfile
 from ..utils.storage import build_image_url
