@@ -1,4 +1,4 @@
-from ..extensions import jwt, db, mail, babel
+from extensions import jwt, db, mail, babel
 from .auth.routes import auth_bp
 from .admin.routes import admin_bp
 from .recipe.routes import recipe_bp
@@ -15,7 +15,7 @@ from flask_cors import CORS
 
 def create_app(config=None):
     if config is None:
-        from ..config import Config
+        from config import Config
 
         config = Config
 
