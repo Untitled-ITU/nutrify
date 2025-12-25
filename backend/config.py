@@ -19,10 +19,8 @@ class Config:
     CLOUD_SQL_CONNECTION_NAME = os.getenv("CLOUD_SQL_CONNECTION_NAME", "")
 
     if os.getenv("K_SERVICE"):
-        # Use unix socket in Cloud Run environment
         SQLALCHEMY_DATABASE_URI = f"postgresql+pg8000://{DB_USER}:{DB_PASSWORD}@/{DB_NAME}?unix_sock=/cloudsql/{CLOUD_SQL_CONNECTION_NAME}/.s.PGSQL.5432"
     else:
-        # Use direct connection or existing DATABASE_URL for local development
         SQLALCHEMY_DATABASE_URI = os.getenv(
             "DATABASE_URL",
             f"postgresql://{DB_USER}:{DB_PASSWORD}@127.0.0.1:5433/{DB_NAME}"
@@ -30,7 +28,6 @@ class Config:
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-    # Connection pool settings (optimized for db-f1-micro)
     SQLALCHEMY_ENGINE_OPTIONS = {
         'pool_size': 5,
         'pool_recycle': 300,

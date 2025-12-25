@@ -8,25 +8,12 @@ from ..auth.schemas import UnauthorizedResponse
 from ..models import Recipe, Ingredient, RecipeIngredient, Rating, ChefProfile
 from ..utils.unit_converter import format_quantity_with_conversions
 from ..utils.storage import build_image_url
-from ..decorators import chef_required, login_required
+from ..decorators import chef_required
 from .schemas import (
     RecipeIdPath, ChefRecipesResponse, CreateRecipeBody, RecipeResponse,
     ChefRecipeDetail, UpdateRecipeBody, MessageResponse, ChefStatsResponse,
     ChefProfileResponse, UpdateChefProfileBody,
-    ChefPublicProfileResponse, ChefIdPath,   
 )
-
-public_tag = Tag(name="Public", description="Public chef profiles")
-
-public_bp = APIBlueprint(
-    "public",
-    __name__,
-    url_prefix="/api/public",
-    abp_tags=[public_tag],
-    abp_security=[{"jwt": []}],
-    abp_responses={"401": UnauthorizedResponse},
-)
-
 
 
 chef_tag = Tag(name="Chef", description="Chef recipe management")
@@ -35,80 +22,6 @@ chef_bp = APIBlueprint(
     abp_tags=[chef_tag], abp_security=[{"jwt": []}],
     abp_responses={"401": UnauthorizedResponse}
 )
-
-@public_bp.get(
-    "/chefs/<int:chef_id>",
-    responses={"200": ChefPublicProfileResponse, "404": MessageResponse},
-)
-@login_required  
-def get_public_chef_profile(path: ChefIdPath):
-    chef_id = path.chef_id
-
-    chef_user = db.session.get(User, chef_id)
-    if not chef_user or chef_user.role not in ("chef", "admin"):
-        return {"msg": "Chef not found"}, 404
-
-    profile = ChefProfile.query.filter_by(user_id=chef_id).first()
-    bio = profile.bio if profile else None
-    website = profile.website if profile else None
-    location = profile.location if profile else None
-    avatar_url = build_image_url(profile.avatar_name) if (profile and profile.avatar_name) else None
-
-    recipes_list = Recipe.query.filter_by(author_id=chef_id).order_by(Recipe.created_at.desc()).all()
-    recipes = []
-    for recipe in recipes_list:
-        avg_rating = db.session.query(func.avg(Rating.score)).filter(
-            Rating.recipe_id == recipe.id
-        ).scalar()
-        rating_count = Rating.query.filter_by(recipe_id=recipe.id).count()
-
-        recipes.append({
-            "id": recipe.id,
-            "title": recipe.title,
-            "description": recipe.description,
-            "image_url": build_image_url(recipe.image_name),
-            "category": recipe.category,
-            "cuisine": recipe.cuisine,
-            "num_ingredients": recipe.num_ingredients,
-            "average_rating": round(avg_rating, 1) if avg_rating else None,
-            "rating_count": rating_count,
-            "created_at": recipe.created_at.isoformat() if recipe.created_at else None
-        })
-
-    total_recipes = Recipe.query.filter_by(author_id=chef_id).count()
-
-    total_ratings = db.session.query(Rating).join(Recipe).filter(
-        Recipe.author_id == chef_id
-    ).count()
-
-    avg_rating = db.session.query(func.avg(Rating.score)).join(Recipe).filter(
-        Recipe.author_id == chef_id
-    ).scalar()
-
-    categories = db.session.query(
-        Recipe.category,
-        func.count(Recipe.id)
-    ).filter(
-        Recipe.author_id == chef_id
-    ).group_by(Recipe.category).all()
-
-    stats = {
-        "total_recipes": total_recipes,
-        "total_ratings": total_ratings,
-        "average_rating": round(avg_rating, 1) if avg_rating else None,
-        "recipes_by_category": {cat: count for cat, count in categories if cat}
-    }
-
-    return {
-        "chef_id": chef_user.id,
-        "username": chef_user.username,
-        "bio": bio,
-        "website": website,
-        "location": location,
-        "avatar_url": avatar_url,
-        "stats": stats,
-        "recipes": recipes,
-    }, 200
 
 
 @chef_bp.get('/recipes', responses={"200": ChefRecipesResponse, "404": MessageResponse})
@@ -420,75 +333,3 @@ def update_chef_profile(body: UpdateChefProfileBody):
     db.session.commit()
 
     return {'msg': 'Profile updated successfully'}, 200
-
-   
-@login_required
-def get_public_chef_profile(path: dict):
-    chef_id = path["chef_id"]
-
-    chef_user = db.session.get(User, chef_id)
-    if not chef_user or chef_user.role not in ("chef", "admin"):
-        return {"msg": "Chef not found"}, 404
-
-    profile = ChefProfile.query.filter_by(user_id=chef_id).first()
-    bio = profile.bio if profile else None
-    website = profile.website if profile else None
-    location = profile.location if profile else None
-    avatar_url = build_image_url(profile.avatar_name) if (profile and profile.avatar_name) else None
-
-
-    recipes_list = Recipe.query.filter_by(author_id=chef_id).order_by(Recipe.created_at.desc()).all()
-    recipes = []
-    for recipe in recipes_list:
-        avg_rating = db.session.query(func.avg(Rating.score)).filter(
-            Rating.recipe_id == recipe.id
-        ).scalar()
-        rating_count = Rating.query.filter_by(recipe_id=recipe.id).count()
-
-        recipes.append({
-            "id": recipe.id,
-            "title": recipe.title,
-            "description": recipe.description,
-            "image_url": build_image_url(recipe.image_name),
-            "category": recipe.category,
-            "cuisine": recipe.cuisine,
-            "num_ingredients": recipe.num_ingredients,
-            "average_rating": round(avg_rating, 1) if avg_rating else None,
-            "rating_count": rating_count,
-            "created_at": recipe.created_at.isoformat() if recipe.created_at else None
-        })
-
-    total_recipes = Recipe.query.filter_by(author_id=chef_id).count()
-
-    total_ratings = db.session.query(Rating).join(Recipe).filter(
-        Recipe.author_id == chef_id
-    ).count()
-
-    avg_rating = db.session.query(func.avg(Rating.score)).join(Recipe).filter(
-        Recipe.author_id == chef_id
-    ).scalar()
-
-    categories = db.session.query(
-        Recipe.category,
-        func.count(Recipe.id)
-    ).filter(
-        Recipe.author_id == chef_id
-    ).group_by(Recipe.category).all()
-
-    stats = {
-        "total_recipes": total_recipes,
-        "total_ratings": total_ratings,
-        "average_rating": round(avg_rating, 1) if avg_rating else None,
-        "recipes_by_category": {cat: count for cat, count in categories if cat}
-    }
-
-    return {
-        "chef_id": chef_user.id,
-        "username": chef_user.username,
-        "bio": bio,
-        "website": website,
-        "location": location,
-        "avatar_url": avatar_url,
-        "stats": stats,
-        "recipes": recipes,
-    }, 200

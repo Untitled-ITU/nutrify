@@ -6,21 +6,17 @@ from ..auth.models import User
 from ..models import Recipe, Rating, ChefProfile
 from ..utils.storage import build_image_url
 from .schemas import (
-    ChefPublicProfileResponse,
-    ChefRecipesResponse,
-    MessageResponse,
-    ChefIdPath,
+    ChefPublicProfileResponse, ChefRecipesResponse,
+    MessageResponse, ChefIdPath,
 )
 
-public_tag = Tag(name="Public", description="Public endpoints (no auth)")
 
-# IMPORTANT: blueprint name must be UNIQUE in the whole app
+public_tag = Tag(name="Public Chef Profiles", description="Public chef profiles and recipes (no authentication required)")
 public_chef_bp = APIBlueprint(
-    "public_chef",
-    __name__,
-    url_prefix="/api/public",
+    "public_chef", __name__, url_prefix="/api/public",
     abp_tags=[public_tag],
 )
+
 
 @public_chef_bp.get(
     "/chefs/<int:chef_id>",
@@ -36,7 +32,6 @@ def get_public_chef_profile(path: ChefIdPath):
     profile = ChefProfile.query.filter_by(user_id=chef_id).first()
     avatar_url = build_image_url(profile.avatar_name) if (profile and profile.avatar_name) else None
 
-    # stats
     total_recipes = Recipe.query.filter_by(author_id=chef_id).count()
 
     total_ratings = db.session.query(Rating).join(Recipe).filter(
@@ -61,7 +56,6 @@ def get_public_chef_profile(path: ChefIdPath):
         "recipes_by_category": {cat: count for cat, count in categories if cat},
     }
 
-    # recipes list (summary)
     recipes_list = Recipe.query.filter_by(author_id=chef_id).order_by(Recipe.created_at.desc()).all()
     recipes = []
     for recipe in recipes_list:
