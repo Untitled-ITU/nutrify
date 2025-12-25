@@ -77,6 +77,10 @@ export default function Navbar() {
                     <Button variant="subtle" size="xl" fz="h3" color={theme.white} radius={0} component={Link} href="/meal-plan">
                       Meal Plan
                     </Button>
+                    
+                    <Button variant="subtle" size="xl" fz="h3" color={theme.white} radius={0} component={Link} href="/fridge">
+                      Fridge
+                    </Button>
 
                     <Button
                       variant="subtle"

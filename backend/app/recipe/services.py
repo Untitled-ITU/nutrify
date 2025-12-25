@@ -136,7 +136,7 @@ def get_recipe_detail(recipe_id, user_id=None):
 
     ingredients = []
     for ri in recipe.ingredients:
-        formatted = format_quantity_with_conversions(ri.quantity, ri.unit, include_conversions=True)
+        formatted = format_quantity_with_conversions(ri.quantity, ri.unit, include_conversions=False)
         ingredients.append({
             'id': ri.ingredient.id,
             'name': ri.ingredient.name,
