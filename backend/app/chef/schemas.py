@@ -112,3 +112,16 @@ class UpdateChefProfileBody(BaseModel):
     website: Optional[str] = None
     location: Optional[str] = None
     avatar_name: Optional[str] = None  # Sadece dosya adı, tam URL değil
+
+class ChefPublicProfileResponse(BaseModel):
+    chef_id: int
+    username: str
+    bio: Optional[str] = None
+    website: Optional[str] = None
+    location: Optional[str] = None
+    avatar_url: Optional[str] = None
+    stats: ChefStatsResponse
+    recipes: list[ChefRecipeSummary] = []
+
+class ChefIdPath(BaseModel):
+    chef_id: int

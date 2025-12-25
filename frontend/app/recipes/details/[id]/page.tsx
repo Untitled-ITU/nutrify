@@ -11,6 +11,7 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Modal, Text } from "@mantine/core";
 import { RecipeRating } from "@/components/ratings/RecipeRating";
+import Link from "next/dist/client/link";
 
 const EMPTY_RECIPE: RecipeDetails = {
     author: {
@@ -122,9 +123,18 @@ export default function RecipeDetailsPage() {
                             <div className="mb-6">
                                 <div className="font-semibold">Created By</div>
                                 {recipe.author ? (
-                                    <div className="text-gray-600">
-                                        {recipe.author.username}
-                                    </div>
+                                <Text size="sm" c="dimmed">
+                                    By{" "}
+                                    <Text
+                                    component={Link}
+                                    href={`/chef-profile/${recipe.author.id}`}
+                                    span
+                                    fw={600}
+                                    style={{ textDecoration: "underline" }}
+                                    >
+                                    {recipe.author.username}
+                                    </Text>
+                                </Text>
                                 ) : "admin"}
                             </div>
                             <div className="flex flex-row gap-10 mb-8">
