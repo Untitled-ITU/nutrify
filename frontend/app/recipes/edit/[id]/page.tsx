@@ -23,6 +23,7 @@ export default function EditRecipePage() {
             ]);
 
             const recipe = await recipeRes.json();
+            console.log(recipe);
             const filters = await filterRes.json();
 
             setFilters(filters);

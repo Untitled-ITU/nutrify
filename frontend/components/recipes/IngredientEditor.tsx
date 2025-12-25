@@ -77,22 +77,30 @@ export function IngredientEditor({ value, onChange }: Props) {
                         />
 
                         <NumberInput
-                            placeholder="Qty"
-                            min={0}
-                            value={row.quantity ?? ""}
-                            onChange={(value) =>
-                                updateRow(index, {
-                                    quantity:
-                                        typeof value === "number"
-                                            ? value
-                                            : null,
-                                })
-                            }
+                            value={row.quantity ?? 1}
+                            defaultValue={1}
+                            min={0.25}
+                            step={0.25}
+                            hideControls={false}
+                            clampBehavior="strict"
+                            onChange={(value) => {
+                                if (typeof value !== "number") {
+                                    updateRow(index, { quantity: null });
+                                    return;
+                                }
+
+                                // Force to nearest 0.25
+                                const rounded = Math.round(value * 4) / 4;
+
+                                updateRow(index, { quantity: rounded });
+                            }}
                             flex={1}
                         />
 
+
                         <Select
                             placeholder="Unit"
+                            required
                             data={unitOptions}
                             value={row.unit}
                             onChange={(unit) =>
