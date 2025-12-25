@@ -1,7 +1,7 @@
 from flask_openapi3 import APIBlueprint, Tag
 from flask_jwt_extended import get_jwt_identity
 
-from extensions import db
+from backend.extensions import db
 from ..auth.models import User
 from ..auth.schemas import UnauthorizedResponse
 from ..decorators import login_required
