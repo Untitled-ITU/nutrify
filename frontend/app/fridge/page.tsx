@@ -1,54 +1,73 @@
 "use client";
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, useMemo } from 'react';
 import { useRouter } from "next/navigation";
 import { 
   Button, 
   Loader, 
   ActionIcon, 
   Modal, 
-  TextInput, 
   NumberInput, 
   Group, 
   Stack,
-  Text,
-  Badge
+  Select,
+  useMantineTheme
 } from "@mantine/core";
-import { useDisclosure, useDebouncedValue } from '@mantine/hooks';
-import { Button, Loader, ActionIcon, useMantineTheme } from "@mantine/core";
+import { useDisclosure } from '@mantine/hooks';
 import { IconPencil, IconX, IconPlus } from "@tabler/icons-react";
 import { authFetch } from "../providers/AuthProvider";
 import { API_BASE_URL } from "@/lib/config";
+
+// Import the ingredients data
+import ingredientsJson from "@/ingredients.json";
+const INGREDIENT_UNITS = ingredientsJson as Record<string, string[]>;
 
 interface FridgeItem {
   id: number;
   quantity: number;
   unit: string;
-  description?: string;
   ingredient: { 
     id: number;
     name: string;
     default_unit?: string;
   }; 
-  quantity?: number;
-  ingredient?: { name: string }; 
 }
 
 export default function FridgePage() {
-  const router = useRouter();
   const theme = useMantineTheme();
+  const router = useRouter();
   
+  const [opened, { open, close }] = useDisclosure(false);
+  const [editingItem, setEditingItem] = useState<FridgeItem | null>(null);
+
+  const [newItemName, setNewItemName] = useState<string | null>("");
+  const [newItemQuantity, setNewItemQuantity] = useState<number | string>(1);
+  const [newItemUnit, setNewItemUnit] = useState<string | null>("");
+
   const [items, setItems] = useState<FridgeItem[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  // Memoize options from JSON
+  const ingredientOptions = useMemo(
+    () => Object.keys(INGREDIENT_UNITS).sort(),
+    []
+  );
+
+  // Derived unit options strictly from JSON
+  const unitOptions = useMemo(() => {
+    if (newItemName && INGREDIENT_UNITS[newItemName]) {
+        return INGREDIENT_UNITS[newItemName];
+    }
+    return [];
+  }, [newItemName]);
 
   const fetchItems = useCallback(async () => {
     setIsLoading(true);
     setError(null);
     try {
       const res = await authFetch(`${API_BASE_URL}/api/fridge/items`);
-
       if (res.ok) {
         const data = await res.json();
         setItems(data.items || []); 
@@ -58,7 +77,6 @@ export default function FridgePage() {
         setError(`Error: ${res.statusText}`);
       }
     } catch (error) {
-      console.error("Fetch failed:", error);
       setError("Failed to connect.");
     } finally {
       setIsLoading(false);
@@ -69,41 +87,11 @@ export default function FridgePage() {
     fetchItems();
   }, [fetchItems]);
 
-  useEffect(() => {
-    const checkIngredient = async () => {
-        if (editingItem) return;
-        if (!debouncedName || debouncedName.length < 2) {
-            setIngredientExists(null);
-            return;
-        }
-
-        setIsChecking(true);
-        try {
-            const res = await authFetch(`${API_BASE_URL}/api/ingredients?search=${debouncedName}`);
-            if (res.ok) {
-                const data = await res.json();
-                const found = data.items?.some((i: any) => i.name.toLowerCase() === debouncedName.toLowerCase());
-                setIngredientExists(!!found);
-            } else {
-                setIngredientExists(false);
-            }
-        } catch (error) {
-            setIngredientExists(false);
-        } finally {
-            setIsChecking(false);
-        }
-    };
-
-    checkIngredient();
-  }, [debouncedName, editingItem]);
-
   const handleCloseModal = () => {
       setEditingItem(null);
       setNewItemName("");
-      setNewItemQuantity("");
+      setNewItemQuantity(1);
       setNewItemUnit("");
-      setNewItemDescription("");
-      setIngredientExists(null);
       close();
   };
 
@@ -112,39 +100,44 @@ export default function FridgePage() {
       setNewItemName(item.ingredient.name);
       setNewItemQuantity(item.quantity);
       setNewItemUnit(item.unit);
-      setNewItemDescription(item.description || "");
       open();
   };
 
   const handleSave = async () => {
-    if (!newItemName) return;
+    if (!newItemName || !newItemUnit) return;
 
     try {
-      const res = await authFetch(`${API_BASE_URL}/api/fridge/items`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
+      let url = `${API_BASE_URL}/api/fridge/items`;
+      let method = 'POST';
+      
+      if (editingItem) {
+          url = `${API_BASE_URL}/api/fridge/${editingItem.id}`;
+          method = 'PUT';
+      }
+
+      const res = await authFetch(url, {
+        method: method,
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-            ingredient_name: name,
-            quantity: parseFloat(quantity || '0'),
-            unit: unit || 'pcs'
+            ingredient_name: newItemName, // Send name; backend handles mapping to ID
+            quantity: typeof newItemQuantity === 'number' ? newItemQuantity : parseFloat(newItemQuantity as string || '0'),
+            unit: newItemUnit,
         })
       });
+
       if (res.ok) {
         fetchItems();
+        handleCloseModal(); 
       } else {
-        alert("Failed to add item.");
+        alert("Failed to save item. Please ensure all fields are filled.");
       }
     } catch (error) { console.error(error); }
-  }, [fetchItems]);
+  };
 
   const onDeleteItem = async (id: number) => {
     if (!confirm("Remove this item?")) return;
     try {
-      const res = await authFetch(`${API_BASE_URL}/api/fridge/${id}`, { 
-        method: 'DELETE'
-      });
+      const res = await authFetch(`${API_BASE_URL}/api/fridge/${id}`, { method: 'DELETE' });
       if (res.ok) setItems(prev => prev.filter(item => item.id !== id));
     } catch (error) { console.error(error); }
   };
@@ -155,13 +148,63 @@ export default function FridgePage() {
 
   return (
     <div className="w-full px-4">
-      
-      <h1 className="text-4xl font-bold mb-8">
-        My Fridge
-      </h1>
+      <Modal 
+        opened={opened} 
+        onClose={handleCloseModal} 
+        title={editingItem ? "Edit Ingredient Amount" : "Add Ingredient"}
+        centered
+        radius="lg"
+        overlayProps={{ backgroundOpacity: 0.55, blur: 3 }}
+      >
+        <Stack>
+            <Select 
+                label="Ingredient Name" 
+                placeholder="Select an ingredient" 
+                searchable
+                nothingFoundMessage="Ingredient not found in list"
+                data={ingredientOptions}
+                value={newItemName}
+                disabled={!!editingItem}
+                onChange={(val) => {
+                    setNewItemName(val);
+                    setNewItemUnit(null); // Force unit selection again
+                }}
+            />
+            
+            <Group grow align="end">
+                <NumberInput 
+                    label="Quantity" 
+                    placeholder="0" 
+                    min={0.25}
+                    step={0.25}
+                    value={newItemQuantity}
+                    onChange={(val) => setNewItemQuantity(val)}
+                />
+                
+                <Select 
+                    label="Unit" 
+                    placeholder="Unit" 
+                    data={unitOptions} 
+                    value={newItemUnit}
+                    disabled={!newItemName}
+                    onChange={(val) => setNewItemUnit(val)}
+                />
+            </Group>
+
+            <Button 
+                onClick={handleSave}
+                fullWidth mt="md" radius="md"
+                disabled={!newItemName || !newItemUnit}
+                style={{ backgroundColor: '#896c6c' }}
+            >
+                {editingItem ? "Update Amount" : "Save to Fridge"}
+            </Button>
+        </Stack>
+      </Modal>
+
+      <h1 className="text-4xl font-bold mb-8">My Fridge</h1>
 
       <div className="flex justify-between items-end mb-8 flex-wrap gap-5">
-        
         <div className="flex flex-col gap-2">
             <label className="text-sm font-bold text-gray-700">Search by Name</label>
             <div className="bg-[#e5beb5] rounded-xl px-4 py-2 w-[300px] flex items-center h-[42px]">
@@ -174,20 +217,12 @@ export default function FridgePage() {
             </div>
         </div>
 
-        <div className="flex flex-col gap-2">
-            <label className="text-sm font-bold text-gray-700">Sort By</label>
-            <div className="bg-[#e5beb5] rounded-xl px-5 py-2 text-base font-medium cursor-pointer text-[#171717] h-[42px] flex items-center">
-                Most Amount
-            </div>
-        </div>
-
         <div className="flex-1"></div>
 
         <Button 
             leftSection={<IconPlus size={20} />}
-            size="md" 
-            radius="lg"
-            onClick={onAddIngredientClick}
+            size="md" radius="lg"
+            onClick={open} 
             style={{ backgroundColor: '#896c6c' }}
             className="hover:opacity-90 transition-opacity shadow-md text-white border-none h-[42px]"
         >
@@ -196,8 +231,7 @@ export default function FridgePage() {
       </div>
 
       <div className="flex px-5 mb-3 font-bold text-lg text-[#333]">
-          <div className="flex-[2]">Ingredient Name</div>
-          <div className="flex-[2]">Description</div>
+          <div className="flex-[3]">Ingredient Name</div>
           <div className="flex-1">Amount</div>
           <div className="w-[100px]"></div>
       </div>
@@ -205,11 +239,8 @@ export default function FridgePage() {
       <div className="w-full h-[1px] bg-black/20 mb-4"></div>
 
       <div className="flex flex-col gap-3 pb-10">
-          
           {isLoading && (
-              <div className="flex justify-center p-5">
-                  <Loader color="#896c6c" />
-              </div>
+              <div className="flex justify-center p-5"><Loader color="#896c6c" /></div>
           )}
           
           {!isLoading && error && (
@@ -218,36 +249,29 @@ export default function FridgePage() {
 
           {!isLoading && !error && filteredItems.length === 0 && (
               <div className="text-center p-10 text-gray-500 text-xl">
-                  Your fridge is empty. Click "Add Ingredient" to start!
+                  {searchTerm ? "No matching ingredients." : "Your fridge is empty."}
               </div>
           )}
 
           {!isLoading && filteredItems.map((item) => (
               <div key={item.id} className="bg-[#e5beb5] rounded-xl p-3 px-5 flex items-center justify-between text-[#171717] font-semibold text-lg hover:brightness-95 transition-all">
-                  <div className="flex-[2]">{item.ingredient.name}</div>
-                  <div className="flex-[2] text-sm text-[#555]">{item.description || '-'}</div>
+                  <div className="flex-[3]">{item.ingredient.name}</div>
                   <div className="flex-1 font-bold">{item.quantity} {item.unit}</div>
-                  <div className="flex-[2]">{getIngredientName(item)}</div>
-                  <div className="flex-[2] text-sm text-[#555]">-</div>
-                  <div className="flex-1 font-bold">
-                      {item.quantity} {item.unit}
-                  </div>
-                  
                   <div className="flex gap-2 w-[100px] justify-end">
                       <ActionIcon 
-                          size="lg"
-                          radius="md"
-                          className="bg-[#896c6c] hover:bg-[#7a5e5e] text-white"
-                          onClick={() => console.log('Edit')}
+                        size="lg" radius="md" 
+                        className="text-white" 
+                        style={{ backgroundColor: theme.other.accentColor }}
+                        onClick={() => openEditModal(item)}
                       >
                           <IconPencil size={18} />
                       </ActionIcon>
                       
                       <ActionIcon 
-                          size="lg"
-                          radius="md"
-                          className="bg-[#896c6c] hover:bg-[#7a5e5e] text-white"
-                          onClick={() => onDeleteItem(item.id)}
+                        size="lg" radius="md" 
+                        className="text-white" 
+                        style={{ backgroundColor: theme.other.accentColor }}
+                        onClick={() => onDeleteItem(item.id)}
                       >
                           <IconX size={18} />
                       </ActionIcon>
