@@ -38,7 +38,7 @@ def get_fridge_items():
     result_items = []
     for item in items:
         formatted = format_quantity_with_conversions(
-            item.quantity, item.unit, include_conversions=True
+            item.quantity, item.unit, include_conversions=False
         )
         result_items.append({
             'id': item.id,
@@ -100,7 +100,7 @@ def add_fridge_item(body: AddFridgeItemBody):
     formatted = format_quantity_with_conversions(
         fridge_item.quantity,
         fridge_item.unit,
-        include_conversions=True
+        include_conversions=False
     )
 
     return {
@@ -144,7 +144,7 @@ def update_fridge_item(path: ItemIdPath, body: UpdateFridgeItemBody):
     formatted = format_quantity_with_conversions(
         item.quantity,
         item.unit,
-        include_conversions=True
+        include_conversions=False
     )
 
     return {
@@ -204,7 +204,7 @@ def search_fridge(query: FridgeSearchQuery):
     result_items = []
     for item in items:
         formatted = format_quantity_with_conversions(
-            item.quantity, item.unit, include_conversions=True
+            item.quantity, item.unit, include_conversions=False
         )
         result_items.append({
             'id': item.id,

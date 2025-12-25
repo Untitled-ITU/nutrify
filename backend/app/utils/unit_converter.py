@@ -79,7 +79,7 @@ def get_primary_unit(unit):
     return unit
 
 
-def format_quantity_with_conversions(quantity, unit, include_conversions=True):
+def format_quantity_with_conversions(quantity, unit, include_conversions=False):
     if not quantity or not unit:
         return {
             'quantity': quantity,

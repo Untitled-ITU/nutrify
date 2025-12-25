@@ -131,7 +131,7 @@ def get_recipe_for_edit(path: RecipeIdPath):
 
     ingredients = []
     for ri in recipe.ingredients:
-        formatted = format_quantity_with_conversions(ri.quantity, ri.unit, include_conversions=True)
+        formatted = format_quantity_with_conversions(ri.quantity, ri.unit, include_conversions=False)
         ingredients.append({
             'ingredient_id': ri.ingredient.id,
             'name': ri.ingredient.name,
