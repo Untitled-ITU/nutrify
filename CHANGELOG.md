@@ -9,6 +9,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Profile linking feature and public chef profile pages
+- Recipe edit and rating functionality
+- Admin interface with authentication
+- Firebase Storage integration for recipe images
+- Firebase workflow environment settings
+
+### Changed
+
+- Enhanced landing page design
+- Updated chef routes and schemas for public profile endpoints
+- Meal plan page improvements
+- Fridge page improvements
+
+---
+
+## [0.2.1] - 2025-12-25
+
+### Added
+
 - Login and signup pages with basic
 - Basic discover page
 - Reusable UI components

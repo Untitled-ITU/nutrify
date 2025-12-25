@@ -6,9 +6,10 @@ from .fridge.routes import fridge_bp
 from .planning.routes import planning_bp
 from .shopping.routes import shopping_bp
 from .chef.routes import chef_bp
-from .chef.public_routes import public_chef_bp 
+from .chef.public_routes import public_chef_bp
 from .rating.routes import rating_bp
 from .admin_views import init_admin
+
 from flask_openapi3 import OpenAPI, Info
 from flask_cors import CORS
 
@@ -52,9 +53,8 @@ def create_app(config=None):
     app.register_api(planning_bp)
     app.register_api(shopping_bp)
     app.register_api(fridge_bp)
-    app.register_blueprint(chef_bp)         
-    app.register_blueprint(public_chef_bp)    
-
+    app.register_api(chef_bp)
+    app.register_api(public_chef_bp)
 
     if not app.config.get('TESTING', False):
         init_admin(app)
