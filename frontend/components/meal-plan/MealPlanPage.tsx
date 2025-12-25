@@ -32,7 +32,7 @@ import { authFetch, useAuth } from "@/app/providers/AuthProvider";
 
 /** ---------- Types & Constants ---------- */
 const MEAL_TYPES = ["breakfast", "lunch", "snack", "dinner"] as const;
-const ROW_HEIGHT = 130; 
+const ROW_HEIGHT = 130;
 
 type Recipe = { id: number; title: string; };
 
@@ -51,7 +51,7 @@ function startOfWeekMonday(d: Date) {
     const x = new Date(d);
     x.setHours(0, 0, 0, 0);
     const day = x.getDay();
-    const diff = (day + 6) % 7; 
+    const diff = (day + 6) % 7;
     x.setDate(x.getDate() - diff);
     return x;
 }
@@ -64,9 +64,9 @@ const fmtMonthDay = new Intl.DateTimeFormat("en-US", { month: "short", day: "num
 
 /** --- Visual Card Component --- */
 function MealCardContent({ meal, isOverlay, onEdit, onDelete, onView }: {
-    meal: Meal; 
+    meal: Meal;
     isOverlay?: boolean;
-    onEdit?: (meal: Meal) => void; 
+    onEdit?: (meal: Meal) => void;
     onDelete?: (id: string) => void;
     onView?: (recipeId: number) => void; // Added onView prop
 }) {
@@ -84,14 +84,14 @@ function MealCardContent({ meal, isOverlay, onEdit, onDelete, onView }: {
                 {!isOverlay && (
                     <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                         {/* New View Details Button */}
-                        <button 
-                            onClick={(e) => { e.stopPropagation(); onView?.(meal.recipeId); }} 
+                        <button
+                            onClick={(e) => { e.stopPropagation(); onView?.(meal.recipeId); }}
                             className="p-1 hover:bg-black/5 rounded text-blue-500"
                             title="View Recipe"
                         >
                             <ExternalLink size={14} />
                         </button>
-                        
+
                         <button onClick={(e) => { e.stopPropagation(); onEdit?.(meal); }} className="p-1 hover:bg-black/5 rounded text-gray-400">
                             <Pencil size={14} />
                         </button>
@@ -128,10 +128,10 @@ function DraggableMeal({ meal, onEdit, onDelete, onView }: {
     };
 
     return (
-        <div 
-            ref={setNodeRef} 
-            style={style} 
-            {...attributes} 
+        <div
+            ref={setNodeRef}
+            style={style}
+            {...attributes}
             {...listeners}
             className="absolute left-2 right-2 cursor-grab active:cursor-grabbing"
         >
@@ -327,7 +327,7 @@ export default function MealPlanPage() {
                         <div />
                         {weekDates.map((d, i) => (
                             <div key={i} className="text-center">
-                                <div className="text-[10px] uppercase tracking-[0.2em] font-black text-[#3b2f2f] opacity-50 mb-1">{DAY_NAMES[i]}</div>
+                                <div className="text-[10px] uppercase tracking-[0.2em] font-black text-[#3b2f2f] opacity-90 mb-1">{DAY_NAMES[i]}</div>
                                 <div className="text-sm font-black text-gray-900 leading-none">{fmtMonthDay.format(d)}</div>
                             </div>
                         ))}
@@ -337,8 +337,8 @@ export default function MealPlanPage() {
                 <div className="grid grid-cols-[80px_repeat(7,1fr)] gap-0">
                     <div className="flex flex-col bg-black/5">
                         {MEAL_TYPES.map((type) => (
-                            <div key={type} style={{ height: ROW_HEIGHT }} className="flex items-center justify-end pr-4">
-                                <span className="text-[10px] font-black uppercase tracking-widest text-[#3b2f2f] opacity-40">
+                            <div key={type} style={{ height: ROW_HEIGHT }} className="flex items-center justify-center px-4">
+                                <span className="text-[10px] font-black uppercase tracking-widest text-[#3b2f2f] opacity-90">
                                     {type}
                                 </span>
                             </div>
