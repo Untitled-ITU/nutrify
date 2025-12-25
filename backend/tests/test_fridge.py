@@ -3,7 +3,7 @@ from backend.app.models import Ingredient, FridgeItem
 
 class TestGetFridgeItems:
     def test_get_fridge_items_empty(self, client, consumer_headers):
-        response = client.get('/api/fridge', headers=consumer_headers)
+        response = client.get('/api/fridge/items', headers=consumer_headers)
         assert response.status_code == 200
         data = response.get_json()
         assert data["items"] == []
@@ -14,20 +14,20 @@ class TestGetFridgeItems:
         db_session.add(ingredient)
         db_session.commit()
 
-        client.post('/api/fridge', headers=consumer_headers, json={
+        client.post('/api/fridge/items', headers=consumer_headers, json={
             "ingredient_id": ingredient.id,
             "quantity": 5,
             "unit": "piece"
         })
 
-        response = client.get('/api/fridge', headers=consumer_headers)
+        response = client.get('/api/fridge/items', headers=consumer_headers)
         assert response.status_code == 200
         data = response.get_json()
         assert data["total"] == 1
         assert len(data["items"]) == 1
 
     def test_get_fridge_items_unauthorized(self, client):
-        response = client.get('/api/fridge')
+        response = client.get('/api/fridge/items')
         assert response.status_code == 401
 
 
@@ -39,7 +39,7 @@ class TestAddFridgeItem:
             db_session.add(ingredient)
             db_session.commit()
 
-        response = client.post('/api/fridge', headers=consumer_headers, json={
+        response = client.post('/api/fridge/items', headers=consumer_headers, json={
             "ingredient_id": ingredient.id,
             "quantity": 5,
             "unit": "piece"
@@ -56,7 +56,7 @@ class TestAddFridgeItem:
             db_session.add(ingredient)
             db_session.commit()
 
-        response = client.post('/api/fridge', headers=consumer_headers, json={
+        response = client.post('/api/fridge/items', headers=consumer_headers, json={
             "ingredient_name": "Salt",
             "quantity": 2,
             "unit": "teaspoon"
@@ -66,7 +66,7 @@ class TestAddFridgeItem:
         assert data["msg"] == "Item added to fridge"
 
     def test_add_fridge_item_not_found(self, client, consumer_headers):
-        response = client.post('/api/fridge', headers=consumer_headers, json={
+        response = client.post('/api/fridge/items', headers=consumer_headers, json={
             "ingredient_id": 99999,
             "quantity": 5
         })
@@ -75,7 +75,7 @@ class TestAddFridgeItem:
         assert data["msg"] == "Ingredient not found"
 
     def test_add_fridge_item_unauthorized(self, client):
-        response = client.post('/api/fridge')
+        response = client.post('/api/fridge/items')
         assert response.status_code == 422
 
     def test_add_fridge_item_duplicate(self, client, db_session, consumer_headers):
@@ -85,13 +85,13 @@ class TestAddFridgeItem:
             db_session.add(ingredient)
             db_session.commit()
 
-        client.post('/api/fridge', headers=consumer_headers, json={
+        client.post('/api/fridge/items', headers=consumer_headers, json={
             "ingredient_id": ingredient.id,
             "quantity": 5,
             "unit": "piece"
         })
 
-        response = client.post('/api/fridge', headers=consumer_headers, json={
+        response = client.post('/api/fridge/items', headers=consumer_headers, json={
             "ingredient_id": ingredient.id,
             "quantity": 5,
             "unit": "piece"
@@ -109,7 +109,7 @@ class TestUpdateFridgeItem:
             db_session.add(ingredient)
             db_session.commit()
 
-        add_response = client.post('/api/fridge', headers=consumer_headers, json={
+        add_response = client.post('/api/fridge/items', headers=consumer_headers, json={
             "ingredient_id": ingredient.id,
             "quantity": 5,
             "unit": "piece"
@@ -145,7 +145,7 @@ class TestUpdateFridgeItem:
         db_session.add(ingredient)
         db_session.commit()
 
-        add_response = client.post('/api/fridge', headers=chef_headers, json={
+        add_response = client.post('/api/fridge/items', headers=chef_headers, json={
             "ingredient_id": ingredient.id,
             "quantity": 5,
             "unit": "piece"
@@ -169,7 +169,7 @@ class TestDeleteFridgeItem:
             db_session.add(ingredient)
             db_session.commit()
 
-        add_response = client.post('/api/fridge', headers=consumer_headers, json={
+        add_response = client.post('/api/fridge/items', headers=consumer_headers, json={
             "ingredient_id": ingredient.id,
             "quantity": 5,
             "unit": "piece"
@@ -243,7 +243,7 @@ class TestBatchAddItems:
         db_session.add(ingredient)
         db_session.commit()
 
-        client.post('/api/fridge', headers=consumer_headers, json={
+        client.post('/api/fridge/items', headers=consumer_headers, json={
             "ingredient_id": ingredient.id,
             "quantity": 5,
             "unit": "piece"
@@ -305,7 +305,7 @@ class TestFridgeSearch:
         db_session.add(ingredient)
         db_session.commit()
 
-        client.post('/api/fridge', headers=consumer_headers, json={
+        client.post('/api/fridge/items', headers=consumer_headers, json={
             "ingredient_id": ingredient.id,
             "quantity": 5,
             "unit": "piece"
@@ -326,7 +326,7 @@ class TestFridgeSearch:
         db_session.commit()
 
         for ing in [ing1, ing2, ing3]:
-            client.post('/api/fridge', headers=consumer_headers, json={
+            client.post('/api/fridge/items', headers=consumer_headers, json={
                 "ingredient_id": ing.id,
                 "quantity": 2,
                 "unit": ing.default_unit
