@@ -9,6 +9,7 @@ import { ActionIcon, Button, Menu, Select, TextInput, useMantineTheme } from "@m
 import { IconArrowsSort, IconBookmark, IconCheck, IconHeart, IconHeartFilled, IconPlus, IconSearch, IconX } from "@tabler/icons-react";
 import { handleAddFavorite, handleRemoveFavorite } from "@/lib/tableActions";
 import { AddToCollectionMenu } from "@/components/recipes/AddToCollectionMenu";
+import { AddToPlanButton } from "@/components/meal-plan/AddToPlanButton";
 
 type RecipesResponse = {
     recipes: Recipe[];
@@ -111,6 +112,11 @@ export default function DiscoverPage() {
                                 <IconHeart size={18} />
                             )}
                         </ActionIcon>
+                        <AddToPlanButton
+                            recipeId={r.id}
+                            recipeTitle={r.title}
+                            variant="icon"
+                        />
                         <Menu shadow="md" width={220}>
                             <Menu.Target>
                                 <ActionIcon

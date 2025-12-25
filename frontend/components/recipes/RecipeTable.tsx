@@ -143,7 +143,7 @@ export function RecipeTable({
                                 <StarRating rating={r.average_rating} />
                             </span>
 
-                            <div className="flex justify-end gap-3">
+                            <div className="flex flex-wrap justify-end gap-3">
                                 <ActionIcon
                                     style={{ backgroundColor: theme.other.accentColor }}
                                     onClick={() => router.push(`/recipes/details/${r.id}`)}
@@ -174,6 +174,7 @@ import {
 } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 import { TruncatedText } from "../TruncatedText";
+import { AddToPlanButton } from "../meal-plan/AddToPlanButton";
 
 function SortableHeader({
     label,

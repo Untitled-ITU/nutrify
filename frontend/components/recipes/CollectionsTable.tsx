@@ -168,7 +168,6 @@ export function CollectionsTable({ collections, onCollectionsUpdated }: Props) {
       <Modal centered={true} radius="lg" opened={editModalOpen} onClose={() => setEditModalOpen(false)} title={currentCollection ? "Edit Collection" : "Create Collection"}>
         <TextInput label="Collection Name" placeholder="Enter collection name" required mb="sm" value={name} onChange={(e) => setName(e.currentTarget.value)} />
         <Textarea label="Description" placeholder="Optional description" mb="sm" value={description} onChange={(e) => setDescription(e.currentTarget.value)} />
-        <Switch label="Public" checked={isPublic} onChange={(e) => setIsPublic(e.currentTarget.checked)} mb="md" />
         <Button fullWidth loading={saving} style={{ backgroundColor: theme.other.accentColor }} onClick={handleSaveCollection}>
           {currentCollection ? "Update Collection" : "Create Collection"}
         </Button>

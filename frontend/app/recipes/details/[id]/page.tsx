@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { Modal, Text } from "@mantine/core";
 import { RecipeRating } from "@/components/ratings/RecipeRating";
 import Link from "next/dist/client/link";
+import { AddToPlanButton } from "@/components/meal-plan/AddToPlanButton";
 
 const EMPTY_RECIPE: RecipeDetails = {
     author: {
@@ -176,6 +177,7 @@ export default function RecipeDetailsPage() {
                                 {recipe.is_favorite ? "Remove from favorites" : "Add to favorites"}
                             </Button>
                             <AddToCollectionMenu variant="button" recipe={mapRecipeDetailsToRecipe(recipe)} />
+                            <AddToPlanButton recipeId={recipe.id} recipeTitle={recipe.title} />
                             {recipe.author && user?.id === recipe.author.id && (
                                 <>
                                     <Button

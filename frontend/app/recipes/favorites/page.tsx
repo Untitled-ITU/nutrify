@@ -9,6 +9,7 @@ import { ActionIcon, Menu, Select, TextInput, useMantineTheme } from "@mantine/c
 import { IconArrowsSort, IconBookmark, IconCheck, IconHeart, IconHeartBroken, IconPlus, IconSearch, IconX } from "@tabler/icons-react";
 import { handleAddFavorite, handleRemoveFavorite } from "@/lib/tableActions";
 import { AddToCollectionMenu } from "@/components/recipes/AddToCollectionMenu";
+import { AddToPlanButton } from "@/components/meal-plan/AddToPlanButton";
 
 type RecipesResponse = {
     favorites: Recipe[];
@@ -92,6 +93,11 @@ export default function FavoritesPage() {
                 disableIngredientFilter={true}
                 renderActions={(r) => (
                     <>
+                        <AddToPlanButton
+                            recipeId={r.id}
+                            recipeTitle={r.title}
+                            variant="icon"
+                        />
                         <ActionIcon
                             style={{ backgroundColor: theme.other.primaryDark }}
                                 onClick={() => onRemove(r)}

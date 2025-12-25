@@ -101,9 +101,9 @@ function MealCardContent({ meal, isOverlay, onEdit, onDelete, onView }: {
                     </div>
                 )}
             </div>
-            <Text className="text-sm font-bold text-gray-800 leading-snug line-clamp-3">
+            <span className="text-[14px] font-bold text-gray-800 leading-snug line-clamp-3">
                 {meal.recipeName}
-            </Text>
+            </span>
         </div>
     );
 }
