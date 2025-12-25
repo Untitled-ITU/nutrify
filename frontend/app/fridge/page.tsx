@@ -2,6 +2,19 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import { useRouter } from "next/navigation";
+import { 
+  Button, 
+  Loader, 
+  ActionIcon, 
+  Modal, 
+  TextInput, 
+  NumberInput, 
+  Group, 
+  Stack,
+  Text,
+  Badge
+} from "@mantine/core";
+import { useDisclosure, useDebouncedValue } from '@mantine/hooks';
 import { Button, Loader, ActionIcon, useMantineTheme } from "@mantine/core";
 import { IconPencil, IconX, IconPlus } from "@tabler/icons-react";
 import { authFetch } from "../providers/AuthProvider";
@@ -9,9 +22,14 @@ import { API_BASE_URL } from "@/lib/config";
 
 interface FridgeItem {
   id: number;
-  ingredient_id: number;
-  name: string;
+  quantity: number;
   unit: string;
+  description?: string;
+  ingredient: { 
+    id: number;
+    name: string;
+    default_unit?: string;
+  }; 
   quantity?: number;
   ingredient?: { name: string }; 
 }
@@ -51,11 +69,55 @@ export default function FridgePage() {
     fetchItems();
   }, [fetchItems]);
 
-  const onAddIngredientClick = useCallback(async () => {
-    const name = prompt("Enter ingredient name:");
-    if (!name) return;
-    const quantity = prompt("Enter quantity:");
-    const unit = prompt("Enter unit (kg, pcs, etc):");
+  useEffect(() => {
+    const checkIngredient = async () => {
+        if (editingItem) return;
+        if (!debouncedName || debouncedName.length < 2) {
+            setIngredientExists(null);
+            return;
+        }
+
+        setIsChecking(true);
+        try {
+            const res = await authFetch(`${API_BASE_URL}/api/ingredients?search=${debouncedName}`);
+            if (res.ok) {
+                const data = await res.json();
+                const found = data.items?.some((i: any) => i.name.toLowerCase() === debouncedName.toLowerCase());
+                setIngredientExists(!!found);
+            } else {
+                setIngredientExists(false);
+            }
+        } catch (error) {
+            setIngredientExists(false);
+        } finally {
+            setIsChecking(false);
+        }
+    };
+
+    checkIngredient();
+  }, [debouncedName, editingItem]);
+
+  const handleCloseModal = () => {
+      setEditingItem(null);
+      setNewItemName("");
+      setNewItemQuantity("");
+      setNewItemUnit("");
+      setNewItemDescription("");
+      setIngredientExists(null);
+      close();
+  };
+
+  const openEditModal = (item: FridgeItem) => {
+      setEditingItem(item);
+      setNewItemName(item.ingredient.name);
+      setNewItemQuantity(item.quantity);
+      setNewItemUnit(item.unit);
+      setNewItemDescription(item.description || "");
+      open();
+  };
+
+  const handleSave = async () => {
+    if (!newItemName) return;
 
     try {
       const res = await authFetch(`${API_BASE_URL}/api/fridge/items`, {
@@ -87,12 +149,8 @@ export default function FridgePage() {
     } catch (error) { console.error(error); }
   };
 
-  const getIngredientName = (item: FridgeItem) => {
-    return item.ingredient?.name || item.name || "Unknown Item";
-  };
-
   const filteredItems = items.filter(item => 
-    getIngredientName(item).toLowerCase().includes(searchTerm.toLowerCase())
+    item.ingredient.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -166,6 +224,9 @@ export default function FridgePage() {
 
           {!isLoading && filteredItems.map((item) => (
               <div key={item.id} className="bg-[#e5beb5] rounded-xl p-3 px-5 flex items-center justify-between text-[#171717] font-semibold text-lg hover:brightness-95 transition-all">
+                  <div className="flex-[2]">{item.ingredient.name}</div>
+                  <div className="flex-[2] text-sm text-[#555]">{item.description || '-'}</div>
+                  <div className="flex-1 font-bold">{item.quantity} {item.unit}</div>
                   <div className="flex-[2]">{getIngredientName(item)}</div>
                   <div className="flex-[2] text-sm text-[#555]">-</div>
                   <div className="flex-1 font-bold">
