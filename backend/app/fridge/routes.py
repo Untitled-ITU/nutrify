@@ -49,7 +49,6 @@ def get_fridge_items():
             },
             'quantity': formatted['quantity'],
             'unit': formatted['unit'],
-            'description': item.description,
             'alternatives': formatted['alternatives'],
             'added_at': item.added_at.isoformat() if item.added_at else None
         })
@@ -71,24 +70,15 @@ def add_fridge_item(body: AddFridgeItemBody):
         return {'msg': 'User not found'}, 404
 
     ingredient = None
-
     if body.ingredient_id:
         ingredient = db.session.get(Ingredient, body.ingredient_id)
-    
     elif body.ingredient_name:
-        clean_name = body.ingredient_name.strip().title()
-        
         ingredient = Ingredient.query.filter(
-            Ingredient.name.ilike(clean_name)
+            Ingredient.name.ilike(body.ingredient_name.strip())
         ).first()
 
-        if not ingredient:
-            ingredient = Ingredient(name=clean_name, default_unit=body.unit or 'pcs')
-            db.session.add(ingredient)
-            db.session.commit()
-    
     if not ingredient:
-        return {'msg': 'Ingredient invalid'}, 400
+        return {'msg': 'Ingredient not found'}, 404
 
     existing = FridgeItem.query.filter_by(
         user_id=user.id,
@@ -96,14 +86,13 @@ def add_fridge_item(body: AddFridgeItemBody):
     ).first()
 
     if existing:
-        return {'msg': 'Ingredient already in fridge. Use PUT to update or delete old one.'}, 409
+        return {'msg': 'Ingredient already in fridge. Use PUT to update.'}, 409
 
     fridge_item = FridgeItem(
         user_id=user.id,
         ingredient_id=ingredient.id,
         quantity=body.quantity,
-        unit=body.unit or ingredient.default_unit,
-        description=body.description
+        unit=body.unit or ingredient.default_unit
     )
     db.session.add(fridge_item)
     db.session.commit()
@@ -125,7 +114,6 @@ def add_fridge_item(body: AddFridgeItemBody):
             },
             'quantity': formatted['quantity'],
             'unit': formatted['unit'],
-            'description': fridge_item.description,
             'alternatives': formatted['alternatives'],
             'added_at': fridge_item.added_at.isoformat() if fridge_item.added_at else None
         }
@@ -150,8 +138,6 @@ def update_fridge_item(path: ItemIdPath, body: UpdateFridgeItemBody):
         item.quantity = body.quantity
     if body.unit is not None:
         item.unit = body.unit
-    if body.description is not None:
-        item.description = body.description
 
     db.session.commit()
 
@@ -256,20 +242,13 @@ def batch_add_items(body: BatchAddBody):
         ingredient = None
         if item_data.ingredient_id:
             ingredient = db.session.get(Ingredient, item_data.ingredient_id)
-        
         elif item_data.ingredient_name:
-            clean_name = item_data.ingredient_name.strip().title()
             ingredient = Ingredient.query.filter(
-                Ingredient.name.ilike(clean_name)
+                Ingredient.name.ilike(item_data.ingredient_name.strip())
             ).first()
-            
-            if not ingredient:
-                ingredient = Ingredient(name=clean_name, default_unit=item_data.unit or 'pcs')
-                db.session.add(ingredient)
-                db.session.commit()
 
         if not ingredient:
-            errors.append(f"Could not process: {item_data.ingredient_name}")
+            errors.append('Ingredient not found')
             continue
 
         existing = FridgeItem.query.filter_by(
