@@ -43,36 +43,6 @@ export default function Navbar() {
               >
                 Nutrify
               </Button>
-    return (
-        <AppShell
-            padding="md"
-            header={{ height: 60 }}
-        >
-            <AppShell.Header className="shadow-xl" style={{ backgroundColor: theme.other.primaryDark }}>
-                <Center h="100%" >
-                    <Group className="max-w-7xl" w="100%">
-                        <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-                        <Group justify="space-between" style={{ flex: 1 }}>
-                            <Button
-                                variant="unstyled"
-                                component={Link}
-                                href="/"
-                                leftSection={<img className="w-12" src="/foodIcon.png" />}
-                                className="text-white font-bold p-0 hover:bg-transparent"
-                                styles={{
-                                    root: {
-                                        backgroundColor: "transparent",
-                                    },
-                                }}
-                                fz="h2"
-                            >
-                                Nutrify
-                            </Button>
-                            <Group ml="xl" gap={0} visibleFrom="sm">
-                                {
-                                    user ? (
-                                        <>
-                                            <Button variant="subtle" size="xl" fz="h3" color={theme.white} radius={0} component={Link} href="/discover" >Discover</Button>
 
               <Group ml="xl" gap={0} visibleFrom="sm">
                 {user ? (
