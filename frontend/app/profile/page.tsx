@@ -17,6 +17,7 @@ import {
   Textarea,
   TextInput,
   Title,
+  useMantineTheme,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { notifications } from "@mantine/notifications";
@@ -65,6 +66,8 @@ function StatCard({ label, value }: { label: string; value: React.ReactNode }) {
 }
 
 export default function ProfilePage() {
+  const theme = useMantineTheme();
+
   const [loading, setLoading] = useState(true);
   const [profile, setProfile] =
     useState<Awaited<ReturnType<typeof fetchProfile>> | null>(null);
@@ -327,7 +330,7 @@ async function onResetPassword() {
   }
 
   return (
-    <Stack className="w-full" gap="lg">
+    <Stack className="w-full px-4" gap="lg">
       {/* Header */}
       <Group align="center" justify="space-between" wrap="wrap">
         <Group>
@@ -367,7 +370,7 @@ async function onResetPassword() {
                   w={320}
                   {...usernameForm.getInputProps("username")}
                 />
-                <Button loading={busy} onClick={onSaveUsername} color="green">
+                <Button loading={busy} onClick={onSaveUsername} style={{ backgroundColor: theme.other.accentColor }} >
                   Save
                 </Button>
               </Group>
@@ -422,7 +425,7 @@ async function onResetPassword() {
         /* CHEF (same as before) */
         <>
           {/* Account Settings */}
-          <Card withBorder radius="md" p="lg">
+          <Card withBorder radius="md" shadow="md" p="lg">
             <Title order={4}>Account Settings</Title>
             <Text c="dimmed" size="sm" mt={4}>
               Update your basic profile information.
@@ -435,13 +438,13 @@ async function onResetPassword() {
                 w={320}
                 {...usernameForm.getInputProps("username")}
               />
-              <Button loading={busy} onClick={onSaveUsername} color="green">
+                <Button loading={busy} onClick={onSaveUsername} style={{ backgroundColor: theme.other.accentColor }} >
                 Save
               </Button>
             </Group>
           </Card>
           {/* Reset Password (Chef also) */}
-          <Card withBorder radius="md" p="lg">
+          <Card withBorder radius="md" shadow="md" p="lg">
             <Group justify="space-between" align="center" wrap="wrap">
               <div>
                 <Title order={4}>Reset Password</Title>
@@ -454,7 +457,7 @@ async function onResetPassword() {
                 loading={sendCodeBusy}
                 onClick={onSendResetCode}
                 variant="outline"
-                color="green"
+                color={theme.other.accentColor}
               >
                 Send Reset Code
               </Button>
@@ -484,14 +487,14 @@ async function onResetPassword() {
             </SimpleGrid>
 
             <Group justify="flex-end" mt="md">
-              <Button loading={resetBusy} onClick={onResetPassword} color="green">
+              <Button loading={resetBusy} onClick={onResetPassword} color={theme.other.accentColor}>
                 Reset Password
               </Button>
             </Group>
           </Card>
 
           {/* Chef Public Profile */}
-          <Card withBorder radius="md" p="lg">
+          <Card withBorder radius="md" p="lg" shadow="md">
             <Title order={4}>Chef Public Profile</Title>
             <Text c="dimmed" size="sm" mt={4}>
               This is what people see on your public chef profile.
@@ -523,7 +526,7 @@ async function onResetPassword() {
               <Button
                 loading={chefProfileBusy}
                 onClick={onSaveChefPublicProfile}
-                color="green"
+                color={theme.other.accentColor}
               >
                 Save Public Profile
               </Button>
@@ -531,7 +534,7 @@ async function onResetPassword() {
           </Card>
 
           {/* Chef Stats */}
-          <Card withBorder radius="md" p="lg">
+          <Card withBorder shadow="md" radius="md" p="lg">
             <Group justify="space-between" align="center">
               <Title order={4}>Chef Stats</Title>
             </Group>
@@ -558,7 +561,7 @@ async function onResetPassword() {
           </Card>
 
           {/* My Recipes */}
-          <Card withBorder radius="md" p="lg">
+          <Card withBorder shadow="md" radius="md" p="lg">
             <Group justify="space-between" align="center">
               <Title order={4}>My Recipes</Title>
             </Group>

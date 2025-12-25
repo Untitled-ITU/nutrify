@@ -38,6 +38,7 @@ export default function Navbar() {
                 component={Link}
                 href="/"
                 className="text-white font-bold p-0 hover:bg-transparent"
+                leftSection={<img className="w-12" src="/foodIcon.png" />}
                 styles={{ root: { backgroundColor: "transparent" } }}
                 fz="h2"
               >

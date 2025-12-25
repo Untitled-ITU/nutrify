@@ -246,10 +246,10 @@ export default function RecipeDetailsPage() {
 
                             {/* Step text */}
                             <div className="flex flex-row w-full items-center">
-                                <Badge className="me-4" size="xl" circle>
+                                <Badge color="green" className="me-4" size="xl" circle>
                                     {index + 1}
                                 </Badge>
-                                <p className="align-baseline flex-9 text-gray-600 leading-relaxed">
+                                <p color="green" className="align-baseline flex-9 text-gray-600 leading-relaxed">
                                     {step}
                                 </p>
                             </div>

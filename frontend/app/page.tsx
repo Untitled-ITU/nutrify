@@ -15,10 +15,11 @@ export default function Home() {
                 {/* Left Column - Text */}
                 <Grid.Col span={{ base: 12, md: 7 }}>
                     <div className="flex flex-col gap-4">
-                        <div className="flex flex-row justify-between items-center">
+                        <div className="flex flex-row items-center">
                             <h1 className="text-6xl font-bold">
                                 Welcome to <br /> Nutrify!
                             </h1>
+                            <img className="w-24 text-black ms-16" src="/foodIconBlack.png" />
                         </div>
 
                         {user != null ? (<>
