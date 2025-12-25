@@ -18,6 +18,9 @@ type RecipesResponse = {
 type RecipeFilters = {
     q?: string;
     ingredients?: string[];
+    excluded_ingredients?: string[];
+    is_vegan?: boolean;
+    is_vegetarian?: boolean;
     sort_by?: string;
 };
 
@@ -40,6 +43,15 @@ export default function DiscoverPage() {
             // if (filters.sort_by) params.set("sort_by", filters.sort_by);
             if (filters.ingredients?.length) {
                 params.set("ingredients", filters.ingredients.join(","));
+            }
+            if (filters.excluded_ingredients?.length) {
+                params.set("exclude_ingredients", filters.excluded_ingredients.join(","));
+            }
+            if (filters.is_vegan) {
+                params.set("is_vegan", "true");
+            }
+            if (filters.is_vegetarian) {
+                params.set("is_vegetarian", "true");
             }
             // params.set("sort_order", "asc");
 

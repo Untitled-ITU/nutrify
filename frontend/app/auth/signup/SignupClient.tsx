@@ -36,6 +36,11 @@ export default function SignupPage() {
             return;
         }
 
+        if (password.length < 6) {
+            alert("Passwords must be at least 6 characters");
+            return;
+        }
+
         const role = isChef ? "chef" : "consumer";
 
         const res = await fetch(API_BASE_URL + "/api/auth/register", {
@@ -74,6 +79,7 @@ export default function SignupPage() {
                         size="lg"
                         radius="lg"
                         label="E-Mail"
+                        type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         styles={{ label: { fontSize: 24 } }}
@@ -93,6 +99,7 @@ export default function SignupPage() {
                         radius="lg"
                         label="Password"
                         type="password"
+                        minLength={6}
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         styles={{ label: { fontSize: 24 } }}
@@ -103,6 +110,7 @@ export default function SignupPage() {
                         radius="lg"
                         label="Confirm Password"
                         type="password"
+                        minLength={6}
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         styles={{ label: { fontSize: 24 } }}

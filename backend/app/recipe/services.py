@@ -68,9 +68,62 @@ def get_recipe_list(
     else:
         query = query.order_by(sort_column.desc())
 
+    recipes_list = query.all()
+
+    if not recipes_list:
+        return {'recipes': []}
+
+    recipe_ids = [r.id for r in recipes_list]
+
+    favorites_set = set()
+    if user_id:
+        favorites = Favorite.query.filter(
+            Favorite.user_id == user_id,
+            Favorite.recipe_id.in_(recipe_ids)
+        ).all()
+        favorites_set = {f.recipe_id for f in favorites}
+
+    collections_count = {}
+    if user_id:
+        collection_counts_query = db.session.query(
+            CollectionItem.recipe_id,
+            func.count(CollectionItem.collection_id).label('count')
+        ).join(RecipeCollection).filter(
+            RecipeCollection.user_id == user_id,
+            CollectionItem.recipe_id.in_(recipe_ids)
+        ).group_by(CollectionItem.recipe_id).all()
+        collections_count = {r.recipe_id: r.count for r in collection_counts_query}
+
+    ratings_dict = {}
+    ratings_query = db.session.query(
+        Rating.recipe_id,
+        func.avg(Rating.score).label('avg_rating')
+    ).filter(
+        Rating.recipe_id.in_(recipe_ids)
+    ).group_by(Rating.recipe_id).all()
+    ratings_dict = {r.recipe_id: r.avg_rating for r in ratings_query}
+
     recipes = []
-    for recipe in query.all():
-        recipe_data = serialize_recipe_summary(recipe, user_id)
+    for recipe in recipes_list:
+        is_favorite = recipe.id in favorites_set
+        in_collections_count = collections_count.get(recipe.id, 0)
+        avg_rating = ratings_dict.get(recipe.id)
+
+        recipe_data = {
+            'id': recipe.id,
+            'title': recipe.title,
+            'description': recipe.description,
+            'category': recipe.category,
+            'cuisine': recipe.cuisine,
+            'meal_type': recipe.meal_type,
+            'is_vegan': recipe.is_vegan,
+            'is_vegetarian': recipe.is_vegetarian,
+            'image_url': build_image_url(recipe.image_name),
+            'num_ingredients': recipe.num_ingredients,
+            'average_rating': round(avg_rating, 1) if avg_rating else None,
+            'is_favorite': is_favorite,
+            'in_collections_count': in_collections_count
+        }
         recipes.append(recipe_data)
 
     return {'recipes': recipes}

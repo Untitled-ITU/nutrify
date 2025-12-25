@@ -12,9 +12,12 @@ import {
     Select,
     Text,
     useMantineTheme,
+    FileInput,
+    FileButton,
 } from "@mantine/core";
 import { IngredientEditor } from "@/components/recipes/IngredientEditor";
 import { IngredientRow } from "@/components/recipes/IngredientEditor";
+import { useState } from "react";
 
 export type RecipeFormData = {
     title: string;
@@ -26,6 +29,7 @@ export type RecipeFormData = {
     meal_type: string;
     is_vegan: boolean;
     is_vegetarian: boolean;
+    file?: File;
 };
 
 type Filters = {
@@ -52,6 +56,7 @@ export function RecipeForm({
     onSubmit,
 }: Props) {
     const theme = useMantineTheme();
+    const [file, setFile] = useState<File | null>(null);
 
     function update<K extends keyof RecipeFormData>(
         key: K,
@@ -157,9 +162,28 @@ export function RecipeForm({
                                     )
                                 }
                             />
-
                             <Divider />
 
+                            <FileButton
+                                accept="image/png,image/jpeg"
+                                onChange={(v) => {
+                                    update("file", v || undefined)
+                                    setFile(v);
+                                }
+                                }
+                            >
+                                {(props) => <Button style={{
+                                    backgroundColor:
+                                        theme.other.accentColor,
+                                }} {...props}>Upload image</Button>}
+                            </FileButton>
+                            {file && (
+                                <Text size="sm" ta="center" mt="sm">
+                                    Picked file: {file.name}
+                                </Text>
+                            )}
+
+                            <Divider />
                             <Button
                                 fullWidth
                                 loading={loading}

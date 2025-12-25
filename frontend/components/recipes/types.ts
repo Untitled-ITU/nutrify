@@ -51,7 +51,9 @@ export type IngredientFilter = {
 
 export type FiltersState = {
     vegetarian: boolean;
+    vegan: boolean;
     ingredients: IngredientFilter[];
+    excluded_ingredients: string[];
     cuisines: string[];
     categories: string[];
 };
