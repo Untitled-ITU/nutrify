@@ -1,26 +1,22 @@
 "use client";
 
-import { MOCK_RECIPES } from "@/lib/mockRecipes";
-import { Card, Badge, Group, Text, Stack, Divider, rgba } from "@mantine/core";
+import { API_BASE_URL } from "@/lib/config";
+import { Card, Badge, Group, Text, Stack } from "@mantine/core";
 import { useEffect, useState } from "react";
+import { Recipe } from "./types";
 
 export function RandomRecipeCard() {
-    // const recipe =
-    //     MOCK_RECIPES[Math.floor(Math.random() * MOCK_RECIPES.length)];
 
     const [recipe, setRecipe] = useState<any | null>(null);
-    const [steps, setSteps] = useState<string[] | null>(null);
 
     useEffect(() => {
-        const random =
-            MOCK_RECIPES[Math.floor(Math.random() * MOCK_RECIPES.length)];
-        setRecipe(random);
-        setSteps(
-            random.directions
-                .split(". ")
-                .map((s: any) => s.trim())
-                .filter(Boolean)
-        );
+        async function fetchRecipe() {
+            const res = await fetch(`${API_BASE_URL}/api/recipes/random`);
+            if (!res.ok) throw new Error("Failed to fetch random recipe");
+            const random: Recipe = await res.json()
+            setRecipe(random);
+        }
+        fetchRecipe();
     }, []);
 
     if (!recipe) {
