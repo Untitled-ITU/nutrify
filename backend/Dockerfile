@@ -14,7 +14,9 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application code
-COPY . .
+COPY backend /app/backend
+COPY requirements.txt /app/
+COPY config.py /app/backend/
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1
@@ -23,6 +25,5 @@ ENV PORT=8080
 # Expose port
 EXPOSE 8080
 
-# Run the application with gunicorn (using factory pattern)
-CMD exec gunicorn --bind :$PORT --workers 1 --threads 8 --timeout 0 "app:create_app()"
-
+# Run the application with gunicorn
+CMD exec gunicorn --bind :$PORT --workers 1 --threads 8 --timeout 0 "backend.app:create_app()"
