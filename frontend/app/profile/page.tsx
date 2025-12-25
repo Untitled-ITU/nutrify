@@ -9,78 +9,112 @@ import {
   Divider,
   Group,
   Loader,
-  Modal,
   Paper,
+  PasswordInput,
   SimpleGrid,
   Stack,
   Text,
   Textarea,
   TextInput,
   Title,
-  Switch,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { notifications } from "@mantine/notifications";
-import { IconChefHat, IconPlus, IconTrash, IconEdit, IconCheck, IconX } from "@tabler/icons-react";
+import { IconChefHat, IconCheck, IconX } from "@tabler/icons-react";
 
 import {
   ChefRecipeSummary,
   ChefStats,
-  CreateRecipePayload,
   fetchChefRecipes,
   fetchChefStats,
   fetchProfile,
   updateUsername,
-  createChefRecipe,
-  updateChefRecipe,
   deleteChefRecipe,
+  fetchChefOwnProfile,
+  updateChefOwnProfile,
+  forgotPassword,
+  resetPassword, 
 } from "@/lib/chef";
+
+/** ---- Website normalization helper (Option B) ---- */
+function toExternalUrl(raw?: string | null) {
+  const v = (raw ?? "").trim();
+  if (!v) return null;
+
+  // already absolute http(s)
+  if (/^https?:\/\//i.test(v)) return v;
+
+  // block dangerous schemes
+  if (/^(javascript|data):/i.test(v)) return null;
+
+  // treat plain domain as external
+  return `https://${v}`;
+}
 
 function StatCard({ label, value }: { label: string; value: React.ReactNode }) {
   return (
     <Paper radius="md" p="md" withBorder>
-      <Text size="sm" c="dimmed">{label}</Text>
-      <Text fw={700} size="xl">{value}</Text>
+      <Text size="sm" c="dimmed">
+        {label}
+      </Text>
+      <Text fw={700} size="xl">
+        {value}
+      </Text>
     </Paper>
   );
 }
 
 export default function ProfilePage() {
   const [loading, setLoading] = useState(true);
-  const [profile, setProfile] = useState<Awaited<ReturnType<typeof fetchProfile>> | null>(null);
+  const [profile, setProfile] =
+    useState<Awaited<ReturnType<typeof fetchProfile>> | null>(null);
 
   const [stats, setStats] = useState<ChefStats | null>(null);
   const [recipes, setRecipes] = useState<ChefRecipeSummary[]>([]);
+
   const [busy, setBusy] = useState(false);
+  const [chefProfileBusy, setChefProfileBusy] = useState(false);
+  const [resetBusy, setResetBusy] = useState(false);
+  const [sendCodeBusy, setSendCodeBusy] = useState(false);
 
-  const [recipeModalOpen, setRecipeModalOpen] = useState(false);
-  const [editingRecipeId, setEditingRecipeId] = useState<number | null>(null);
 
+  const isChef = useMemo(
+    () => profile?.role === "chef" || profile?.role === "admin",
+    [profile]
+  );
+
+  // Username form (for BOTH consumer + chef)
   const usernameForm = useForm({
     initialValues: { username: "" },
     validate: {
-      username: (v) => (v.trim().length < 2 ? "Username must be at least 2 characters" : null),
+      username: (v) =>
+        v.trim().length < 2 ? "Username must be at least 2 characters" : null,
     },
   });
 
-  const recipeForm = useForm<CreateRecipePayload>({
+  // Consumer reset-password form (email is taken from profile)
+    const resetForm = useForm({
     initialValues: {
-      title: "",
-      description: "",
-      category: "",
-      cuisine: "",
-      meal_type: "",
-      is_vegan: false,
-      is_vegetarian: false,
-      directions: "",
-      ingredients: [],
+      code: "",
+      new_password: "",
+      confirm_password: "",
     },
     validate: {
-      title: (v) => (v.trim().length < 1 ? "Title is required" : null),
+      code: (v) => (v.trim().length !== 6 ? "Code must be exactly 6 characters" : null),
+      new_password: (v) => (v.trim().length < 6 ? "Password must be at least 6 characters" : null),
+      confirm_password: (v, values) => (v !== values.new_password ? "Passwords do not match" : null),
     },
   });
 
-  const isChef = useMemo(() => profile?.role === "chef" || profile?.role === "admin", [profile]);
+
+  // Chef public profile form (only for chefs)
+  const chefProfileForm = useForm({
+    initialValues: {
+      bio: "",
+      website: "",
+      location: "",
+    },
+  });
 
   async function reloadChefData() {
     const [s, r] = await Promise.all([fetchChefStats(), fetchChefRecipes()]);
@@ -92,14 +126,22 @@ export default function ProfilePage() {
     (async () => {
       try {
         setLoading(true);
+
         const p = await fetchProfile();
         setProfile(p);
         usernameForm.setValues({ username: p.username });
 
         if (p.role === "chef" || p.role === "admin") {
           await reloadChefData();
+
+          const cp = await fetchChefOwnProfile();
+          chefProfileForm.setValues({
+            bio: cp.bio ?? "",
+            website: cp.website ?? "",
+            location: cp.location ?? "",
+          });
         }
-      } catch (e) {
+      } catch {
         notifications.show({
           title: "Failed to load profile",
           message: "Please try again.",
@@ -113,6 +155,8 @@ export default function ProfilePage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  
+
   async function onSaveUsername() {
     const valid = usernameForm.validate();
     if (valid.hasErrors) return;
@@ -120,13 +164,14 @@ export default function ProfilePage() {
     try {
       setBusy(true);
       const res = await updateUsername(usernameForm.values.username.trim());
+
       notifications.show({
         title: "Profile updated",
         message: res.msg,
         color: "green",
         icon: <IconCheck size={18} />,
       });
-      // refresh profile label
+
       const p = await fetchProfile();
       setProfile(p);
     } catch {
@@ -141,64 +186,104 @@ export default function ProfilePage() {
     }
   }
 
-  function openCreateRecipe() {
-    setEditingRecipeId(null);
-    recipeForm.reset();
-    setRecipeModalOpen(true);
-  }
-
-  function openEditRecipe(r: ChefRecipeSummary) {
-    setEditingRecipeId(r.id);
-    recipeForm.setValues({
-      title: r.title ?? "",
-      description: r.description ?? "",
-      category: r.category ?? "",
-      cuisine: r.cuisine ?? "",
-      meal_type: "",
-      is_vegan: false,
-      is_vegetarian: false,
-      directions: "",
-      ingredients: [],
+ async function onSendResetCode() {
+  if (!profile?.email) return;
+  try {
+    setSendCodeBusy(true);
+    const res = await forgotPassword({ email: profile.email });
+    notifications.show({
+      title: "Reset code sent",
+      message: res.msg ?? "Check your email for the 6-digit code.",
+      color: "green",
+      icon: <IconCheck size={18} />,
     });
-    setRecipeModalOpen(true);
+  } catch {
+    notifications.show({
+      title: "Failed to send code",
+      message: "Could not send reset code. Please try again.",
+      color: "red",
+      icon: <IconX size={18} />,
+    });
+  } finally {
+    setSendCodeBusy(false);
   }
+}
 
-  async function onSubmitRecipe() {
-    const valid = recipeForm.validate();
-    if (valid.hasErrors) return;
+async function onResetPassword() {
+  if (!profile) return;
+  const valid = resetForm.validate();
+  if (valid.hasErrors) return;
 
+  try {
+    setResetBusy(true);
+    const res = await resetPassword({
+      email: profile.email,
+      code: resetForm.values.code.trim(),
+      new_password: resetForm.values.new_password,
+    });
+
+    notifications.show({
+      title: "Password updated",
+      message: res.msg ?? "Your password was updated successfully.",
+      color: "green",
+      icon: <IconCheck size={18} />,
+    });
+
+    resetForm.reset();
+  } catch {
+    notifications.show({
+      title: "Reset failed",
+      message: "Could not reset password. Check your code and try again.",
+      color: "red",
+      icon: <IconX size={18} />,
+    });
+  } finally {
+    setResetBusy(false);
+  }
+}
+
+  async function onSaveChefPublicProfile() {
     try {
-      setBusy(true);
+      setChefProfileBusy(true);
 
-      if (editingRecipeId) {
-        await updateChefRecipe(editingRecipeId, recipeForm.values);
+      const normalizedWebsite = toExternalUrl(chefProfileForm.values.website);
+
+      if (chefProfileForm.values.website?.trim() && !normalizedWebsite) {
         notifications.show({
-          title: "Recipe updated",
-          message: "Your recipe was updated successfully.",
-          color: "green",
-          icon: <IconCheck size={18} />,
+          title: "Invalid website",
+          message:
+            "Please enter a valid website (example.com or https://example.com).",
+          color: "red",
+          icon: <IconX size={18} />,
         });
-      } else {
-        await createChefRecipe(recipeForm.values);
-        notifications.show({
-          title: "Recipe created",
-          message: "Your recipe was created successfully.",
-          color: "green",
-          icon: <IconCheck size={18} />,
-        });
+        return;
       }
 
-      setRecipeModalOpen(false);
-      await reloadChefData();
+      const payload = {
+        bio: chefProfileForm.values.bio?.trim() || null,
+        website: normalizedWebsite,
+        location: chefProfileForm.values.location?.trim() || null,
+      };
+
+      const res = await updateChefOwnProfile(payload);
+
+      chefProfileForm.setFieldValue("website", normalizedWebsite ?? "");
+
+      notifications.show({
+        title: "Profile updated",
+        message: res.msg,
+        color: "green",
+        icon: <IconCheck size={18} />,
+      });
     } catch {
       notifications.show({
-        title: "Operation failed",
-        message: "Something went wrong. Please try again.",
+        title: "Update failed",
+        message: "Could not update chef profile.",
         color: "red",
         icon: <IconX size={18} />,
       });
     } finally {
-      setBusy(false);
+      setChefProfileBusy(false);
     }
   }
 
@@ -250,26 +335,91 @@ export default function ProfilePage() {
           <div>
             <Group gap="sm">
               <Title order={2}>{profile.username}</Title>
-              <Badge leftSection={<IconChefHat size={14} />} color={isChef ? "grape" : "gray"}>
+              <Badge
+                leftSection={<IconChefHat size={14} />}
+                color={isChef ? "grape" : "gray"}
+              >
                 {isChef ? "Chef" : "User"}
               </Badge>
             </Group>
-            <Text size="sm" c="dimmed">{profile.email}</Text>
+            <Text size="sm" c="dimmed">
+              {profile.email}
+            </Text>
           </div>
         </Group>
       </Group>
 
       <Divider />
 
-      {/* If NOT chef, we leave placeholder for Consumer profile (we’ll implement next) */}
-      {!isChef ? (
-        <Card withBorder radius="md" p="lg">
-          <Title order={4}>Consumer Profile</Title>
-          <Text c="dimmed" mt="xs">
-            We’ll implement the consumer profile (meal list sharing only) next.
-          </Text>
-        </Card>
-      ) : (
+      {/* CONSUMER */}
+        {!isChef ? (
+          <>
+            <Card withBorder radius="md" p="lg">
+              <Title order={4}>Account Settings</Title>
+              <Text c="dimmed" size="sm" mt={4}>
+                Update your username.
+              </Text>
+
+              <Group mt="md" align="end">
+                <TextInput
+                  label="Username"
+                  placeholder="Your username"
+                  w={320}
+                  {...usernameForm.getInputProps("username")}
+                />
+                <Button loading={busy} onClick={onSaveUsername} color="green">
+                  Save
+                </Button>
+              </Group>
+            </Card>
+
+            <Card withBorder radius="md" p="lg">
+              <Group justify="space-between" align="center" wrap="wrap">
+                <div>
+                  <Title order={4}>Reset Password</Title>
+                  <Text c="dimmed" size="sm" mt={4}>
+                    Send a reset code to your email, then enter it below.
+                  </Text>
+                </div>
+
+                <Button loading={sendCodeBusy} onClick={onSendResetCode} variant="outline" color="green">
+                  Send Reset Code
+                </Button>
+              </Group>
+
+              <TextInput mt="md" label="Email" value={profile.email} disabled />
+
+              <TextInput
+                mt="md"
+                label="6-digit code"
+                placeholder="123456"
+                maxLength={6}
+                {...resetForm.getInputProps("code")}
+              />
+
+              <SimpleGrid cols={{ base: 1, sm: 2 }} mt="md">
+                <PasswordInput
+                  label="New password"
+                  placeholder="New password"
+                  {...resetForm.getInputProps("new_password")}
+                />
+                <PasswordInput
+                  label="Confirm password"
+                  placeholder="Confirm password"
+                  {...resetForm.getInputProps("confirm_password")}
+                />
+              </SimpleGrid>
+
+              <Group justify="flex-end" mt="md">
+                <Button loading={resetBusy} onClick={onResetPassword} color="green">
+                  Reset Password
+                </Button>
+              </Group>
+            </Card>
+          </>
+        ) : (
+
+        /* CHEF (same as before) */
         <>
           {/* Account Settings */}
           <Card withBorder radius="md" p="lg">
@@ -285,8 +435,97 @@ export default function ProfilePage() {
                 w={320}
                 {...usernameForm.getInputProps("username")}
               />
-              <Button loading={busy} onClick={onSaveUsername}>
+              <Button loading={busy} onClick={onSaveUsername} color="green">
                 Save
+              </Button>
+            </Group>
+          </Card>
+          {/* Reset Password (Chef also) */}
+          <Card withBorder radius="md" p="lg">
+            <Group justify="space-between" align="center" wrap="wrap">
+              <div>
+                <Title order={4}>Reset Password</Title>
+                <Text c="dimmed" size="sm" mt={4}>
+                  Send a reset code to your email, then enter it below.
+                </Text>
+              </div>
+
+              <Button
+                loading={sendCodeBusy}
+                onClick={onSendResetCode}
+                variant="outline"
+                color="green"
+              >
+                Send Reset Code
+              </Button>
+            </Group>
+
+            <TextInput mt="md" label="Email" value={profile.email} disabled />
+
+            <TextInput
+              mt="md"
+              label="6-digit code"
+              placeholder="123456"
+              maxLength={6}
+              {...resetForm.getInputProps("code")}
+            />
+
+            <SimpleGrid cols={{ base: 1, sm: 2 }} mt="md">
+              <PasswordInput
+                label="New password"
+                placeholder="New password"
+                {...resetForm.getInputProps("new_password")}
+              />
+              <PasswordInput
+                label="Confirm password"
+                placeholder="Confirm password"
+                {...resetForm.getInputProps("confirm_password")}
+              />
+            </SimpleGrid>
+
+            <Group justify="flex-end" mt="md">
+              <Button loading={resetBusy} onClick={onResetPassword} color="green">
+                Reset Password
+              </Button>
+            </Group>
+          </Card>
+
+          {/* Chef Public Profile */}
+          <Card withBorder radius="md" p="lg">
+            <Title order={4}>Chef Public Profile</Title>
+            <Text c="dimmed" size="sm" mt={4}>
+              This is what people see on your public chef profile.
+            </Text>
+
+            <Textarea
+              mt="md"
+              label="Bio"
+              placeholder="Tell people about your cooking style, specialties..."
+              minRows={4}
+              autosize
+              {...chefProfileForm.getInputProps("bio")}
+            />
+
+            <SimpleGrid cols={{ base: 1, sm: 2 }} mt="md">
+              <TextInput
+                label="Website"
+                placeholder="example.com or https://example.com"
+                {...chefProfileForm.getInputProps("website")}
+              />
+              <TextInput
+                label="Location"
+                placeholder="Istanbul, TR"
+                {...chefProfileForm.getInputProps("location")}
+              />
+            </SimpleGrid>
+
+            <Group justify="flex-end" mt="md">
+              <Button
+                loading={chefProfileBusy}
+                onClick={onSaveChefPublicProfile}
+                color="green"
+              >
+                Save Public Profile
               </Button>
             </Group>
           </Card>
@@ -303,7 +542,6 @@ export default function ProfilePage() {
               <StatCard label="Average Rating" value={stats?.average_rating ?? "—"} />
             </SimpleGrid>
 
-            {/* Category breakdown (simple list) */}
             <Stack gap={6} mt="md">
               <Text fw={600}>Recipes by Category</Text>
               {stats && Object.keys(stats.recipes_by_category).length > 0 ? (
@@ -323,9 +561,6 @@ export default function ProfilePage() {
           <Card withBorder radius="md" p="lg">
             <Group justify="space-between" align="center">
               <Title order={4}>My Recipes</Title>
-              <Button leftSection={<IconPlus size={16} />} onClick={openCreateRecipe}>
-                Create Recipe
-              </Button>
             </Group>
 
             <Stack mt="md" gap="sm">
@@ -337,6 +572,7 @@ export default function ProfilePage() {
                     <Group justify="space-between" align="flex-start" wrap="wrap">
                       <div>
                         <Text fw={700}>{r.title}</Text>
+
                         {r.description ? (
                           <Text c="dimmed" size="sm" mt={4}>
                             {r.description}
@@ -350,27 +586,15 @@ export default function ProfilePage() {
                           <Text size="sm" c="dimmed">
                             Ingredients: <b>{r.num_ingredients ?? "—"}</b>
                           </Text>
-                          {r.category ? (
-                            <Badge variant="light">{r.category}</Badge>
-                          ) : null}
-                          {r.cuisine ? (
-                            <Badge variant="light">{r.cuisine}</Badge>
-                          ) : null}
+                          {r.category ? <Badge variant="light">{r.category}</Badge> : null}
+                          {r.cuisine ? <Badge variant="light">{r.cuisine}</Badge> : null}
                         </Group>
                       </div>
 
-                      <Group gap="xs">
+                      <Group>
                         <Button
-                          variant="light"
-                          leftSection={<IconEdit size={16} />}
-                          onClick={() => openEditRecipe(r)}
-                        >
-                          Edit
-                        </Button>
-                        <Button
+                          variant="outline"
                           color="red"
-                          variant="light"
-                          leftSection={<IconTrash size={16} />}
                           loading={busy}
                           onClick={() => onDeleteRecipe(r.id)}
                         >
@@ -383,73 +607,8 @@ export default function ProfilePage() {
               )}
             </Stack>
           </Card>
-
-          {/* Placeholder: Chef Bio/Links (needs backend additions) */}
-          <Card withBorder radius="md" p="lg">
-            <Title order={4}>Chef Public Profile</Title>
-            <Text c="dimmed" size="sm" mt={4}>
-              Bio + website/restaurant links are not supported by the backend yet.
-              We’ll add a ChefProfile model + endpoints, then wire the UI here.
-            </Text>
-          </Card>
         </>
       )}
-
-      {/* Create/Edit Recipe Modal */}
-      <Modal
-        opened={recipeModalOpen}
-        onClose={() => setRecipeModalOpen(false)}
-        title={editingRecipeId ? "Edit Recipe" : "Create Recipe"}
-        centered
-        size="lg"
-      >
-        <Stack>
-          <TextInput label="Title" placeholder="Recipe title" {...recipeForm.getInputProps("title")} />
-          <Textarea
-            label="Description"
-            placeholder="Short description"
-            autosize
-            minRows={2}
-            {...recipeForm.getInputProps("description")}
-          />
-
-          <Group grow>
-            <TextInput label="Category" placeholder="e.g. Dessert" {...recipeForm.getInputProps("category")} />
-            <TextInput label="Cuisine" placeholder="e.g. Italian" {...recipeForm.getInputProps("cuisine")} />
-          </Group>
-
-          <TextInput label="Meal Type" placeholder="e.g. dinner" {...recipeForm.getInputProps("meal_type")} />
-
-          <Group>
-            <Switch label="Vegan" {...recipeForm.getInputProps("is_vegan", { type: "checkbox" })} />
-            <Switch label="Vegetarian" {...recipeForm.getInputProps("is_vegetarian", { type: "checkbox" })} />
-          </Group>
-
-          <Textarea
-            label="Directions"
-            placeholder="Step-by-step directions"
-            autosize
-            minRows={4}
-            {...recipeForm.getInputProps("directions")}
-          />
-
-          <Divider />
-
-          <Group justify="flex-end">
-            <Button variant="default" onClick={() => setRecipeModalOpen(false)}>
-              Cancel
-            </Button>
-            <Button loading={busy} onClick={onSubmitRecipe}>
-              {editingRecipeId ? "Save Changes" : "Create"}
-            </Button>
-          </Group>
-
-          <Text size="xs" c="dimmed">
-            Ingredients UI is intentionally omitted for the first pass (backend allows empty ingredients).
-            We can add ingredient search + unit inputs next using `/api/recipes/ingredients/search`.
-          </Text>
-        </Stack>
-      </Modal>
     </Stack>
   );
 }
