@@ -45,6 +45,10 @@ function toExternalUrl(raw?: string | null) {
   return `https://${v}`;
 }
 
+export async function generateStaticParams() {
+  return [];
+}
+
 export default function ChefProfilePage() {
   const theme = useMantineTheme();
   const params = useParams<{ chefId: string }>();

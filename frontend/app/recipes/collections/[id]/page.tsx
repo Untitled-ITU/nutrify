@@ -11,6 +11,10 @@ import { Button } from "@mantine/core";
 import { IconX } from "@tabler/icons-react";
 import { AddToPlanButton } from "@/components/meal-plan/AddToPlanButton";
 
+export async function generateStaticParams() {
+    return [];
+}
+
 export default function CollectionDetailPage() {
     const params = useParams();
     const collectionId = params?.id;

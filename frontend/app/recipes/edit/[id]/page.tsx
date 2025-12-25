@@ -7,6 +7,10 @@ import { notifications } from "@mantine/notifications";
 import { API_BASE_URL } from "@/lib/config";
 import { RecipeForm, RecipeFormData } from "@/components/recipes/RecipeForm";
 
+export async function generateStaticParams() {
+    return [];
+}
+
 export default function EditRecipePage() {
     const { id } = useParams();
     const router = useRouter();

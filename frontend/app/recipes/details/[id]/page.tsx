@@ -34,6 +34,10 @@ const EMPTY_RECIPE: RecipeDetails = {
     image_url: "",
 };
 
+export async function generateStaticParams() {
+    return [];
+}
+
 export default function RecipeDetailsPage() {
     const params = useParams();
     const recipeId = params?.id;
@@ -126,18 +130,18 @@ export default function RecipeDetailsPage() {
                             <div className="mb-6">
                                 <div className="font-semibold">Created By</div>
                                 {recipe.author ? (
-                                <Text size="sm" c="dimmed">
-                                    By{" "}
-                                    <Text
-                                    component={Link}
-                                    href={`/chef-profile/${recipe.author.id}`}
-                                    span
-                                    fw={600}
-                                    style={{ textDecoration: "underline" }}
-                                    >
-                                    {recipe.author.username}
+                                    <Text size="sm" c="dimmed">
+                                        By{" "}
+                                        <Text
+                                            component={Link}
+                                            href={`/chef-profile/${recipe.author.id}`}
+                                            span
+                                            fw={600}
+                                            style={{ textDecoration: "underline" }}
+                                        >
+                                            {recipe.author.username}
+                                        </Text>
                                     </Text>
-                                </Text>
                                 ) : "admin"}
                             </div>
                             <div className="flex flex-row gap-10 mb-8">
