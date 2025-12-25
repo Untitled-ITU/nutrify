@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { ActionIcon, Menu, Select, TextInput, useMantineTheme } from "@mantine/core";
-import { IconArrowsSort, IconBookmark, IconCategory, IconCheck, IconHeart, IconPlus, IconSearch, IconWorld, IconX } from "@tabler/icons-react";
+import { IconArrowsSort, IconBan, IconBookmark, IconCategory, IconCheck, IconHeart, IconPlus, IconSearch, IconWorld, IconX } from "@tabler/icons-react";
 
 import ingredientsJson from "@/ingredients.json";
 import { Recipe, FiltersState } from "./types";
@@ -14,6 +14,7 @@ type Props = {
     onFiltersChangeAction: (filters: {
         q?: string;
         ingredients?: string[];
+        excluded_ingredients?: string[];
         sort_by?: string;
     }) => void;
 
@@ -168,6 +169,9 @@ export function RecipeExplorer({
             ingredients: filters.ingredients
                 .filter((f) => f.type === "include")
                 .map((f) => f.value),
+            excluded_ingredients: filters.ingredients
+                .filter((f) => f.type === "exclude")
+                .map((f) => f.value),
         });
     }, [filters, onFiltersChange]);
 
@@ -233,21 +237,38 @@ export function RecipeExplorer({
                         />
 
                         {!disableIngredientFilter && (
-                            <Select
-                                label="Included Ingredient"
-                                labelProps={{ style: { fontSize: 16, marginBottom: 8 } }}
-                                placeholder="Select"
-                                searchable
-                                leftSection={<IconPlus size={16} />}
-                                value={includeValue}
-                                data={ALL_INGREDIENTS
-                                    .filter((i) => !usedIngredients.includes(i))
-                                    .map((i) => ({
-                                        value: i,
-                                        label: formatIngredientLabel(i),
-                                    }))}
-                                onChange={(v) => v && addIngredientFilter("include", v)}
-                            />
+                            <>
+                                <Select
+                                    label="Included Ingredient"
+                                    labelProps={{ style: { fontSize: 16, marginBottom: 8 } }}
+                                    placeholder="Select"
+                                    searchable
+                                    leftSection={<IconPlus size={16} />}
+                                    value={includeValue}
+                                    data={ALL_INGREDIENTS
+                                        .filter((i) => !usedIngredients.includes(i) && !excludedIngredients.includes(i))
+                                        .map((i) => ({
+                                            value: i,
+                                            label: formatIngredientLabel(i),
+                                        }))}
+                                    onChange={(v) => v && addIngredientFilter("include", v)}
+                                />
+                                <Select
+                                    label="Excluded Ingredient"
+                                    labelProps={{ style: { fontSize: 16, marginBottom: 8 } }}
+                                    placeholder="Select"
+                                    searchable
+                                    leftSection={<IconBan size={16} style={{ color: theme.colors.red[6] }} />}
+                                    value={excludeValue}
+                                    data={ALL_INGREDIENTS
+                                        .filter((i) => !usedIngredients.includes(i) && !excludedIngredients.includes(i))
+                                        .map((i) => ({
+                                            value: i,
+                                            label: formatIngredientLabel(i),
+                                        }))}
+                                    onChange={(v) => v && addIngredientFilter("exclude", v)}
+                                />
+                            </>
                         )}
                     </div>
                 </div>
