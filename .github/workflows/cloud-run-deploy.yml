@@ -51,7 +51,7 @@ jobs:
             --platform managed \
             --region $REGION \
             --allow-unauthenticated \
-            --set-env-vars "SECRET_KEY=${{ secrets.SECRET_KEY }},JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }},DB_USER=${{ secrets.DB_USER }},DB_PASSWORD=${{ secrets.DB_PASSWORD }},DB_NAME=${{ secrets.DB_NAME }},CLOUD_SQL_CONNECTION_NAME=${{ secrets.CLOUD_SQL_CONNECTION_NAME }},MAIL_USERNAME=${{ secrets.MAIL_USERNAME }},MAIL_PASSWORD=${{ secrets.MAIL_PASSWORD }}" \
+            --set-env-vars "SECRET_KEY=${{ secrets.SECRET_KEY }},JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }},DB_USER=${{ secrets.DB_USER }},DB_PASSWORD=${{ secrets.DB_PASSWORD }},DB_NAME=${{ secrets.DB_NAME }},CLOUD_SQL_CONNECTION_NAME=${{ secrets.CLOUD_SQL_CONNECTION_NAME }},MAIL_USERNAME=${{ secrets.MAIL_USERNAME }},MAIL_PASSWORD=${{ secrets.MAIL_PASSWORD }},MAIL_SERVER=${{ secrets.MAIL_SERVER }},MAIL_PORT=${{ secrets.MAIL_PORT }},MAIL_USE_TLS=${{ secrets.MAIL_USE_TLS }},MAIL_USE_SSL=${{ secrets.MAIL_USE_SSL }},ADMIN_URL=${{ secrets.ADMIN_URL }},FIREBASE_STORAGE_BASE_URL=${{ secrets.FIREBASE_STORAGE_BASE_URL }},ENABLE_DOCS=${{ secrets.ENABLE_DOCS }}" \
             --add-cloudsql-instances ${{ secrets.CLOUD_SQL_CONNECTION_NAME }} \
             --port 8080 \
             --memory 512Mi \
