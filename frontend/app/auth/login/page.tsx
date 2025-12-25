@@ -74,6 +74,7 @@ export default function LoginPage() {
                         style={{ backgroundColor: theme.other.primaryDark }}
                         className='text-2xl h-4' fz="h3" size='xl'>Login</Button>
                     <Link className="text-center" href="/auth/signup">Don’t have an account? Sign up</Link>
+                    <Link className="text-center" href="/auth/reset-password">Forgot password?</Link>
                 </div>
             </form>
         </div>

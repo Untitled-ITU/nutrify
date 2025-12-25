@@ -40,7 +40,7 @@ export function RecipeExplorer({
     const [search, setSearch] = useState("");
     const [includeValue, setIncludeValue] = useState<string | null>(null);
     const [excludeValue, setExcludeValue] = useState<string | null>(null);
-    const [sortBy, setSortBy] = useState<SortKey>("title");
+    const [sortBy, setSortBy] = useState<SortKey>("rating");
     const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
 
     const handleSortChange = (key: SortKey) => {
