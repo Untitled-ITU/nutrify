@@ -45,7 +45,7 @@ def get_shopping_list():
     result_items = []
     for item in items:
         unit = item.unit or (item.ingredient.default_unit if item.ingredient else None)
-        formatted = format_quantity_with_conversions(item.amount, unit, include_conversions=True)
+        formatted = format_quantity_with_conversions(item.amount, unit, include_conversions=False)
 
         result_items.append({
             'id': item.id,
