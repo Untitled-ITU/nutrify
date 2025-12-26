@@ -287,9 +287,6 @@ export default function ChefProfilePage() {
                     <Text size="sm" c="dimmed">
                       Rating: <b>{r.average_rating ?? "—"}</b> ({r.rating_count})
                     </Text>
-                    <Text size="sm" c="dimmed">
-                      Ingredients: <b>{r.num_ingredients ?? "—"}</b>
-                    </Text>
                     {r.category ? <Badge variant="light">{r.category}</Badge> : null}
                     {r.cuisine ? <Badge variant="light">{r.cuisine}</Badge> : null}
                   </Group>

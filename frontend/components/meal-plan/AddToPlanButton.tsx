@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Button, Modal, Select, Stack, Group, Text, useMantineTheme, ActionIcon, Tooltip } from "@mantine/core";
-import { IconCalendarPlus } from "@tabler/icons-react"; // Match your table icon library
+import { IconCalendarPlus, IconPlus } from "@tabler/icons-react"; // Match your table icon library
 import { authFetch } from "@/app/providers/AuthProvider";
 import { API_BASE_URL } from "@/lib/config";
 
@@ -44,14 +44,14 @@ export function AddToPlanButton({ recipeId, recipeTitle, variant = "button" }: A
             setLoading(false);
         }
     };
-
     return (
         <>
             {variant === "button" ? (
                 <Button
-                    leftSection={<IconCalendarPlus size={18} />}
-                    style={{ backgroundColor: theme.other.accentColor }}
+                    leftSection={<IconPlus size={20} />}
+                    style={{ backgroundColor: '#896c6c' }}
                     onClick={() => setOpened(true)}
+                    className="hover:opacity-90 transition-opacity shadow-md text-white border-none h-[42px]"
                 >
                     Add to meal plan
                 </Button>
