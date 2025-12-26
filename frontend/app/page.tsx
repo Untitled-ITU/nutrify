@@ -47,7 +47,7 @@ export default function Home() {
             {/* Title row: leaf left + symmetric spacing */}
             <div className="flex flex-col sm:flex-row sm:items-center sm:gap-6">
               <div className="hidden sm:flex w-24 justify-center">
-                <IconPlant size={64} color={leafGreen} />
+                <img className="w-24 ms-16" src="/foodIcon-green.png" alt="Nutrify logo" />
               </div>
 
               <h1 className="text-6xl font-bold leading-tight">
