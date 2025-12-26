@@ -160,13 +160,6 @@ export function RecipeRating({ recipeId }: Props) {
                 <Stack>
                     <Rating value={score} onChange={setScore} size="lg" />
 
-                    <Textarea
-                        placeholder="Leave a comment (optional)"
-                        value={comment}
-                        onChange={(e) => setComment(e.target.value)}
-                        minRows={3}
-                    />
-
                     <Group justify="flex-end">
                         <Button
                             variant="default"

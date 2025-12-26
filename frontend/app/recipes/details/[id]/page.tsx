@@ -15,8 +15,6 @@ import Link from "next/dist/client/link";
 import { AddToPlanButton } from "@/components/meal-plan/AddToPlanButton";
 
 
-
-
 const EMPTY_RECIPE: RecipeDetails = {
     author: {
         id: 0,
