@@ -6,13 +6,16 @@ import { mapRecipeDetailsToRecipe, Recipe, RecipeDetails } from "@/components/re
 import { API_BASE_URL } from "@/lib/config";
 import { handleAddFavorite, handleRemoveFavorite, removeFavorite } from "@/lib/tableActions";
 import { ActionIcon, Badge, Button, Divider, Group, Image, Menu, useMantineTheme } from "@mantine/core";
-import { IconEdit, IconHeart, IconHttpDelete, IconPlus, IconX } from "@tabler/icons-react";
+import { IconEdit, IconHeart, IconHttpDelete, IconPlus, IconX, IconPointFilled } from "@tabler/icons-react";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Modal, Text } from "@mantine/core";
 import { RecipeRating } from "@/components/ratings/RecipeRating";
 import Link from "next/dist/client/link";
 import { AddToPlanButton } from "@/components/meal-plan/AddToPlanButton";
+
+
+
 
 const EMPTY_RECIPE: RecipeDetails = {
     author: {
@@ -221,14 +224,25 @@ export default function RecipeDetailsPage() {
                         Ingredients
                     </h2>
 
-                    <ul className="gap-x-6 gap-y-8 grid grid-cols-2 text-gray-600">
-                        {recipe.ingredients.map((ing) => (
-                            <li key={ing.id}>
-                                &gt; <span className="capitalize">{ing.name}</span> ,{" "}
-                                {ing.quantity} {ing.unit}
-                            </li>
-                        ))}
+                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-4">
+                    {recipe.ingredients.map((ing) => (
+                        <li key={ing.id} className="flex items-start gap-3">
+                        <IconPointFilled
+                            size={18}
+                            style={{ color: theme.other.accentColor, marginTop: 2, flexShrink: 0 }}
+                        />
+
+                        <div className="leading-snug">
+                            <span className="font-medium text-gray-800 capitalize">{ing.name}</span>
+                            <span className="text-gray-500">
+                            {" "}
+                            — {ing.quantity} {ing.unit}
+                            </span>
+                        </div>
+                        </li>
+                    ))}
                     </ul>
+
                 </section>
 
                 {/* Instructions */}
