@@ -45,11 +45,10 @@ export default function Home() {
         <Grid.Col span={{ base: 12, md: 7 }}>
           <div className="flex flex-col gap-4">
             {/* Title row: leaf left + symmetric spacing */}
-            <div className="flex flex-col sm:flex-row sm:items-center sm:gap-6">
-              <div className="hidden sm:flex w-24 justify-center">
-                <img className="w-24 ms-16" src="/foodIcon-green.png" alt="Nutrify logo" />
+            <div className="flex flex-col sm:flex-row sm:items-center sm:gap-10">
+              <div className="hidden sm:flex w-24 justify-center mr-4">
+              <img src="/foodIcon-green.png" className="w-20" alt="Nutrify" />
               </div>
-
               <h1 className="text-6xl font-bold leading-tight">
                 Welcome to <br /> Nutrify!
               </h1>
