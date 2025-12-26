@@ -20,6 +20,8 @@ import {
 } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import { IconChefHat, IconEdit, IconPlus, IconTrash, IconX } from "@tabler/icons-react";
+import { IconExternalLink } from "@tabler/icons-react";
+
 
 import {
   ChefRecipeSummary,
@@ -255,39 +257,66 @@ export default function ChefProfilePage() {
             <Text c="dimmed">No recipes yet.</Text>
           ) : (
             recipes.map((r) => (
-              <Paper key={r.id} withBorder radius="md" p="md">
-                <Group justify="space-between" align="flex-start" wrap="wrap">
-                  <div>
-                    <Text fw={700}>
-                      <Link
-                        href={`/recipes/details/${r.id}`}
-                        style={{ color: BRAND, textDecoration: "none" }}
-                      >
-                        {r.title}
-                      </Link>
+            <Paper
+              key={r.id}
+              withBorder
+              radius="md"
+              p="md"
+              className="group hover:shadow-sm transition-shadow"
+            >
+              <Group justify="space-between" align="flex-start" wrap="nowrap">
+                {/* Left content */}
+                <div className="min-w-0">
+                  <Text fw={700} className="truncate">
+                    <Link
+                      href={`/recipes/details/${r.id}`}
+                      className="text-inherit no-underline group-hover:underline"
+                      style={{ color: BRAND, textDecorationThickness: "2px", textUnderlineOffset: "4px" }}
+                    >
+                      {r.title}
+                    </Link>
+                  </Text>
+
+                  {r.description ? (
+                    <Text c="dimmed" size="sm" mt={4} className="line-clamp-2">
+                      {r.description}
                     </Text>
+                  ) : null}
 
-                    {r.description ? (
-                      <Text c="dimmed" size="sm" mt={4}>
-                        {r.description}
-                      </Text>
-                    ) : null}
+                  <Group gap="md" mt="sm">
+                    <Text size="sm" c="dimmed">
+                      Rating: <b>{r.average_rating ?? "—"}</b> ({r.rating_count})
+                    </Text>
+                    <Text size="sm" c="dimmed">
+                      Ingredients: <b>{r.num_ingredients ?? "—"}</b>
+                    </Text>
+                    {r.category ? <Badge variant="light">{r.category}</Badge> : null}
+                    {r.cuisine ? <Badge variant="light">{r.cuisine}</Badge> : null}
+                  </Group>
+                </div>
 
-                    <Group gap="md" mt="sm">
-                      <Text size="sm" c="dimmed">
-                        Rating: <b>{r.average_rating ?? "—"}</b> ({r.rating_count})
-                      </Text>
-                      <Text size="sm" c="dimmed">
-                        Ingredients: <b>{r.num_ingredients ?? "—"}</b>
-                      </Text>
-                      {r.category ? <Badge variant="light">{r.category}</Badge> : null}
-                      {r.cuisine ? <Badge variant="light">{r.cuisine}</Badge> : null}
-                    </Group>
-                  </div>
+                {/* Right actions */}
+                <Group gap="xs" align="center">
+                  {/* View details icon (always visible, subtle) */}
+                  <Button
+                    variant="subtle"
+                    color="gray"
+                    px={10}
+                    onClick={() => router.push(`/recipes/details/${r.id}`)}
+                    title="View recipe"
+                    aria-label="View recipe"
+                    styles={{
+                      root: {
+                        borderRadius: 12,
+                      },
+                    }}
+                  >
+                    <IconExternalLink size={18} color={BRAND} />
+                  </Button>
 
                   {/* OWNER-ONLY EDIT/DELETE */}
                   {isOwner ? (
-                    <Group gap="xs">
+                    <>
                       <Button
                         variant="outline"
                         styles={outlineBtnStyles}
@@ -306,10 +335,12 @@ export default function ChefProfilePage() {
                       >
                         Delete
                       </Button>
-                    </Group>
+                    </>
                   ) : null}
                 </Group>
-              </Paper>
+              </Group>
+            </Paper>
+
             ))
           )}
         </Stack>

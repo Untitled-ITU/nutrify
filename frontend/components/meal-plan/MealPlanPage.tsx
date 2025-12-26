@@ -395,11 +395,38 @@ export default function MealPlanPage() {
             </div>
 
             <div className="flex items-center gap-4 mb-6">
-                <div className="flex bg-white/50 backdrop-blur p-1 rounded-xl border border-black/5 shadow-sm">
-                    <button onClick={() => setWeekStart(d => { const ns = new Date(d); ns.setDate(ns.getDate() - 7); return ns; })} className="p-2 hover:bg-white rounded-lg transition-colors"><ChevronLeft size={20} /></button>
-                    <button onClick={() => setWeekStart(startOfWeekMonday(new Date()))} className="px-4 font-black text-xs uppercase tracking-widest">Today</button>
-                    <button onClick={() => setWeekStart(d => { const ns = new Date(d); ns.setDate(ns.getDate() + 7); return ns; })} className="p-2 hover:bg-white rounded-lg transition-colors"><ChevronRight size={20} /></button>
-                </div>
+                <div className="flex items-center gap-2">
+                    <button
+                        onClick={() => setWeekStart(d => { const ns = new Date(d); ns.setDate(ns.getDate() - 7); return ns; })}
+                        className="h-10 w-10 rounded-xl border border-black/10 bg-white/60 backdrop-blur shadow-sm
+                                hover:bg-white/80 hover:-translate-y-[1px] transition-all flex items-center justify-center"
+                        title="Previous week"
+                        aria-label="Previous week"
+                    >
+                        <ChevronLeft size={20} />
+                    </button>
+
+                    <button
+                        onClick={() => setWeekStart(startOfWeekMonday(new Date()))}
+                        className="h-10 px-5 rounded-xl border border-black/10 bg-white/60 backdrop-blur shadow-sm
+                                hover:bg-white/80 hover:-translate-y-[1px] transition-all
+                                font-black text-xs uppercase tracking-widest text-[#3b2f2f]"
+                        title="Go to current week"
+                    >
+                        Today
+                    </button>
+
+                    <button
+                        onClick={() => setWeekStart(d => { const ns = new Date(d); ns.setDate(ns.getDate() + 7); return ns; })}
+                        className="h-10 w-10 rounded-xl border border-black/10 bg-white/60 backdrop-blur shadow-sm
+                                hover:bg-white/80 hover:-translate-y-[1px] transition-all flex items-center justify-center"
+                        title="Next week"
+                        aria-label="Next week"
+                    >
+                        <ChevronRight size={20} />
+                    </button>
+                    </div>
+
                 <div className="font-bold text-gray-700 bg-white/80 px-4 py-2 rounded-xl border border-black/5 shadow-sm text-sm">
                     {mounted && `${toISODateLocal(weekDates[0])} — ${toISODateLocal(weekDates[6])}`}
                 </div>
