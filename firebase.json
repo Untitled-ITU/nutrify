@@ -1,0 +1,51 @@
+{
+  "firestore": {
+    "database": "(default)",
+    "location": "eur3",
+    "rules": "database/firestore.rules",
+    "indexes": "database/firestore.indexes.json"
+  },
+  "hosting": {
+    "public": "frontend/public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "/api/**",
+        "run": {
+          "serviceId": "nutrify-backend",
+          "region": "europe-west1"
+        }
+      },
+      {
+        "source": "/meals",
+        "run": {
+          "serviceId": "nutrify-backend",
+          "region": "europe-west1"
+        }
+      },
+      {
+        "source": "/meal/**",
+        "run": {
+          "serviceId": "nutrify-backend",
+          "region": "europe-west1"
+        }
+      },
+      {
+        "source": "**",
+        "run": {
+          "serviceId": "nutrify-frontend",
+          "region": "europe-west1"
+        }
+      }
+    ],
+    "cleanUrls": true,
+    "trailingSlash": false
+  },
+  "storage": {
+    "rules": "storage.rules"
+  }
+}

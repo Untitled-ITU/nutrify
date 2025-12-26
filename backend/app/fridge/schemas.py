@@ -1,0 +1,85 @@
+from pydantic import BaseModel, Field
+from typing import Optional
+
+
+class ItemIdPath(BaseModel):
+    item_id: int
+
+
+class FridgeIngredientInfo(BaseModel):
+    id: int
+    name: str
+    default_unit: Optional[str]
+
+
+class AlternativeUnit(BaseModel):
+    quantity: float
+    unit: str
+
+
+class FridgeItemDetail(BaseModel):
+    id: int
+    ingredient: FridgeIngredientInfo
+    quantity: float
+    unit: str
+    alternatives: list[AlternativeUnit] = []
+    added_at: Optional[str]
+
+
+class FridgeListResponse(BaseModel):
+    items: list[FridgeItemDetail]
+    total: int
+
+
+class AddFridgeItemBody(BaseModel):
+    ingredient_id: Optional[int] = None
+    ingredient_name: Optional[str] = None
+    quantity: Optional[float] = None
+    unit: Optional[str] = None
+
+
+class FridgeItemResponse(BaseModel):
+    msg: str
+    item: FridgeItemDetail
+
+
+class UpdateFridgeItemBody(BaseModel):
+    quantity: Optional[float] = None
+    unit: Optional[str] = None
+
+
+class MessageResponse(BaseModel):
+    msg: str
+
+
+class BatchAddItem(BaseModel):
+    ingredient_id: Optional[int] = None
+    ingredient_name: Optional[str] = None
+    quantity: Optional[float] = None
+    unit: Optional[str] = None
+
+
+class BatchAddBody(BaseModel):
+    items: list[BatchAddItem] = Field(min_length=1)
+
+
+class BatchAddResponse(BaseModel):
+    msg: str
+    added: int
+    updated: int
+    errors: list[str] = []
+
+
+class RecentItem(BaseModel):
+    id: int
+    ingredient_name: str
+    added_at: Optional[str]
+
+
+class FridgeStatsResponse(BaseModel):
+    total_items: int
+    recently_added: list[RecentItem]
+
+
+class FridgeSearchQuery(BaseModel):
+    q: str = Field(min_length=2)
