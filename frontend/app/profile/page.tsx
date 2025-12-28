@@ -38,7 +38,7 @@ import {
 } from "@/lib/chef";
 
 /** ---- Website normalization helper (Option B) ---- */
-function toExternalUrl(raw?: string | null) {
+export function toExternalUrl(raw?: string | null) {
   const v = (raw ?? "").trim();
   if (!v) return null;
 
